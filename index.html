@@ -275,7 +275,10 @@
             }
 
             document.getElementById('info-questao').innerHTML = `
-                <span class="tag-quest">${q.materia || window.materiaAtual}</span>
+                <span class="tag-quest">${q.materia || materiaAtual}</span>
+                <span class="tag-quest">${q.ano || 'Ano N/A'}</span>
+                <span class="tag-quest">${q.banca || 'IBADE'}</span>
+                <span class="tag-quest">${q.orgao || 'Orgão N/A'}</span>
                 <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
             `;
             document.getElementById('enunciado').innerHTML = q.enunciado;
@@ -337,3 +340,4 @@
     </script>
 </body>
 </html>
+
