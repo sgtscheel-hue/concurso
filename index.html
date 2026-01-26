@@ -52,7 +52,7 @@
                 <select id="filtroAssunto" onchange="aplicarFiltro()" class="w-full text-[11px] p-2 rounded border border-gray-200 bg-gray-50 outline-none">
                     <option value="todos">Todos os assuntos</option>
                 </select>
-                
+
                 <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
                     <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
                 </button>
@@ -95,8 +95,8 @@
                     </div>
 
                     <div id="panel-video" class="extra-panel">
-                          <div id="video-container" class="aspect-video bg-black rounded-lg overflow-hidden flex items-center justify-center text-white text-xs">
-                          <p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo aula disponível para esta questão</p>
+                        <div id="video-container" class="aspect-video bg-black rounded-lg overflow-hidden flex items-center justify-center text-white text-xs">
+                            <p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo aula disponível</p>
                         </div>
                     </div>
                     
@@ -140,7 +140,11 @@
             if (!lista || lista[idx] === undefined) throw new Error("Selecione uma matéria primeiro.");
 
             const q = lista[idx];
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", apiVersion: "v1" }, { apiVersion: 'v1' });
+            // CORREÇÃO DO ERRO 404: Definindo apiVersion estável
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-1.5-flash", 
+                apiVersion: "v1" 
+            }, { apiVersion: 'v1' });
 
             const context = `Você é um Professor de Concursos. Materia: ${window.materiaAtual}. Questão: ${q.enunciado}. Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
             const result = await model.generateContent(context);
@@ -148,7 +152,8 @@
             loading.innerText = response.text();
             loading.classList.remove("italic", "text-gray-400");
         } catch (e) {
-            loading.innerText = "Erro ao conectar. Verifique a API.";
+            console.error(e);
+            loading.innerText = "Erro ao conectar. Verifique a API no Google AI Studio.";
             loading.classList.add("text-red-500");
         }
         chat.scrollTop = chat.scrollHeight;
@@ -156,10 +161,9 @@
     </script>
 
     <script>
-        // Mapeamento de aulas por assunto (Substitua os links conforme necessário)
         const aulasPorAssunto = {
             'portugues': {
-                'Classes de Palavras': 'https://www.youtube.com/embed/SUA_URL_AQUI',
+                'Classes de Palavras': 'https://www.youtube.com/embed/5U_URL',
                 'Acentuação Gráfica': 'https://www.youtube.com/embed/OUTRA_URL'
             },
             'rondonia': {
@@ -239,7 +243,6 @@
 
             document.getElementById('info-questao').innerHTML = `
                 <span class="tag-quest">${q.materia || window.materiaAtual}</span>
-                <span class="tag-quest">${q.ano || 'N/A'}</span>
                 <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
             `;
 
@@ -251,7 +254,7 @@
             if (q.videoUrl) {
                 videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
             } else {
-                videoContainer.innerHTML = `<p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo por questão não disponível.</p>`;
+                videoContainer.innerHTML = `<p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo por questão indisponível.</p>`;
             }
             
             document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
