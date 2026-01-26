@@ -15,7 +15,6 @@ const banco_pt = [
     correta: "d",
     comentario: "A preposição 'POR' seguida de verbo no infinitivo ('saberem') introduz uma oração subordinada reduzida causal. A substituição adequada mantém a ideia de causa através da conjunção 'porque'.",
     assunto: "Classes de Palavras",
-    videoUrl: "https://www.youtube.com/embed/ltrzPijgKi4?si=FYbsypAT8XqpJ_ty", // Use sempre o link /embed/
     resumo: "<b>Causa:</b> Indica o motivo. Pode aparecer de forma reduzida (Por + infinitivo) ou desenvolvida (Porque, visto que, já que)."
 },
 {
@@ -33,7 +32,6 @@ const banco_pt = [
     correta: "e",
     comentario: "'Já que' é uma locução conjuntiva causal. 'Visto que' é sua substituta direta, mantendo o valor de causa/motivação para a ação de voar.",
     assunto: "Classes de Palavras",
-    videoUrl: "https://www.youtube.com/embed/tKJkDQSMdh0?si=d_rSHf1GDSLW78bc", // Use sempre o link /embed/
     resumo: "Conjunções Causais: porque, que, como (no início da frase), pois, visto que, já que, uma vez que."
 },
 
@@ -1498,7 +1496,6 @@ const banco_pt = [
         correta: "d",
         comentario: "A palavra 'médico' é proparoxítona. A única alternativa que também apresenta uma proparoxítona é 'genéticas'.",
         assunto: "Acentuação Gráfica",
-	videoUrl: "https://www.youtube.com/embed/Ytw1SjnqEJ8?si=JLgmUCrRQYOUe1bY", // Use sempre o link /embed/
         resumo: "Proparoxítonas: Todas as palavras proparoxítonas (tônica na antepenúltima) devem ser acentuadas."
     },
     {
@@ -2115,4 +2112,5 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     }
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
+
 ];
