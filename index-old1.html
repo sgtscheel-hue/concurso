@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador SEDUC Pro - v19 Gemini</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .container-main { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .tag-info { background: #E5E7EB; color: #374151; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; text-transform: uppercase; }
+        .alternativa-card { border: 1px solid #e5e7eb; transition: 0.2s; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: white; margin-bottom: 4px; }
+        .alternativa-card:hover { border-color: #93c5fd; background: #f9fafb; }
+        input[type="radio"]:checked + .alternativa-card { border-color: #3b82f6; background: #eff6ff; }
+        .letra-circulo { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #6b7280; }
+        input[type="radio"]:checked + .alternativa-card .letra-circulo { background: #2563eb; border-color: #2563eb; color: white; }
+        .menu-item { cursor: pointer; transition: 0.2s; border-radius: 8px; padding: 10px; border-left: 4px solid transparent; font-size: 13px; }
+        .menu-item.active { background: #DBEAFE; border-left-color: #2563EB; color: #1E40AF; font-weight: 700; }
+        
+        .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; pt-4; }
+        .chart-box { height: 180px; width: 100%; margin-bottom: 20px; }
+
+        /* Estilos do Chat Gemini */
+        .chat-gemini-container { background: white; border-radius: 10px; border: 1px solid #e0f2fe; overflow: hidden; margin-top: 10px; }
+        .chat-messages { height: 180px; overflow-y: auto; padding: 10px; font-size: 12px; background: #f8fafc; display: flex; flex-direction: column; gap: 8px; }
+        .msg-ai { background: #e0f2fe; color: #0369a1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0ea5e9; }
+        .msg-user { background: #f1f5f9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-weight: 500; }
+        .typing { font-style: italic; color: #94a3b8; font-size: 10px; margin-left: 5px; }
+    </style>
+
+    <script src="portugues.js"></script>
+    <script src="historia_geografia_rondonia.js"></script>
+    <script src="conhecimentos_especificos.js"></script>
+    <script src="informatica_basica.js"></script>
+</head>
+<body class="py-4 px-4">
+
+    <div class="container-main">
+        <div class="w-64 flex-shrink-0">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 sticky top-4">
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest text-center">Desempenho Geral</h2>
+                <div class="chart-box"><canvas id="performanceChart"></canvas></div>
+                <h2 class="text-xs font-black text-gray-400 uppercase mb-4 tracking-widest border-t pt-4">Matérias</h2>
+                <nav class="space-y-1">
+                    <div onclick="trocarMateria('portugues', this)" class="menu-item active"><i class="fa-solid fa-book mr-2"></i>Português</div>
+                    <div onclick="trocarMateria('rondonia', this)" class="menu-item"><i class="fa-solid fa-map-location-dot mr-2"></i>Hist. e Geo. RO</div>
+                    <div onclick="trocarMateria('especificos', this)" class="menu-item"><i class="fa-solid fa-graduation-cap mr-2"></i>Conhec. Específicos</div>
+                    <div onclick="trocarMateria('informatica', this)" class="menu-item"><i class="fa-solid fa-desktop mr-2"></i>Informática</div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="flex-grow">
+            <div class="flex justify-between items-center mb-3 bg-white p-3 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex gap-6">
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Acertos</p><p id="dashAcertos" class="text-base font-bold text-emerald-600">0</p></div>
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Erros</p><p id="dashErros" class="text-base font-bold text-red-600">0</p></div>
+                    <div id="nomeMateriaAtual" class="ml-4 text-xs font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full uppercase italic">Português</div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="togglePanel('panel-video')" class="text-gray-400 hover:text-red-500 p-2"><i class="fa-solid fa-video"></i></button>
+                    <button onclick="togglePanel('panel-notes')" class="text-gray-400 hover:text-yellow-600 p-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button onclick="resetar()" class="text-gray-300 hover:text-red-500 p-2"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-2 border-b border-gray-100 bg-gray-50 flex gap-2">
+                    <span id="m-ano" class="tag-info">2024</span>
+                    <span id="m-banca" class="tag-info text-blue-600">IBADE</span>
+                </div>
+
+                <div class="px-6 py-4">
+                    <div id="enunciado" class="text-gray-800 text-[15px] leading-snug mb-4 font-medium"></div>
+                    <div id="alternativas" class="space-y-0"></div>
+
+                    <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+                        <button onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
+                        <div class="flex gap-4">
+                            <button onclick="anterior()" class="text-gray-400 hover:text-blue-600 text-xs font-bold"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="posicao" class="text-[10px] text-gray-400 font-bold self-center">1/20</span>
+                            <button onclick="proxima()" class="text-gray-400 hover:text-blue-600 text-xs font-bold"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="feedback" class="hidden mt-4 p-3 rounded-lg border-l-4"></div>
+                    
+                    <div id="panel-ai" class="extra-panel bg-sky-50 p-4 rounded-xl border border-sky-100 mt-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-sky-600"></i>
+                            <h4 class="text-xs font-bold text-sky-800 uppercase">Gemini AI Assistente</h4>
+                        </div>
+                        <div class="chat-gemini-container">
+                            <div id="chatMessages" class="chat-messages">
+                                <div class="msg-ai">Olá! Eu sou o Gemini. Responda à questão para eu analisar, ou me faça uma pergunta sobre o tema!</div>
+                            </div>
+                            <div class="flex border-t border-sky-100 p-2 bg-white">
+                                <input type="text" id="geminiQuery" onkeypress="if(event.key === 'Enter') perguntarGemini()" placeholder="Pergunte ao Gemini..." class="flex-grow text-xs outline-none px-2">
+                                <button onclick="perguntarGemini()" class="text-sky-600 hover:scale-110 transition"><i class="fa-solid fa-paper-plane p-2"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panel-notes" class="extra-panel pt-4">
+                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase"><i class="fa-solid fa-note-sticky mr-1"></i> Minhas Anotações</h4>
+                        <textarea id="user-notes" class="w-full h-24 p-3 text-xs border border-yellow-200 bg-yellow-50 rounded-lg outline-none" placeholder="Anotações..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bibliotecas = {
+            'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+            'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+            'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+            'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+        };
+
+        let materiaAtual = 'portugues';
+        let index = 0;
+        let acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+        let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+        let myChart;
+
+        function trocarMateria(materia, element) {
+            materiaAtual = materia; index = 0;
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+            render();
+        }
+
+        function render() {
+            const banco = bibliotecas[materiaAtual];
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('panel-ai').style.display = 'none';
+            document.getElementById('panel-notes').style.display = 'none';
+            document.getElementById('chatMessages').innerHTML = '<div class="msg-ai">Questão carregada. Como posso ajudar?</div>';
+            
+            if (!banco[index]) return;
+            const q = banco[index];
+            document.getElementById('enunciado').innerText = q.enunciado;
+            document.getElementById('posicao').innerText = `${index + 1} / ${banco.length}`;
+            document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => {
+                if(!q[l]) return '';
+                return `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>`;
+            }).join('');
+            document.getElementById('user-notes').value = localStorage.getItem(`note_${materiaAtual}_${index}`) || "";
+            updateDash();
+        }
+
+        function verificar() {
+            const banco = bibliotecas[materiaAtual];
+            const sel = document.querySelector('input[name="quiz"]:checked');
+            if(!sel) return;
+            const correta = banco[index].correta.toLowerCase().trim();
+            const f = document.getElementById('feedback');
+            f.classList.remove('hidden');
+            document.getElementById('panel-ai').style.display = 'block';
+
+            if(sel.value === correta) {
+                acertos++; f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+                f.innerHTML = `<strong>✓ Correto!</strong>`;
+            } else {
+                erros++; f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+                f.innerHTML = `<strong>✕ Errado. Gabarito: ${correta.toUpperCase()}</strong>`;
+            }
+            
+            localStorage.setItem('seduc_acertos', acertos);
+            localStorage.setItem('seduc_erros', erros);
+            
+            const chat = document.getElementById('chatMessages');
+            chat.innerHTML += `<div class="msg-ai"><b>Análise Gemini:</b> ${banco[index].comentario || "Questão técnica sobre o tema."}</div>`;
+            chat.scrollTop = chat.scrollHeight;
+
+            updateDash();
+        }
+
+        function perguntarGemini() {
+            const input = document.getElementById('geminiQuery');
+            const chat = document.getElementById('chatMessages');
+            const pergunta = input.value.trim();
+            if(!pergunta) return;
+
+            chat.innerHTML += `<div class="msg-user">${pergunta}</div>`;
+            input.value = "";
+            chat.innerHTML += `<div class="typing" id="typing">Analisando...</div>`;
+            chat.scrollTop = chat.scrollHeight;
+
+            setTimeout(() => {
+                document.getElementById('typing').remove();
+                let r = "Como assistente Gemini, sugiro focar na base teórica de " + materiaAtual + ". A alternativa correta é " + bibliotecas[materiaAtual][index].correta.toUpperCase();
+                chat.innerHTML += `<div class="msg-ai">${r}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 800);
+        }
+
+        function updateDash() {
+            document.getElementById('dashAcertos').innerText = acertos;
+            document.getElementById('dashErros').innerText = erros;
+            updateChart();
+        }
+
+        function updateChart() {
+            const total = acertos + erros;
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const data = {
+                labels: ['Acertos', 'Erros'],
+                datasets: [{
+                    data: total === 0 ? [1, 0] : [acertos, erros],
+                    backgroundColor: total === 0 ? ['#E5E7EB', '#E5E7EB'] : ['#10B981', '#EF4444'],
+                    borderWidth: 0
+                }]
+            };
+
+            if (myChart) {
+                myChart.data = data;
+                myChart.update();
+            } else {
+                myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: { cutout: '75%', plugins: { legend: { display: false } } }
+                });
+            }
+        }
+
+        function resetar() { if(confirm("Zerar desempenho?")) { localStorage.clear(); location.reload(); } }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+        document.getElementById('user-notes').addEventListener('input', (e) => { localStorage.setItem(`note_${materiaAtual}_${index}`, e.target.value); });
+        function proxima() { if(index < bibliotecas[materiaAtual].length - 1) { index++; render(); } }
+        function anterior() { if(index > 0) { index--; render(); } }
+        window.onload = () => render();
+    </script>
+</body>
+</html>

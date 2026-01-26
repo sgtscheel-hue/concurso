@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador SEDUC Pro - Gemini Real-Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .container-main { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .tag-info { background: #E5E7EB; color: #374151; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; text-transform: uppercase; }
+        .alternativa-card { border: 1px solid #e5e7eb; transition: 0.2s; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: white; margin-bottom: 4px; }
+        .alternativa-card:hover { border-color: #93c5fd; background: #f9fafb; }
+        input[type="radio"]:checked + .alternativa-card { border-color: #3b82f6; background: #eff6ff; }
+        .letra-circulo { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #6b7280; }
+        input[type="radio"]:checked + .alternativa-card .letra-circulo { background: #2563eb; border-color: #2563eb; color: white; }
+        .menu-item { cursor: pointer; transition: 0.2s; border-radius: 8px; padding: 10px; border-left: 4px solid transparent; font-size: 13px; }
+        .menu-item.active { background: #DBEAFE; border-left-color: #2563EB; color: #1E40AF; font-weight: 700; }
+        .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; pt-4; }
+        .chat-messages { height: 200px; overflow-y: auto; padding: 10px; font-size: 12px; background: #f8fafc; display: flex; flex-direction: column; gap: 8px; border-radius: 8px; }
+        .msg-ai { background: #e0f2fe; color: #0369a1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0ea5e9; }
+        .msg-user { background: #f1f5f9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; }
+    </style>
+
+    <script type="importmap">
+    { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
+    </script>
+
+    <script src="portugues.js"></script>
+    <script src="historia_geografia_rondonia.js"></script>
+    <script src="conhecimentos_especificos.js"></script>
+    <script src="informatica_basica.js"></script>
+</head>
+<body class="py-4 px-4">
+
+    <div class="container-main">
+        <div class="w-64 flex-shrink-0">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 sticky top-4">
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest text-center">Desempenho</h2>
+                <div class="h-40 mb-4"><canvas id="performanceChart"></canvas></div>
+                <nav class="space-y-1">
+                    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
+                    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
+                    <div onclick="trocarMateria('especificos', this)" class="menu-item">Específicos</div>
+                    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="flex-grow">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4">
+                    <div id="enunciado" class="text-gray-800 text-[15px] mb-4 font-medium">Carregando questão...</div>
+                    <div id="alternativas" class="space-y-0"></div>
+                    <div class="mt-4 pt-4 border-t flex justify-between">
+                        <button onclick="verificar()" class="bg-blue-600 text-white px-6 py-2 rounded-md font-bold text-xs">Responder</button>
+                        <div class="flex gap-2">
+                            <button onclick="anterior()" class="text-gray-400 px-2"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="posicao" class="text-xs font-bold self-center">1/20</span>
+                            <button onclick="proxima()" class="text-gray-400 px-2"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div id="feedback" class="hidden mt-4 p-3 rounded-lg border-l-4"></div>
+
+                    <div class="mt-6 bg-sky-50 p-4 rounded-xl border border-sky-100">
+                        <h4 class="text-xs font-bold text-sky-800 uppercase mb-2">Perguntar ao Gemini</h4>
+                        <div id="chatMessages" class="chat-messages mb-2">
+                            <div class="msg-ai">Olá! Como posso ajudar com esta questão?</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="geminiQuery" placeholder="Digite sua dúvida..." class="flex-grow text-xs p-2 rounded border outline-none">
+                            <button id="btnGemini" class="bg-sky-600 text-white px-4 py-2 rounded text-xs">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+        const genAI = new GoogleGenerativeAI("AIzaSyC0zDIgVTwFKzf01VvJz_pi-DziFNoIB6s");
+
+        document.getElementById('btnGemini').addEventListener('click', async () => {
+            const input = document.getElementById('geminiQuery');
+            const chat = document.getElementById('chatMessages');
+            const pergunta = input.value.trim();
+            if(!pergunta) return;
+
+            chat.innerHTML += `<div class="msg-user">${pergunta}</div>`;
+            input.value = "";
+            const tempMsg = document.createElement("div");
+            tempMsg.className = "msg-ai italic";
+            tempMsg.innerText = "Pensando...";
+            chat.appendChild(tempMsg);
+            chat.scrollTop = chat.scrollHeight;
+
+            try {
+                const q = bibliotecas[materiaAtual][index];
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const prompt = `Questão: ${q.enunciado}\nGabarito: ${q.correta}\nDúvida: ${pergunta}`;
+                const result = await model.generateContent(prompt);
+                tempMsg.innerText = result.response.text();
+                tempMsg.classList.remove("italic");
+            } catch (e) {
+                tempMsg.innerText = "Erro ao conectar. Verifique se a chave está ativa.";
+            }
+            chat.scrollTop = chat.scrollHeight;
+        });
+    </script>
+
+    <script>
+        // Lógica de funcionamento do simulador
+        const bibliotecas = {
+            'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+            'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+            'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+            'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+        };
+        let materiaAtual = 'portugues';
+        let index = 0;
+        let acertos = 0;
+        let erros = 0;
+
+        function render() {
+            const q = bibliotecas[materiaAtual][index];
+            if(!q) return;
+            document.getElementById('enunciado').innerText = q.enunciado;
+            document.getElementById('posicao').innerText = `${index + 1} / ${bibliotecas[materiaAtual].length}`;
+            document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+                q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo">${l.toUpperCase()}</span><span>${q[l]}</span></div></label>` : ''
+            ).join('');
+            document.getElementById('feedback').classList.add('hidden');
+        }
+
+        function verificar() {
+            const sel = document.querySelector('input[name="quiz"]:checked');
+            if(!sel) return;
+            const correta = bibliotecas[materiaAtual][index].correta.toLowerCase();
+            const f = document.getElementById('feedback');
+            f.classList.remove('hidden');
+            if(sel.value === correta) {
+                f.className = "mt-4 p-3 bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800 text-xs";
+                f.innerHTML = "✓ Correto!";
+            } else {
+                f.className = "mt-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-800 text-xs";
+                f.innerHTML = "✕ Errado. Gabarito: " + correta.toUpperCase();
+            }
+        }
+
+        function proxima() { if(index < bibliotecas[materiaAtual].length - 1) { index++; render(); } }
+        function anterior() { if(index > 0) { index--; render(); } }
+        function trocarMateria(m, el) { 
+            materiaAtual = m; index = 0; 
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            render(); 
+        }
+
+        window.onload = render;
+    </script>
+</body>
+</html>

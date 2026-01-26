@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador SEDUC Pro - v23 Atualizado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .container-main { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .alternativa-card { border: 1px solid #e5e7eb; transition: 0.2s; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: white; margin-bottom: 4px; }
+        input[type="radio"]:checked + .alternativa-card { border-color: #3b82f6; background: #eff6ff; }
+        .letra-circulo { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #6b7280; }
+        input[type="radio"]:checked + .alternativa-card .letra-circulo { background: #2563eb; border-color: #2563eb; color: white; }
+        .menu-item { cursor: pointer; transition: 0.2s; border-radius: 8px; padding: 10px; border-left: 4px solid transparent; font-size: 13px; }
+        .menu-item.active { background: #DBEAFE; border-left-color: #2563EB; color: #1E40AF; font-weight: 700; }
+        .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
+        .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
+        /* Estilo das novas tags de informação */
+        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; }
+    </style>
+
+    <script type="importmap">
+    { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
+    </script>
+
+    <script src="portugues.js"></script>
+    <script src="historia_geografia_rondonia.js"></script>
+    <script src="conhecimentos_especificos.js"></script>
+    <script src="informatica_basica.js"></script>
+</head>
+<body class="py-4 px-4">
+
+    <div class="container-main">
+        <div class="w-64 flex-shrink-0">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 sticky top-4">
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2 text-center">Desempenho</h2>
+                <div class="h-32 mb-4"><canvas id="performanceChart"></canvas></div>
+                
+                <h2 class="text-xs font-black text-gray-400 uppercase mb-2 border-t pt-4">Matérias</h2>
+                <nav class="space-y-1 mb-4">
+                    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
+                    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
+                    <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
+                    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
+                </nav>
+
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2">Filtrar Assunto</h2>
+                <select id="filtroAssunto" onchange="aplicarFiltro()" class="w-full text-[11px] p-2 rounded border border-gray-200 bg-gray-50 outline-none">
+                    <option value="todos">Todos os assuntos</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex-grow">
+            <div class="flex justify-between items-center mb-3 bg-white p-3 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex gap-6">
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Acertos</p><p id="dashAcertos" class="text-base font-bold text-emerald-600">0</p></div>
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Erros</p><p id="dashErros" class="text-base font-bold text-red-600">0</p></div>
+                    <div id="nomeMateriaAtual" class="ml-4 text-xs font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full uppercase italic">Português</div>
+                </div>
+                <button onclick="resetar()" class="text-gray-300 hover:text-red-500 p-2"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4">
+                    <div id="info-questao" class="flex flex-wrap gap-2 mb-4"></div>
+
+                    <div id="enunciado" class="text-gray-800 text-[15px] mb-4 font-medium leading-snug"></div>
+                    <div id="alternativas" class="space-y-0"></div>
+
+                    <div class="mt-4 flex items-center justify-between border-t pt-4">
+                        <div class="flex gap-2">
+                            <button onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
+                            <button onclick="togglePanel('panel-comment')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-gray-200">Comentário</button>
+                            <button onclick="togglePanel('panel-video')" class="bg-red-50 text-red-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-red-100">Vídeo Aula</button>
+                        </div>
+                        <div class="flex gap-4 items-center">
+                            <button onclick="anterior()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="posicao" class="text-[10px] text-gray-400 font-bold uppercase">1/20</span>
+                            <button onclick="proxima()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="feedback" class="hidden mt-4 p-3 rounded-lg border-l-4"></div>
+
+                    <div id="panel-comment" class="extra-panel">
+                        <h4 class="text-xs font-bold text-gray-700 mb-2">Comentário e Resumo:</h4>
+                        <div id="ai-resumo" class="text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-lg border"></div>
+                    </div>
+
+                    <div id="panel-video" class="extra-panel">
+                          <div id="video-container" class="aspect-video bg-black rounded-lg overflow-hidden flex items-center justify-center text-white text-xs">
+                          <p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo aula disponível para esta questão</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 bg-sky-50 p-4 rounded-xl border border-sky-100">
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase mb-2"><i class="fa-solid fa-robot mr-1"></i> Gemini AI Professor</h4>
+                        <div id="chatWindow" class="flex flex-col gap-2 max-h-48 overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg">
+                            <div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="geminiInput" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
+                            <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+
+    // Sua chave de API atualizada
+    const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE";
+    const genAI = new GoogleGenerativeAI(API_KEY);
+
+    window.perguntarGemini = async function() {
+        const input = document.getElementById('geminiInput');
+        const chat = document.getElementById('chatWindow');
+        const pergunta = input.value.trim();
+        if(!pergunta) return;
+
+        chat.innerHTML += `<div class="bubble-user">${pergunta}</div>`;
+        input.value = "";
+        const loading = document.createElement("div");
+        loading.className = "bubble-ai italic text-gray-400";
+        loading.innerText = "O Professor está analisando...";
+        chat.appendChild(loading);
+        chat.scrollTop = chat.scrollHeight;
+
+        try {
+            // ACESSO ÀS VARIÁVEIS GLOBAIS (window.)
+            const lista = window.questoesFiltradas;
+            const idx = window.index;
+
+            if (!lista || lista[idx] === undefined) {
+                throw new Error("Selecione uma matéria e uma questão primeiro.");
+            }
+
+            const q = lista[idx];
+            
+            // SOLUÇÃO DO ERRO 404: Forçamos a apiVersion para "v1"
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-1.5-flash",
+                apiVersion: "v1" 
+            }, { apiVersion: 'v1' }); // Reforço da versão estável
+
+            const context = `Você é um Professor de Concursos. 
+            Materia: ${window.materiaAtual}. Questão: ${q.enunciado}. 
+            Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
+
+            const result = await model.generateContent(context);
+            const response = await result.response;
+            loading.innerText = response.text();
+            loading.classList.remove("italic", "text-gray-400");
+        } catch (e) {
+            console.error("ERRO TÉCNICO:", e);
+            loading.innerText = "Erro ao conectar. Verifique se a API está ativa no console do Google.";
+            loading.classList.add("text-red-500");
+        }
+        chat.scrollTop = chat.scrollHeight;
+    }
+</script>
+
+    <script>
+        // Tornamos as variáveis de controle GLOBAIS usando window.
+        window.bibliotecas = {
+            'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+            'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+            'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+            'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+        };
+
+        // Adicione 'window.' antes destas 3 variáveis:
+	window.materiaAtual = 'portugues';
+	window.index = 0;
+	window.questoesFiltradas = [];
+        
+        // As demais variáveis permanecem locais
+        let acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+        let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+        let myChart;
+
+        // IMPORTANTE: Atualize as funções para usar window.materiaAtual e window.index
+        function popularFiltros() {
+            const select = document.getElementById('filtroAssunto');
+            const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
+            select.innerHTML = '<option value="todos">Todos os assuntos</option>';
+            assuntos.forEach(a => select.innerHTML += `<option value="${a}">${a}</option>`);
+        }
+
+        function aplicarFiltro() {
+            const filtro = document.getElementById('filtroAssunto').value;
+            window.questoesFiltradas = filtro === 'todos' ? window.bibliotecas[window.materiaAtual] : window.bibliotecas[window.materiaAtual].filter(q => q.assunto === filtro);
+            window.index = 0;
+            render();
+        }
+
+        function trocarMateria(materia, element) {
+            window.materiaAtual = materia;
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+            popularFiltros();
+            aplicarFiltro();
+        }
+
+        function aplicarFiltro() {
+            const filtro = document.getElementById('filtroAssunto').value;
+            questoesFiltradas = filtro === 'todos' ? bibliotecas[materiaAtual] : bibliotecas[materiaAtual].filter(q => q.assunto === filtro);
+            index = 0;
+            render();
+        }
+
+        function trocarMateria(materia, element) {
+            materiaAtual = materia;
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+            popularFiltros();
+            aplicarFiltro();
+        }
+
+        function render() {
+    const q = questoesFiltradas[index];
+    document.getElementById('feedback').classList.add('hidden');
+    document.querySelectorAll('.extra-panel').forEach(p => p.style.display = 'none');
+    
+    if (!q) {
+        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada.";
+        document.getElementById('alternativas').innerHTML = "";
+        document.getElementById('info-questao').innerHTML = "";
+        return;
+    }
+
+    // Atualização das tags de informação
+    const infoContainer = document.getElementById('info-questao');
+    infoContainer.innerHTML = `
+        <span class="tag-quest">${q.materia || materiaAtual}</span>
+        <span class="tag-quest">${q.ano || 'Ano N/A'}</span>
+        <span class="tag-quest">${q.banca || 'IBADE'}</span>
+        <span class="tag-quest">${q.orgao || 'Orgão N/A'}</span>
+        <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
+    `;
+
+    document.getElementById('enunciado').innerHTML = q.enunciado;
+    document.getElementById('posicao').innerText = `${index + 1} / ${questoesFiltradas.length}`;
+    
+    // Comentário e Resumo
+    const textoComentario = `
+        <p class="mb-2"><strong>Comentário:</strong> ${q.comentario || 'Sem comentário.'}</p>
+        ${q.resumo ? `<div class="mt-2 pt-2 border-t border-gray-200"><strong>Resumo do Tema:</strong> ${q.resumo}</div>` : ''}
+    `;
+    document.getElementById('ai-resumo').innerHTML = textoComentario;
+
+    // --- NOVA LÓGICA DE VÍDEO DINÂMICO ---
+    const videoContainer = document.getElementById('video-container');
+    if (q.videoUrl && q.videoUrl.trim() !== "") {
+        videoContainer.innerHTML = `
+            <iframe 
+                width="100%" 
+                height="100%" 
+                src="${q.videoUrl}" 
+                title="Vídeo Aula" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>`;
+    } else {
+        videoContainer.innerHTML = `
+            <p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo aula não disponível para esta questão.</p>`;
+    }
+    // -------------------------------------
+    
+    document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+        q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
+    ).join('');
+    updateDash();
+}
+
+        function verificar() {
+            const sel = document.querySelector('input[name="quiz"]:checked');
+            if(!sel) return;
+            const correta = questoesFiltradas[index].correta.toLowerCase();
+            const f = document.getElementById('feedback');
+            f.classList.remove('hidden');
+            if(sel.value === correta) {
+                acertos++; f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+                f.innerHTML = "<strong>✓ Correto!</strong>";
+            } else {
+                erros++; f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+                f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
+            }
+            localStorage.setItem('seduc_acertos', acertos);
+            localStorage.setItem('seduc_erros', erros);
+            updateDash();
+        }
+
+        function updateDash() {
+            document.getElementById('dashAcertos').innerText = acertos;
+            document.getElementById('dashErros').innerText = erros;
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const total = acertos + erros;
+            const data = { datasets: [{ data: total === 0 ? [1, 0] : [acertos, erros], backgroundColor: total === 0 ? ['#E5E7EB', '#E5E7EB'] : ['#10B981', '#EF4444'], borderWidth: 0 }] };
+            if (myChart) { myChart.data = data; myChart.update(); } 
+            else { myChart = new Chart(ctx, { type: 'doughnut', data: data, options: { cutout: '75%', plugins: { legend: { display: false } } } }); }
+        }
+
+        function togglePanel(id) {
+            const p = document.getElementById(id);
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function resetar() { if(confirm("Zerar desempenho?")) { localStorage.clear(); location.reload(); } }
+        function proxima() { if(index < questoesFiltradas.length - 1) { index++; render(); } }
+        function anterior() { if(index > 0) { index--; render(); } }
+        
+        window.onload = () => { popularFiltros(); aplicarFiltro(); };
+    </script>
+</body>
+</html>
