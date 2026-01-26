@@ -162,16 +162,22 @@
 
     <script>
         const aulasPorAssunto = {
-            'portugues': {
-                'Classes de Palavras': 'https://www.youtube.com/embed/ltrzPijgKi4?si=eYAIPdDj4ryAfIBm',
-                'Classes de Palavras': 'https://www.youtube.com/embed/tKJkDQSMdh0?si=KCbnoh96kIYpY0OE',
-                
-                'Acentuação Gráfica': 'https://www.youtube.com/embed/nWQVPQmxWTk?si=yGR4H6DJHDrLRWXn'
-            },
-            'rondonia': {
-                'História de Rondônia': 'https://www.youtube.com/embed/URL_RO'
-            }
-        };
+    'portugues': {
+        'Acentuação Gráfica': [
+            { titulo: 'Aula 01: Regras Gerais', url: 'https://www.youtube.com/embed/URL_1' },
+            { titulo: 'Aula 02: Exercícios Comentados', url: 'https://www.youtube.com/embed/URL_2' }
+        ],
+        'Classes de Palavras': [
+            { titulo: 'Substantivos e Adjetivos', url: 'https://www.youtube.com/embed/URL_3' }
+        ]
+    },
+    'rondonia': {
+        'História de Rondônia': [
+            { titulo: 'Ciclo da Borracha', url: 'https://www.youtube.com/embed/URL_4' },
+            { titulo: 'Criação do Estado', url: 'https://www.youtube.com/embed/URL_5' }
+        ]
+    }
+};
 
         window.bibliotecas = {
             'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
@@ -213,15 +219,43 @@
         }
 
         function abrirAulaAssunto() {
-            const filtro = document.getElementById('filtroAssunto').value;
-            const urlAula = aulasPorAssunto[window.materiaAtual]?.[filtro];
-            if (urlAula) {
-                const panel = document.getElementById('panel-video');
-                panel.style.display = 'block';
-                document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${urlAula}" frameborder="0" allowfullscreen></iframe>`;
-                panel.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+    const filtro = document.getElementById('filtroAssunto').value;
+    const aulas = aulasPorAssunto[window.materiaAtual]?.[filtro];
+    
+    if (aulas && aulas.length > 0) {
+        const modal = document.getElementById('modalAulas');
+        const lista = document.getElementById('listaAulas');
+        
+        // Limpa a lista anterior e adiciona as novas opções
+        lista.innerHTML = '';
+        aulas.forEach((aula, index) => {
+            lista.innerHTML += `
+                <button onclick="carregarVideoNoPlayer('${aula.url}')" class="w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-amber-50 border border-gray-200 rounded-lg transition group text-left">
+                    <div class="w-8 h-8 bg-amber-100 group-hover:bg-amber-500 group-hover:text-white text-amber-600 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                        ${index + 1}
+                    </div>
+                    <span class="text-xs font-semibold text-gray-700 group-hover:text-amber-700">${aula.titulo}</span>
+                </button>
+            `;
+        });
+        
+        modal.classList.remove('hidden');
+    }
+}
+
+function fecharModalAulas() {
+    document.getElementById('modalAulas').classList.add('hidden');
+}
+
+function carregarVideoNoPlayer(url) {
+    const panel = document.getElementById('panel-video');
+    panel.style.display = 'block'; 
+    document.getElementById('video-container').innerHTML = `
+        <iframe width="100%" height="100%" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+    
+    fecharModalAulas(); // Fecha o modal após escolher
+    panel.scrollIntoView({ behavior: 'smooth' }); // Rola até o vídeo
+}
 
         function trocarMateria(materia, element) {
             window.materiaAtual = materia;
@@ -304,8 +338,19 @@
         
         window.onload = () => { popularFiltros(); aplicarFiltro(); };
     </script>
+    <div id="modalAulas" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="bg-amber-500 p-4 flex justify-between items-center text-white">
+            <h3 class="font-bold text-sm uppercase"><i class="fa-solid fa-layer-group mr-2"></i> Escolha a Vídeo Aula</h3>
+            <button onclick="fecharModalAulas()" class="hover:text-amber-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="listaAulas" class="p-4 space-y-2 max-h-80 overflow-y-auto">
+            </div>
+    </div>
+</div>
 </body>
 </html>
+
 
 
 
