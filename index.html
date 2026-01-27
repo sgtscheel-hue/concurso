@@ -268,7 +268,7 @@
             render();
         }
 
-        // 4. Funções de Renderização (Versão Colorida Profissional)
+        // 4. Funções de Renderização (ORDEM PERSONALIZADA)
 function render() {
     const q = window.questoesFiltradas[window.index];
     const feedback = document.getElementById('feedback');
@@ -290,19 +290,19 @@ function render() {
     btnResp.disabled = false;
     btnResp.classList.remove('opacity-50');
 
-    // MONTAGEM DO CABEÇALHO COLORIDO
+    // CABEÇALHO NA ORDEM EXATA PEDIDA
     document.getElementById('info-questao').innerHTML = `
-        <span class="tag-quest bg-blue-600 text-white border-none">${q.materia || 'Matéria'}</span>
-        <span class="tag-quest bg-emerald-100 text-emerald-700 border-emerald-200 font-bold">${q.orgao || 'Órgão'}</span>
-        <span class="tag-quest bg-amber-50 text-amber-700 border-amber-200">${q.banca || 'Banca'}</span>
-        <span class="tag-quest bg-gray-100 text-gray-600">${q.ano || 'Ano'}</span>
-        <span class="tag-quest text-blue-600 font-black border-blue-100 uppercase text-[9px]">${q.assunto || 'Assunto'}</span>
-        <span class="tag-quest italic text-gray-400 border-none">Prova: ${q.prova || 'Geral'}</span>
+        <span class="tag-quest bg-blue-600 text-white border-none">${q.materia || 'Português'}</span>
+        <span class="tag-quest bg-blue-50 text-blue-700 border-blue-200 font-bold">${q.assunto || 'Assunto'}</span>
+        <span class="tag-quest bg-amber-50 text-amber-700 border-amber-200">${q.banca || 'IBADE'}</span>
+        <span class="tag-quest bg-emerald-50 text-emerald-700 border-emerald-200">${q.orgao || 'IBGE'}</span>
+        <span class="tag-quest bg-gray-100 text-gray-600 border-gray-300">Prova: ${q.prova || 'Geral'}</span>
+        <span class="tag-quest bg-white text-gray-400 border-gray-200">${q.ano || '2019'}</span>
     `;
     
     document.getElementById('enunciado').innerHTML = q.enunciado;
     document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
-    document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário cadastrado.';
+    document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário disponível.';
 
     document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
         q[l] ? `<label class="block">
@@ -314,7 +314,7 @@ function render() {
                 </label>` : ''
     ).join('');
     
-    // Controle do botão de aula por assunto
+    // Controle do botão de aula
     const filtro = document.getElementById('filtroAssunto').value;
     const temAula = aulasPorAssunto[window.materiaAtual]?.[filtro];
     document.getElementById('btnAulaAssunto').classList.toggle('hidden', !temAula);
@@ -408,6 +408,7 @@ function render() {
     </script>
 </body>
 </html>
+
 
 
 
