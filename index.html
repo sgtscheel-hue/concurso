@@ -250,36 +250,40 @@
     const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
     const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-    let baseQuestoes = [];
-
-    // CAMADA 1: Definir o universo (Todas as matérias ou uma específica)
+    // 1. DEFINIR O UNIVERSO INICIAL (MATÉRIA)
+    let resultado = [];
     if (window.materiaAtual === 'todas') {
-        baseQuestoes = Object.values(window.bibliotecas).flat();
+        // Junta todos os bancos de dados em um único array
+        resultado = Object.values(window.bibliotecas).flat();
     } else {
-        baseQuestoes = window.bibliotecas[window.materiaAtual];
-        // CAMADA 2: Filtrar por assunto (se não for "todos")
-        if (filtroAssunto !== 'todos') {
-            baseQuestoes = baseQuestoes.filter(q => q.assunto === filtroAssunto);
-        }
+        resultado = [...window.bibliotecas[window.materiaAtual]];
     }
 
-    // CAMADA 3: Aplicar filtros de desempenho (Cruzamento real)
+    // 2. FILTRAR POR ASSUNTO (APENAS SE NÃO FOR "TODAS AS MATÉRIAS")
+    if (window.materiaAtual !== 'todas' && filtroAssunto !== 'todos') {
+        resultado = resultado.filter(q => q.assunto === filtroAssunto);
+    }
+
+    // 3. FILTRAR POR DESEMPENHO (CHECKBOXES)
+    // Se "Apenas as que errei" estiver marcado
     if (apenasErradas) {
-        baseQuestoes = baseQuestoes.filter(q => respondidasMap[q.id] === 'erro');
+        resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
     }
     
+    // Se "Apenas não respondidas" estiver marcado
     if (apenasNaoRespondidas) {
-        baseQuestoes = baseQuestoes.filter(q => !respondidasMap[q.id]);
+        resultado = resultado.filter(q => !respondidasMap[q.id]);
     }
 
-    window.questoesFiltradas = baseQuestoes;
+    // 4. ATUALIZAR ESTADO GLOBAL
+    window.questoesFiltradas = resultado;
     window.index = 0;
 
-    // Lógica do botão de aula (Apenas se houver um assunto selecionado)
+    // 5. LÓGICA DO BOTÃO DE VÍDEO AULA
     const btnAula = document.getElementById('btnAulaAssunto');
     const temAula = aulasPorAssunto[window.materiaAtual] && aulasPorAssunto[window.materiaAtual][filtroAssunto];
     
-    if (temAula && window.materiaAtual !== 'todas') {
+    if (temAula && window.materiaAtual !== 'todas' && filtroAssunto !== 'todos') {
         btnAula.classList.remove('hidden');
     } else {
         btnAula.classList.add('hidden');
@@ -461,6 +465,7 @@
     </script>
 </body>
 </html>
+
 
 
 
