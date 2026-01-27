@@ -41,12 +41,13 @@
                 <div class="h-32 mb-4"><canvas id="performanceChart"></canvas></div>
                 
                 <h2 class="text-xs font-black text-gray-400 uppercase mb-2 border-t pt-4">Matérias</h2>
-                <nav class="space-y-1 mb-4">
-                    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
-                    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
-                    <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
-                    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
-                </nav>
+<nav class="space-y-1 mb-4">
+    <div onclick="trocarMateria('todas', this)" class="menu-item">Todas as Matérias</div>
+    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
+    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
+    <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
+    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
+</nav>
 
                 <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2">Filtrar Assunto</h2>
                 <select id="filtroAssunto" onchange="aplicarFiltro()" class="w-full text-[11px] p-2 rounded border border-gray-200 bg-gray-50 outline-none">
@@ -226,17 +227,20 @@
 
         function popularFiltros() {
     const select = document.getElementById('filtroAssunto');
+    
+    // Se for "todas", não mostramos assuntos específicos, pois os bancos são diferentes
+    if (window.materiaAtual === 'todas') {
+        select.innerHTML = `<option value="todos">Selecione uma matéria para filtrar por assunto</option>`;
+        select.disabled = true;
+        return;
+    }
+
+    select.disabled = false;
     const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
     
     select.innerHTML = `
-        <optgroup label="Geral">
-            <option value="todos">Todos os assuntos (Tudo)</option>
-            <option value="erradas">❌ Todas as que eu errei</option>
-            <option value="nao_respondidas">📝 Todas não respondidas</option>
-        </optgroup>
-        <optgroup label="Por Assunto">
-            ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
-        </optgroup>
+        <option value="todos">Todos os assuntos de ${document.getElementById('nomeMateriaAtual').innerText}</option>
+        ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
     `;
 }
 
@@ -244,41 +248,42 @@
     const filtroAssunto = document.getElementById('filtroAssunto').value;
     const apenasErradas = document.getElementById('checkApenasErradas').checked;
     const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
-    
-    const todasDaMateria = window.bibliotecas[window.materiaAtual];
     const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-    // 1. Filtragem por Assunto ou Categorias Gerais
-    let resultado = todasDaMateria;
-    if (filtroAssunto !== 'todos' && filtroAssunto !== 'erradas' && filtroAssunto !== 'nao_respondidas') {
-        resultado = todasDaMateria.filter(q => q.assunto === filtroAssunto);
-    } else if (filtroAssunto === 'erradas') {
-        resultado = todasDaMateria.filter(q => respondidasMap[q.id] === 'erro');
-    } else if (filtroAssunto === 'nao_respondidas') {
-        resultado = todasDaMateria.filter(q => !respondidasMap[q.id]);
+    let baseQuestoes = [];
+
+    // CAMADA 1: Definir o universo (Todas as matérias ou uma específica)
+    if (window.materiaAtual === 'todas') {
+        baseQuestoes = Object.values(window.bibliotecas).flat();
+    } else {
+        baseQuestoes = window.bibliotecas[window.materiaAtual];
+        // CAMADA 2: Filtrar por assunto (se não for "todos")
+        if (filtroAssunto !== 'todos') {
+            baseQuestoes = baseQuestoes.filter(q => q.assunto === filtroAssunto);
+        }
     }
 
-    // 2. Cruzamento com os Checkboxes
+    // CAMADA 3: Aplicar filtros de desempenho (Cruzamento real)
     if (apenasErradas) {
-        resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
+        baseQuestoes = baseQuestoes.filter(q => respondidasMap[q.id] === 'erro');
     }
+    
     if (apenasNaoRespondidas) {
-        resultado = resultado.filter(q => !respondidasMap[q.id]);
+        baseQuestoes = baseQuestoes.filter(q => !respondidasMap[q.id]);
     }
 
-    window.questoesFiltradas = resultado;
+    window.questoesFiltradas = baseQuestoes;
     window.index = 0;
 
-    // --- LÓGICA DO BOTÃO DE AULA (A que tinha sumido) ---
+    // Lógica do botão de aula (Apenas se houver um assunto selecionado)
     const btnAula = document.getElementById('btnAulaAssunto');
     const temAula = aulasPorAssunto[window.materiaAtual] && aulasPorAssunto[window.materiaAtual][filtroAssunto];
     
-    if (temAula) {
+    if (temAula && window.materiaAtual !== 'todas') {
         btnAula.classList.remove('hidden');
     } else {
         btnAula.classList.add('hidden');
     }
-    // ---------------------------------------------------
 
     render();
 }
@@ -315,54 +320,51 @@
         }
 
         function trocarMateria(materia, element) {
-            window.materiaAtual = materia;
-            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
-            popularFiltros();
-            aplicarFiltro();
-        }      
+    window.materiaAtual = materia;
+    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+    element.classList.add('active');
+    document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+    
+    popularFiltros();
+    aplicarFiltro();
+}      
         // VARIÁVEL NOVA PARA CONTROLE
         let respondidaNaSessao = false;
 
         function render() {
     const q = window.questoesFiltradas[window.index];
     document.getElementById('feedback').classList.add('hidden');
-    document.querySelectorAll('.extra-panel').forEach(p => p.style.display = 'none');
     
+    // Escondemos os painéis apenas se NÃO houver um vídeo de aula tocando
+    const panelVideo = document.getElementById('panel-video');
+    document.getElementById('panel-comment').style.display = 'none';
+
     if (!q) {
-        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada.";
+        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
         document.getElementById('alternativas').innerHTML = "";
+        document.getElementById('posicao').innerText = "0 / 0";
         return;
     }
 
-    // Resetamos apenas o controle da sessão atual para permitir que ele responda de novo
     respondidaNaSessao = false;
-
-    // O botão "Responder" sempre começa ativo
     const btnResponder = document.querySelector('button[onclick="verificar()"]');
     btnResponder.disabled = false;
     btnResponder.classList.remove('opacity-50', 'cursor-not-allowed');
 
     document.getElementById('info-questao').innerHTML = `
-        <span class="tag-quest">${q.materia || materiaAtual}</span>
-        <span class="tag-quest">${q.ano || 'Ano N/A'}</span>
-        <span class="tag-quest">${q.banca || 'IBADE'}</span>
-        <span class="tag-quest">${q.orgao || 'Orgão N/A'}</span>
+        <span class="tag-quest">${q.materia || window.materiaAtual}</span>
         <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
     `;
+    
     document.getElementById('enunciado').innerHTML = q.enunciado;
     document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
     document.getElementById('ai-resumo').innerHTML = `<p>${q.comentario || 'Sem comentário.'}</p>`;
 
-    const videoContainer = document.getElementById('video-container');
+    // Se a questão tem vídeo próprio, carrega. Se não, limpa o player (a menos que o aluno tenha aberto aula por assunto)
     if (q.videoUrl) {
-        videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
-    } else {
-        videoContainer.innerHTML = `<p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Vídeo por questão indisponível.</p>`;
+        document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
     }
-    
-    // Alternativas sempre habilitadas
+
     document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
         q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
     ).join('');
@@ -445,6 +447,7 @@
     </script>
 </body>
 </html>
+
 
 
 
