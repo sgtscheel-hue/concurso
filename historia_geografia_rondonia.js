@@ -1,6 +1,8 @@
 const banco_ro = [
     {
+        id: "ro01",
         ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A construção da Estrada de Ferro Madeira-Mamoré (EFMM) foi motivada principalmente por qual tratado internacional?",
         a: "Tratado de Tordesilhas",
         b: "Tratado de Madri",
@@ -10,7 +12,9 @@ const banco_ro = [
         correta: "c", comentario: "O Tratado de Petrópolis (1903) formalizou a anexação do Acre ao Brasil, com o compromisso de construir a ferrovia."
     },
     {
+        id: "ro02",
         ano: "2024", banca: "IBADE", orgao: "Governo-RO", prova: "Oficial", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Qual é o principal rio que banha a capital, Porto Velho, e abriga importantes usinas hidrelétricas?",
         a: "Rio Guaporé",
         b: "Rio Mamoré",
@@ -20,7 +24,9 @@ const banco_ro = [
         correta: "d", comentario: "O Rio Madeira é o principal eixo fluvial e abriga as usinas de Jirau e Santo Antônio."
     },
     {
+        id: "ro03",
         ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Técnico", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "O Território Federal do Guaporé foi criado em 1943, durante o governo de Getúlio Vargas. Em 1956, seu nome foi alterado em homenagem a:",
         a: "Marechal Rondon",
         b: "Aluízio Ferreira",
@@ -30,7 +36,9 @@ const banco_ro = [
         correta: "a", comentario: "Em 1956, o território passou a se chamar Rondônia em homenagem a Cândido Mariano da Silva Rondon."
     },
     {
+        id: "ro04",
         ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Educação", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Rondônia faz fronteira internacional com qual país?",
         a: "Peru",
         b: "Bolívia",
@@ -40,7 +48,9 @@ const banco_ro = [
         correta: "b", comentario: "O estado de Rondônia possui uma extensa fronteira a oeste e sudoeste com a Bolívia."
     },
     {
+        id: "ro05",
         ano: "2023", banca: "IBADE", orgao: "Câmara", prova: "Geral", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Quem foi o primeiro governador do Estado de Rondônia, após sua elevação de território a estado em 1981?",
         a: "Aluízio Ferreira",
         b: "Jorge Teixeira de Oliveira",
@@ -50,7 +60,9 @@ const banco_ro = [
         correta: "b", comentario: "Coronel Jorge Teixeira foi o último governador do território e o primeiro do estado."
     },
     {
+        id: "ro06",
         ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A economia de Rondônia, a partir da década de 1970, foi impulsionada por qual fenômeno social e econômico?",
         a: "Extração de Petróleo",
         b: "Ciclo da Borracha",
@@ -60,7 +72,9 @@ const banco_ro = [
         correta: "c", comentario: "Os projetos do INCRA atraíram milhares de migrantes das regiões Sul e Sudeste para o estado."
     },
     {
+        id: "ro07",
         ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Técnico", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Qual rodovia federal é a principal espinha dorsal de Rondônia, ligando Porto Velho a Cuiabá?",
         a: "BR-364",
         b: "BR-230",
@@ -70,7 +84,9 @@ const banco_ro = [
         correta: "a", comentario: "A BR-364 é a principal via de escoamento da produção e integração do estado."
     },
     {
+        id: "ro08",
         ano: "2023", banca: "IBADE", orgao: "SEDUC", prova: "Administrativo", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Sobre o Forte Príncipe da Beira, assinale a alternativa correta:",
         a: "Foi construído para proteger a fronteira contra incursões francesas.",
         b: "Localiza-se às margens do Rio Guaporé.",
@@ -80,7 +96,9 @@ const banco_ro = [
         correta: "b", comentario: "O Forte Príncipe da Beira é uma das maiores fortificações portuguesas fora da Europa, no Rio Guaporé."
     },
     {
+        id: "ro09",
         ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Oficial", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "O bioma predominante no estado de Rondônia é:",
         a: "Cerrado",
         b: "Pantanal",
@@ -90,7 +108,9 @@ const banco_ro = [
         correta: "d", comentario: "Rondônia integra a Amazônia Legal e possui a Floresta Amazônica como bioma nativo principal."
     },
     {
+        id: "ro10",
         ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Oficial", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "O ciclo econômico que trouxe os 'Soldados da Borracha' para a região ocorreu durante:",
         a: "A Primeira Guerra Mundial",
         b: "A Segunda Guerra Mundial",
@@ -100,7 +120,9 @@ const banco_ro = [
         correta: "b", comentario: "O segundo ciclo da borracha (1942-1945) ocorreu para suprir os aliados na 2ª Guerra Mundial."
     },
     {
+        id: "ro11",
         ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Nível Médio", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Qual cidade rondoniense é conhecida como a 'Capital do Café' no estado?",
         a: "Porto Velho",
         b: "Cacoal",
@@ -110,7 +132,9 @@ const banco_ro = [
         correta: "b", comentario: "Cacoal destaca-se historicamente e economicamente pela produção de café."
     },
     {
+        id: "ro12",
         ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A fundação de Porto Velho está diretamente ligada a qual obra de infraestrutura?",
         a: "Construção da Usina de Samuel",
         b: "Construção da Estrada de Ferro Madeira-Mamoré",
@@ -120,7 +144,9 @@ const banco_ro = [
         correta: "b", comentario: "Porto Velho surgiu como um ponto de apoio e logística para a construção da ferrovia EFMM."
     },
     {
+        id: "ro13",
         ano: "2023", banca: "IBADE", orgao: "Prefeitura", prova: "Saúde", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Rondônia apresenta um clima do tipo:",
         a: "Semiárido",
         b: "Temperado",
@@ -130,7 +156,9 @@ const banco_ro = [
         correta: "c", comentario: "Como estado amazônico, predomina o clima equatorial com altas temperaturas e chuvas abundantes."
     },
     {
+        id: "ro14",
         ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Técnico", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "O Marechal Rondon ficou famoso na região por qual atividade principal?",
         a: "Garimpo de ouro",
         b: "Comando de tropas na Revolução Acreana",
@@ -140,7 +168,9 @@ const banco_ro = [
         correta: "c", comentario: "A Comissão Rondon instalou linhas telegráficas que integraram o Mato Grosso ao Amazonas."
     },
     {
+        id: "ro15",
         ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Superior", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Qual desses municípios localiza-se na região do 'Cone Sul' de Rondônia?",
         a: "Vilhena",
         b: "Ji-Paraná",
@@ -150,7 +180,9 @@ const banco_ro = [
         correta: "a", comentario: "Vilhena é a principal cidade da região conhecida como Cone Sul rondoniense."
     },
     {
+        id: "ro16",
         ano: "2023", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A mineração em Rondônia teve um marco histórico com a descoberta de grandes jazidas de qual minério na região de Ariquemes?",
         a: "Ferro",
         b: "Cobre",
@@ -160,7 +192,9 @@ const banco_ro = [
         correta: "c", comentario: "A cassiterita (minério de estanho) foi um grande motor econômico do estado nas décadas de 60 e 70."
     },
     {
+        id: "ro17",
         ano: "2024", banca: "IBADE", orgao: "Estado", prova: "Oficial", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A ferrovia Madeira-Mamoré ficou conhecida mundialmente como a 'Ferrovia do Diabo' devido a:",
         a: "Ataques de piratas fluviais",
         b: "Grande número de mortes de trabalhadores por doenças tropicais",
@@ -170,7 +204,9 @@ const banco_ro = [
         correta: "b", comentario: "Milhares de trabalhadores morreram de malária, febre amarela e outras doenças durante a obra."
     },
     {
+        id: "ro18",
         ano: "2023", banca: "IBADE", orgao: "Governo", prova: "Técnico", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A Usina Hidrelétrica de Samuel localiza-se no rio:",
         a: "Madeira",
         b: "Jamari",
@@ -180,7 +216,9 @@ const banco_ro = [
         correta: "b", comentario: "Diferente de Jirau e Santo Antônio, a Usina de Samuel fica no Rio Jamari."
     },
     {
+        id: "ro19",
         ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Administrativo", materia: "História de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "A cidade de Guajará-Mirim faz fronteira com qual cidade boliviana?",
         a: "Cobija",
         b: "Guayaramerín",
@@ -190,7 +228,9 @@ const banco_ro = [
         correta: "b", comentario: "Guajará-Mirim (Brasil) e Guayaramerín (Bolívia) são cidades gêmeas separadas pelo rio Mamoré."
     },
     {
+        id: "ro20",
         ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Geral", materia: "Geografia de RO",
+        assunto: "Hist e Geo RO",
         enunciado: "Em termos de divisão regional, Rondônia pertence a qual região brasileira?",
         a: "Centro-Oeste",
         b: "Nordeste",
