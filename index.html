@@ -243,38 +243,7 @@
         ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
     `;
 }
-
-    function atualizarListaAssuntos(materiaSelecionada) {
-    const selectAssunto = document.getElementById('filtro-assunto'); // Verifique se o ID é este mesmo
-    if (!selectAssunto) return;
-
-    // 1. Limpa as opções atuais, mantendo apenas a primeira ("Todos")
-    selectAssunto.innerHTML = '<option value="todos">Todos os Assuntos</option>';
-
-    if (materiaSelecionada === 'todas') return;
-
-    // 2. Filtra todos os assuntos ÚNICOS daquela matéria específica
-    // Juntamos todos os seus bancos aqui para a busca
-    const todosOsDados = [...banco_ro, ...banco_esp, ...banco_inf, ...banco_port]; 
-    
-    const assuntosMap = todosOsDados
-        .filter(q => q.materia === materiaSelecionada || q.assunto === materiaSelecionada)
-        .map(q => q.assunto);
-
-    // Remove duplicatas
-    const assuntosUnicos = [...new Set(assuntosMap)];
-
-    // 3. Adiciona os novos assuntos ao select
-    assuntosUnicos.forEach(assunto => {
-        if (assunto) {
-            const opt = document.createElement('option');
-            opt.value = assunto;
-            opt.textContent = assunto;
-            selectAssunto.appendChild(opt);
-        }
-    });
-}
-        
+           
     function aplicarFiltro() {
     const filtroAssunto = document.getElementById('filtroAssunto').value;
     const apenasErradas = document.getElementById('checkApenasErradas').checked;
@@ -550,6 +519,7 @@
     </script>
 </body>
 </html>
+
 
 
 
