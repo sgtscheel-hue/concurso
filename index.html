@@ -22,6 +22,25 @@
         .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
         .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; }
         .header-topo {background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+        /* Tela de Bloqueio */
+#login-screen {
+    position: fixed;
+    inset: 0;
+    background: #1e3a8a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
     </style>
 
     <script type="importmap">
@@ -34,6 +53,21 @@
     <script src="informatica_basica.js"></script>
 </head>
 <body class="bg-gray-100">
+    <div id="login-screen">
+    <div class="login-box">
+        <i class="fa-solid fa-lock text-blue-600 text-4xl mb-4"></i>
+        <h2 class="text-xl font-bold text-gray-800 mb-1">Acesso Restrito</h2>
+        <p class="text-gray-500 text-xs mb-6">Simulador SEDUC/RO - v25</p>
+        
+        <input type="text" id="user" placeholder="Usuário" class="w-full p-3 mb-3 border rounded-lg outline-none focus:ring-2 ring-blue-500 text-sm">
+        <input type="password" id="pass" placeholder="Senha" class="w-full p-3 mb-6 border rounded-lg outline-none focus:ring-2 ring-blue-500 text-sm">
+        
+        <button onclick="autenticar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition text-sm">
+            Entrar no Portal
+        </button>
+        <p id="login-erro" class="text-red-500 text-[10px] mt-4 hidden font-bold uppercase tracking-wider">Usuário ou senha incorretos!</p>
+    </div>
+</div>
     <div class="header-topo w-full py-4 px-6 mb-6">
         <div class="max-w-[1200px] mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -422,9 +456,39 @@ function render() {
             aplicarFiltro();
             updateDash();
         };
+        // CONFIGURAÇÃO DE ACESSO (Mude aqui)
+const CREDENCIAIS = {
+    usuario: "admin",
+    senha: "123"
+};
+
+function autenticar() {
+    const u = document.getElementById('user').value;
+    const s = document.getElementById('pass').value;
+    const erro = document.getElementById('login-erro');
+
+    if (u === CREDENCIAIS.usuario && s === CREDENCIAIS.senha) {
+        // Salva que o usuário está logado nesta sessão
+        sessionStorage.setItem('logado', 'true');
+        document.getElementById('login-screen').style.display = 'none';
+    } else {
+        erro.classList.remove('hidden');
+        // Animação de erro (sacudir)
+        document.querySelector('.login-box').classList.add('animate-bounce');
+        setTimeout(() => document.querySelector('.login-box').classList.remove('animate-bounce'), 500);
+    }
+}
+
+// Verifica se já estava logado ao atualizar a página
+window.onload = function() {
+    if (sessionStorage.getItem('logado') === 'true') {
+        document.getElementById('login-screen').style.display = 'none';
+    }
+}        
     </script>
 </body>
 </html>
+
 
 
 
