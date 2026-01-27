@@ -1,6 +1,6 @@
 const banco_pt = [
     {
-        id: "SED_REG_01", materia: "Português", assunto: "Regência",
+        id: "SED_REG_01", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Ao redigir uma circular, o técnico deve observar a regência. Assinale a frase que respeita a norma culta:",
         a: "O Secretário de Educação procedeu o início da cerimônia.", 
@@ -11,14 +11,14 @@ const banco_pt = [
         correta: "b", comentario: "O verbo 'Proceder', no sentido de dar início ou realizar, é VTI e exige a preposição 'A'."
     },
     {
-        id: "SED_REG_02", materia: "Português", assunto: "Regência",
+        id: "SED_REG_02", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "No atendimento ao público, o técnico informou: 'A palestra _____ o senhor se refere já terminou'.<br><br>A preposição que preenche corretamente a lacuna é:",
         a: "que", b: "na qual", c: "a que", d: "onde", e: "com que",
         correta: "c", comentario: "Quem se refere, se refere 'A' algo. A preposição deve aparecer antes do pronome relativo 'que'."
     },
     {
-        id: "SED_REG_03", materia: "Português", assunto: "Regência",
+        id: "SED_REG_03", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Assinale a alternativa que apresenta erro de regência com o verbo 'IMPLICAR' (sentido de acarretar):",
         a: "O atraso implicará punição ao servidor.", 
@@ -29,14 +29,14 @@ const banco_pt = [
         correta: "c", comentario: "No sentido de 'acarretar/resultar', o verbo implicar é VTD (não aceita a preposição 'em'). O correto seria 'implica a nulidade'."
     },
     {
-        id: "SED_REG_04", materia: "Português", assunto: "Regência",
+        id: "SED_REG_04", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Complete a frase: 'O técnico de secretariado _____ o cargo de chefia, mas ainda não _____ à vaga disponível.'",
         a: "aspira - visou", b: "aspira ao - visou", c: "aspira o - visou", d: "aspira ao - visou ao", e: "aspira o - visou o",
         correta: "b", comentario: "Aspirar (desejar) é VTI (aspira ao). Visar (dar visto/assinar) é VTD (visou a vaga/o documento)."
     },
     {
-        id: "SED_REG_05", materia: "Português", assunto: "Regência",
+        id: "SED_REG_05", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Indique a alternativa que respeita a regência do verbo 'ASSISTIR' no sentido de 'prestar auxílio':",
         a: "O técnico assistiu ao diretor durante a reunião.", 
@@ -47,14 +47,14 @@ const banco_pt = [
         correta: "b", comentario: "No sentido de ajudar/auxiliar, o verbo assistir é preferencialmente Transitivo Direto (assistiu o diretor)."
     },
     {
-        id: "SED_REG_06", materia: "Português", assunto: "Regência",
+        id: "SED_REG_06", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "No uso dos computadores da SEDUC, os funcionários devem _____ as normas de segurança.",
         a: "obedecer", b: "obedecerem", c: "obedecer às", d: "obedecer as", e: "obedecerem as",
         correta: "c", comentario: "O verbo obedecer exige a preposição 'A'. Como 'normas' é feminino plural com artigo, usa-se a crase (às)."
     },
     {
-        id: "SED_REG_07", materia: "Português", assunto: "Regência",
+        id: "SED_REG_07", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Assinale a frase com regência verbal CORRETA:",
         a: "Prefiro redigir ofícios do que atender o telefone.", 
@@ -65,7 +65,7 @@ const banco_pt = [
         correta: "c", comentario: "O verbo preferir exige a preposição 'A' e rejeita expressões comparativas como 'do que' ou 'mais'."
     },
     {
-        id: "SED_REG_08", materia: "Português", assunto: "Regência",
+        id: "SED_REG_08", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Qual a regência correta para o verbo 'ESQUECER'?",
         a: "Esqueci do carimbo sobre a mesa.", 
@@ -76,7 +76,7 @@ const banco_pt = [
         correta: "c", comentario: "Sem o pronome 'se', o verbo esquecer é VTD (Esqueci o carimbo). Se houver pronome, exige 'de' (Esqueci-me do)."
     },
     {
-        id: "SED_REG_09", materia: "Português", assunto: "Regência",
+        id: "SED_REG_09", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Em relação ao ambiente escolar, é correto afirmar:",
         a: "Todos visam ao sucesso dos alunos.", 
@@ -87,7 +87,7 @@ const banco_pt = [
         correta: "a", comentario: "Visar no sentido de ter por objetivo/pretender é VTI e exige preposição 'A'."
     },
     {
-        id: "SED_REG_10", materia: "Português", assunto: "Regência",
+        id: "SED_REG_10", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Assinale a alternativa que apresenta erro de regência nominal:",
         a: "Ele é muito atencioso com os colegas.", 
@@ -98,7 +98,7 @@ const banco_pt = [
         correta: "b", comentario: "A regência correta de 'incompatível' é com a preposição 'com' (Incompatível com o cargo)."
     },
     {
-        id: "SED_REG_11", materia: "Português", assunto: "Regência",
+        id: "SED_REG_11", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "O verbo 'NAMORAR' aparece frequentemente em textos de redação oficial. Qual o uso correto?",
         a: "O projeto namora com novas ideias.", 
@@ -109,7 +109,7 @@ const banco_pt = [
         correta: "c", comentario: "Namorar é Verbo Transitivo Direto (não aceita a preposição 'com')."
     },
     {
-        id: "SED_REG_12", materia: "Português", assunto: "Regência",
+        id: "SED_REG_12", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Sobre o verbo 'PAGAR', assinale a opção correta conforme a norma padrão:",
         a: "A SEDUC pagou os professores ontem.", 
@@ -120,14 +120,14 @@ const banco_pt = [
         correta: "b", comentario: "Pagar, quando se refere a PESSOAS, é VTI e exige a preposição 'A'."
     },
     {
-        id: "SED_REG_13", materia: "Português", assunto: "Regência",
+        id: "SED_REG_13", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Complete: 'A lei _____ todos devem obediência foi alterada'.",
         a: "que", b: "na qual", c: "à qual", d: "a que", e: "onde",
         correta: "c", comentario: "Quem deve obediência, deve obediência 'A'. Como 'lei' é feminino, usa-se a crase com o pronome relativo (a + a qual = à qual)."
     },
     {
-        id: "SED_REG_14", materia: "Português", assunto: "Regência",
+        id: "SED_REG_14", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Assinale o erro de regência verbal abaixo:",
         a: "Custou ao aluno entender a questão.", 
@@ -138,21 +138,21 @@ const banco_pt = [
         correta: "d", comentario: "Repetição do erro comum com o verbo Preferir (uso de 'mais' e 'do que')."
     },
     {
-        id: "SED_REG_15", materia: "Português", assunto: "Regência",
+        id: "SED_REG_15", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Complete: 'O técnico de secretariado deve estar atento _____ prazos e ávido _____ novos conhecimentos.'",
         a: "nos - de", b: "aos - por", c: "com os - em", d: "dos - com", e: "pelos - a",
         correta: "b", comentario: "Atento 'a' (Atento aos prazos) e ávido 'por' (ávido por conhecimentos)."
     },
     {
-        id: "SED_REG_16", materia: "Português", assunto: "Regência",
+        id: "SED_REG_16", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "O termo 'PROEMINENTE' exige qual preposição?",
         a: "de", b: "com", c: "em", d: "para", e: "sobre",
         correta: "c", comentario: "Proeminente EM algo (se destaca dentro de uma área)."
     },
     {
-        id: "SED_REG_17", materia: "Português", assunto: "Regência",
+        id: "SED_REG_17", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Assinale a alternativa com regência verbal impecável:",
         a: "Eles aspiravam o perfume das flores no jardim da escola.", 
@@ -163,21 +163,21 @@ const banco_pt = [
         correta: "a", comentario: "Aspirar (sentido de cheirar/sorver) é VTD, logo não tem preposição. As outras estão erradas."
     },
     {
-        id: "SED_REG_18", materia: "Português", assunto: "Regência",
+        id: "SED_REG_18", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "O secretário _____ o documento com atenção e depois o _____ no arquivo.",
         a: "leu - guardou", b: "leu - guardou-o", c: "visou - colocou-o", d: "percorreu - situou", e: "analisou - remeteu-o",
         correta: "a", comentario: "Uso simples de VTD, sem erros de preposição desnecessária."
     },
     {
-        id: "SED_REG_19", materia: "Português", assunto: "Regência",
+        id: "SED_REG_19", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Qual a regência nominal de 'Douto'?",
         a: "Douto em leis.", b: "Douto com leis.", c: "Douto para leis.", d: "Douto de leis.", e: "Douto sobre leis.",
         correta: "a", comentario: "Quem é instruído (douto) é douto EM alguma ciência ou área."
     },
     {
-        id: "SED_REG_20", materia: "Português", assunto: "Regência",
+        id: "SED_REG_20", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Finalizando o expediente, o técnico disse: 'Esqueci-me _____ chaves na gaveta'.",
         a: "das", b: "as", c: "pelas", d: "com as", e: "nas",
@@ -186,7 +186,7 @@ const banco_pt = [
     {
         id: "17Q2351856",
         materia: "Português",
-        assunto: "Regência",
+        assunto: "Regência Verbal",
         banca: "IBADE",
         orgao: "Pref. Iúna - ES",
         ano: "2024",
@@ -203,7 +203,7 @@ const banco_pt = [
     {
         id: "18Q2351501",
         materia: "Português",
-        assunto: "Regência / Morfologia",
+        assunto: "Regência Verbal",
         banca: "IBADE",
         orgao: "Santa Casa de Iúna - ES",
         ano: "2024",
@@ -220,7 +220,7 @@ const banco_pt = [
     {
         id: "19Q2217439",
         materia: "Português",
-        assunto: "Regência",
+        assunto: "Regência Verbal",
         banca: "IBADE",
         orgao: "Pref. Rio Branco - AC",
         ano: "2023",
@@ -237,7 +237,7 @@ const banco_pt = [
     {
         id: "20Q2036647",
         materia: "Português",
-        assunto: "Regência",
+        assunto: "Regência Verbal",
         banca: "IBADE",
         orgao: "Pref. Acrelândia - AC",
         ano: "2022",
@@ -254,7 +254,7 @@ const banco_pt = [
     {
         id: "21Q2034153",
         materia: "Português",
-        assunto: "Regência",
+        assunto: "Regência Verbal",
         banca: "IBADE",
         orgao: "Câmara de Acrelândia - AC",
         ano: "2022",
@@ -269,84 +269,84 @@ const banco_pt = [
         comentario: "A alternativa 'C' está perfeita (Obedecer ao). A 'B' também parece correta, mas em questões de múltipla escolha da IBADE, eles frequentemente focam na regência direta de verbos como Obedecer/Aspirar. Nota: 'Implicar' (sentido de acarretar) é VTD, não aceita 'em'."
     },
     {
-        id: "1Q3365603", materia: "Português", assunto: "Regência",
+        id: "1Q3365603", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "Pref. Rolim de Moura - RO", ano: "2025",
         enunciado: "Em 'Catarina Chagas FOI a autora do texto...', o verbo destacado é:",
         a: "transitivo direto.", b: "transitivo direto e indireto.", c: "de ligação.", d: "intransitivo.", e: "transitivo indireto.",
         correta: "c", comentario: "O verbo 'ser' (foi) liga o sujeito 'Catarina' a uma característica/atribuição (a autora), funcionando como verbo de ligação."
     },
     {
-        id: "2Q3279030", materia: "Português", assunto: "Regência",
+        id: "2Q3279030", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "UNIVESP", ano: "2025",
         enunciado: "Quanto à regência verbal, assinale a alternativa correta:",
         a: "A notícia agradou os alunos.", b: "Anseio uma nova oportunidade.", c: "Assiste ao médico cuidar do paciente.", d: "A minha sobrinha namora com o sobrinho...", e: "A menina desobedeceu os pais.",
         correta: "c", comentario: "O verbo 'assistir' no sentido de caber/pertencer exige preposição 'a'. 'Namorar' é VTD (não aceita 'com'). 'Desobedecer' exige preposição 'a' (aos pais)."
     },
     {
-        id: "3Q3123756", materia: "Português", assunto: "Regência",
+        id: "3Q3123756", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "Pref. Florianópolis", ano: "2024",
         enunciado: "Marque o correto quanto à regência verbal e nominal:",
         a: "O vendedor aspira o cargo...", b: "Eu ajudei ao meu irmão...", c: "Nós pagamos o marceneiro...", d: "Ele anseia por um cargo melhor na firma; ele ficou apto para dirigir.", e: "O gerente do banco visou o cheque.",
         correta: "d", comentario: "Ansiar (desejar) aceita 'por'. Apto exige 'para'. Na 'a', aspirar (desejar) exige preposição 'a'."
     },
     {
-        id: "4Q3100292", materia: "Português", assunto: "Regência",
+        id: "4Q3100292", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "Pref. Ouro Preto do Oeste - RO", ano: "2024",
         enunciado: "Assinale a alternativa em que o uso da preposição na regência verbal está correto:",
         a: "Esqueci do documento.", b: "Prefiro chá a café.", c: "Ele assistiu o filme.", d: "A gerente se referiu os problemas.", e: "Maria obedece as normas.",
         correta: "b", comentario: "O verbo preferir exige a preposição 'a' (Preferir X a Y). Esquecer só tem 'de' se for pronominal (Esqueci-me do). Assistir (ver) exige 'ao'."
     },
     {
-        id: "5Q3028212", materia: "Português", assunto: "Regência",
+        id: "5Q3028212", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "CRMV-PB", ano: "2024",
         enunciado: "Analise a regência NOMINAL: <br>I - Apta para o trabalho. <br>II - Aborrecido com vocês. <br>III - Incompatível com seus gastos.",
         a: "Somente I.", b: "Somente II.", c: "Somente I e II.", d: "Somente II e III.", e: "Todos os itens.",
         correta: "e", comentario: "Todos os adjetivos estão acompanhados de suas preposições corretas conforme a norma culta."
     },
     {
-        id: "6Q3028205", materia: "Português", assunto: "Regência",
+        id: "6Q3028205", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "CRMV-PB", ano: "2024",
         enunciado: "Analise a regência VERBAL: <br>I - Assistiu ao filme. <br>II - Agradou o público. <br>III - Aspira ao cargo.",
         a: "somente I.", b: "somente II.", c: "somente I e II.", d: "somente I e III.", e: "somente II e III.",
         correta: "d", comentario: "I (Assistir = ver = VTI). II (Agradar = ser agradável = VTI, deveria ser 'ao público'). III (Aspirar = desejar = VTI)."
     },
     {
-        id: "8Q3028010", materia: "Português", assunto: "Regência",
+        id: "8Q3028010", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "CRMV-PB", ano: "2024",
         enunciado: "Assinale os itens com regência verbal CORRETA: <br>I - Cheguei em casa. <br>II - Recordou-se do fato. <br>III - Lembrou do acidente.",
         a: "Somente I.", b: "Somente II.", c: "Somente I e II.", d: "Somente I e III.", e: "Somente II e III.",
         correta: "b", comentario: "I (Chegar exige 'a'). II (Recordar-se é pronominal, exige 'de' - correto). III (Lembrou, sem o 'se', não pode ter 'de')."
     },
     {
-        id: "9Q2537650", materia: "Português", assunto: "Regência",
+        id: "9Q2537650", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "Pref. Vila Velha - ES", ano: "2024",
         enunciado: "Assinale a alternativa em que a regência verbal está INCORRETA:",
         a: "Aspiro um alto cargo na empresa.", b: "Esqueci da festa ontem.", c: "Não consigo simpatizar com ela.", d: "Fui ao cinema ontem.", e: "Gostei desta nova peça.",
         correta: "a", comentario: "Aspirar no sentido de pretender/desejar é VTI e exige a preposição 'A'. O correto: 'Aspiro a um alto cargo'."
     },
     {
-        id: "10Q2507318", materia: "Português", assunto: "Regência",
+        id: "10Q2507318", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "CISDESTE - MG", ano: "2024",
         enunciado: "Quais frases estão corretas? <br>I. Insistiu em participar. <br>II. Agradeço a você por sua gentileza. <br>III. Namora com Pedro. <br>IV. Assistimos o filme.",
         a: "II e III.", b: "I e II.", c: "I e IV.", d: "III e IV.", e: "II e IV.",
         correta: "b", comentario: "III está errada (Namora Pedro). IV está errada (Assistimos ao filme)."
     },
     {
-        id: "13Q2506587", materia: "Português", assunto: "Regência",
+        id: "13Q2506587", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "CISDESTE - MG", ano: "2024",
         enunciado: "Assinale a alternativa com regência verbal CORRETA:",
         a: "Recordou do pedido.", b: "Prefiro praia a piscina.", c: "Ele não pagou o funcionário.", d: "Posso ir no banheiro?", e: "Chegamos no local.",
         correta: "b", comentario: "Prefiro A a B. A 'c' está errada porque pagar (pessoa) exige preposição: 'pagou ao funcionário'. 'Ir' e 'Chegar' exigem preposição 'a'."
     },
     {
-        id: "15Q2372378", materia: "Português", assunto: "Regência",
+        id: "15Q2372378", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "SESDEC-RO", ano: "2024",
         enunciado: "No trecho '...se TORNOU tão emblemático que virou quase uma expressão... é evocado quando se quer DESCREVER uma grande celebração...', os verbos são:",
         a: "ligação e transitivo direto.", b: "intransitivo e intransitivo.", c: "transitivo indireto e intransitivo.", d: "transitivo direto e transitivo indireto.",
         correta: "a", comentario: "Tornar-se liga o sujeito ao predicativo (emblemático). Descrever pede algo (objeto direto: uma celebração)."
     },
     {
-        id: "16Q2372374", materia: "Português", assunto: "Regência / Crase",
+        id: "16Q2372374", materia: "Português", assunto: "Regência Verbal",
         banca: "IBADE", orgao: "SESDEC-RO", ano: "2024",
         enunciado: "Complete: 'Em meio ___ uma onda... atinge ___ regiões... chamou ___ atenção... sensação chegou ___ quase 60°C.'",
         a: "à | as | as | a | à", b: "à | às | a | a | as", c: "a | às | à | à | a", d: "a | as | a | a | a",
@@ -4508,6 +4508,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
