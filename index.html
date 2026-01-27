@@ -392,12 +392,10 @@
 
        function verificar() {
     const q = window.questoesFiltradas[window.index];
-    
-    // Se ele já respondeu NESTA sessão (logo após clicar), travamos para evitar cliques duplos
-    if (respondidaNaSessao) return;
+    if (respondidaNaSessao || !q) return;
 
     const sel = document.querySelector('input[name="quiz"]:checked');
-    if(!sel) return;
+    if (!sel) return;
 
     const correta = q.correta.toLowerCase();
     const f = document.getElementById('feedback');
@@ -405,52 +403,74 @@
 
     respondidaNaSessao = true; 
 
-    // Bloqueio visual temporário apenas para mostrar o feedback
+    // Bloqueio visual
     const btnResponder = document.querySelector('button[onclick="verificar()"]');
     btnResponder.disabled = true;
     btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
     document.querySelectorAll('input[name="quiz"]').forEach(input => input.disabled = true);
 
-    // Checamos se esta questão já existe no histórico (já foi respondida antes)
     let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-    const jaFoiRespondidaAntes = q.id in respondidasMap;
+    const statusAnterior = respondidasMap[q.id];
 
-    if(sel.value === correta) {
+    if (sel.value === correta) {
         f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+        f.innerHTML = "<strong>✓ Correto!</strong>";
         
-        if (!jaFoiRespondidaAntes) {
+        // Se acertou uma que era erro ou nunca respondida
+        if (statusAnterior !== 'acerto') {
             acertos++;
+            if (statusAnterior === 'erro') erros--; // Remove do contador de erros se ela estava lá
             respondidasMap[q.id] = 'acerto';
-            f.innerHTML = "<strong>✓ Correto!</strong>";
-        } else {
-            f.innerHTML = "<strong>✓ Correto!</strong> (Esta questão já foi contabilizada anteriormente).";
         }
     } else {
         f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+        f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
         
-        if (!jaFoiRespondidaAntes) {
+        // Se errou uma que nunca foi respondida ou era acerto
+        if (statusAnterior !== 'erro') {
             erros++;
+            if (statusAnterior === 'acerto') acertos--; // Ajusta se ele mudou de acerto para erro
             respondidasMap[q.id] = 'erro';
-            f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
-        } else {
-            f.innerHTML = "<strong>✕ Errado novamente.</strong> Gabarito: " + correta.toUpperCase() + " (Já contabilizada no histórico).";
         }
     }
 
+    // Salva tudo imediatamente
     localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
     localStorage.setItem('seduc_acertos', acertos);
     localStorage.setItem('seduc_erros', erros);
-    updateDash();
+    
+    updateDash(); // Força a atualização do gráfico e dos números no topo
 }       
-        function updateDash() {
-            document.getElementById('dashAcertos').innerText = acertos;
-            document.getElementById('dashErros').innerText = erros;
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            const total = acertos + erros;
-            const data = { datasets: [{ data: total === 0 ? [1, 0] : [acertos, erros], backgroundColor: total === 0 ? ['#E5E7EB', '#E5E7EB'] : ['#10B981', '#EF4444'], borderWidth: 0 }] };
-            if (myChart) { myChart.data = data; myChart.update(); } 
-            else { myChart = new Chart(ctx, { type: 'doughnut', data: data, options: { cutout: '75%', plugins: { legend: { display: false } } } }); }
-        }
+       function updateDash() {
+    // Atualiza as variáveis globais com o que está no Storage para não perder a conta
+    acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+    erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+
+    document.getElementById('dashAcertos').innerText = acertos;
+    document.getElementById('dashErros').innerText = erros;
+    
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const total = acertos + erros;
+    
+    const data = { 
+        datasets: [{ 
+            data: total === 0 ? [1, 0] : [acertos, erros], 
+            backgroundColor: total === 0 ? ['#E5E7EB', '#E5E7EB'] : ['#10B981', '#EF4444'], 
+            borderWidth: 0 
+        }] 
+    };
+
+    if (myChart) { 
+        myChart.data = data; 
+        myChart.update(); 
+    } else { 
+        myChart = new Chart(ctx, { 
+            type: 'doughnut', 
+            data: data, 
+            options: { cutout: '75%', plugins: { legend: { display: false } } } 
+        }); 
+    }
+}
 
         function togglePanel(id) {
             const p = document.getElementById(id);
@@ -465,6 +485,7 @@
     </script>
 </body>
 </html>
+
 
 
 
