@@ -250,40 +250,37 @@
     const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
     const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-    // 1. DEFINIR O UNIVERSO INICIAL (MATÉRIA)
+    // 1. Pega a base da matéria atual ou todas
     let resultado = [];
     if (window.materiaAtual === 'todas') {
-        // Junta todos os bancos de dados em um único array
         resultado = Object.values(window.bibliotecas).flat();
     } else {
-        resultado = [...window.bibliotecas[window.materiaAtual]];
+        resultado = [...(window.bibliotecas[window.materiaAtual] || [])];
     }
 
-    // 2. FILTRAR POR ASSUNTO (APENAS SE NÃO FOR "TODAS AS MATÉRIAS")
-    if (window.materiaAtual !== 'todas' && filtroAssunto !== 'todos') {
+    // 2. FILTRO DE ASSUNTO (Só aplica se não for "todos" e se não for a opção de aviso)
+    if (filtroAssunto !== 'todos' && filtroAssunto !== 'Selecione uma matéria para filtrar por assunto') {
         resultado = resultado.filter(q => q.assunto === filtroAssunto);
     }
 
-    // 3. FILTRAR POR DESEMPENHO (CHECKBOXES)
-    // Se "Apenas as que errei" estiver marcado
+    // 3. FILTRO DE DESEMPENHO (Sempre deve rodar)
     if (apenasErradas) {
         resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
     }
     
-    // Se "Apenas não respondidas" estiver marcado
     if (apenasNaoRespondidas) {
         resultado = resultado.filter(q => !respondidasMap[q.id]);
     }
 
-    // 4. ATUALIZAR ESTADO GLOBAL
+    // 4. Atualiza estado e interface
     window.questoesFiltradas = resultado;
     window.index = 0;
 
-    // 5. LÓGICA DO BOTÃO DE VÍDEO AULA
+    // Lógica do botão de aula
     const btnAula = document.getElementById('btnAulaAssunto');
     const temAula = aulasPorAssunto[window.materiaAtual] && aulasPorAssunto[window.materiaAtual][filtroAssunto];
     
-    if (temAula && window.materiaAtual !== 'todas' && filtroAssunto !== 'todos') {
+    if (temAula && filtroAssunto !== 'todos') {
         btnAula.classList.remove('hidden');
     } else {
         btnAula.classList.add('hidden');
@@ -329,7 +326,25 @@
     element.classList.add('active');
     document.getElementById('nomeMateriaAtual').innerText = element.innerText;
     
-    popularFiltros();
+    function popularFiltros() {
+    const select = document.getElementById('filtroAssunto');
+    
+    if (window.materiaAtual === 'todas') {
+        select.innerHTML = `<option value="todos">Filtro por assunto desativado (Todas as Matérias)</option>`;
+        select.disabled = true;
+        return;
+    }
+
+    select.disabled = false;
+    // Pega assuntos únicos da matéria selecionada
+    const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
+    
+    let html = `<option value="todos">Todos os assuntos de ${document.getElementById('nomeMateriaAtual').innerText}</option>`;
+    html += assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+    
+    select.innerHTML = html;
+    select.value = "todos"; // Força o reset do valor ao mudar de matéria
+}
     aplicarFiltro();
 }      
         // VARIÁVEL NOVA PARA CONTROLE
@@ -481,10 +496,22 @@
         function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
         function anterior() { if(window.index > 0) { window.index--; render(); } }
         
-        window.onload = () => { popularFiltros(); aplicarFiltro(); };
+        window.onload = () => {
+    // Inicializa os bancos de dados caso os scripts demorem a carregar
+    window.bibliotecas = {
+        'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+        'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+        'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+        'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+    };
+    popularFiltros();
+    aplicarFiltro();
+    updateDash();
+};
     </script>
 </body>
 </html>
+
 
 
 
