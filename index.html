@@ -407,54 +407,62 @@
 
        function verificar() {
     const q = window.questoesFiltradas[window.index];
-    if (respondidaNaSessao || !q) return;
+    
+    // 1. Verificação de segurança: a questão tem ID?
+    if (!q || !q.id) {
+        alert("Erro técnico: Esta questão não possui um ID válido.");
+        return;
+    }
+
+    if (respondidaNaSessao) return;
 
     const sel = document.querySelector('input[name="quiz"]:checked');
-    if (!sel) return;
+    if (!sel) {
+        alert("Por favor, selecione uma alternativa.");
+        return;
+    }
 
-    const correta = q.correta.toLowerCase();
+    const correta = q.correta.toLowerCase().trim();
+    const selecionada = sel.value.toLowerCase().trim();
     const f = document.getElementById('feedback');
     f.classList.remove('hidden');
 
     respondidaNaSessao = true; 
 
-    // Bloqueio visual
+    // Bloqueio visual dos inputs e botão
     const btnResponder = document.querySelector('button[onclick="verificar()"]');
-    btnResponder.disabled = true;
-    btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
+    if (btnResponder) {
+        btnResponder.disabled = true;
+        btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
+    }
     document.querySelectorAll('input[name="quiz"]').forEach(input => input.disabled = true);
 
+    // Carrega o mapa de respostas
     let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-    const statusAnterior = respondidasMap[q.id];
 
-    if (sel.value === correta) {
+    if (selecionada === correta) {
         f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
         f.innerHTML = "<strong>✓ Correto!</strong>";
-        
-        // Se acertou uma que era erro ou nunca respondida
-        if (statusAnterior !== 'acerto') {
-            acertos++;
-            if (statusAnterior === 'erro') erros--; // Remove do contador de erros se ela estava lá
-            respondidasMap[q.id] = 'acerto';
-        }
+        respondidasMap[q.id] = 'acerto';
     } else {
         f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
         f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
-        
-        // Se errou uma que nunca foi respondida ou era acerto
-        if (statusAnterior !== 'erro') {
-            erros++;
-            if (statusAnterior === 'acerto') acertos--; // Ajusta se ele mudou de acerto para erro
-            respondidasMap[q.id] = 'erro';
-        }
+        respondidasMap[q.id] = 'erro';
     }
+
+    // 2. NOVA LÓGICA DE CONTABILIZAÇÃO (À prova de erros)
+    // Em vez de somar/subtrair, contamos os valores do mapa
+    const valores = Object.values(respondidasMap);
+    acertos = valores.filter(v => v === 'acerto').length;
+    erros = valores.filter(v => v === 'erro').length;
 
     // Salva tudo imediatamente
     localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
     localStorage.setItem('seduc_acertos', acertos);
     localStorage.setItem('seduc_erros', erros);
     
-    updateDash(); // Força a atualização do gráfico e dos números no topo
+    // Se você tiver um elemento de áudio de acerto/erro, pode tocar aqui
+    updateDash(); 
 }       
        function updateDash() {
     // Atualiza as variáveis globais com o que está no Storage para não perder a conta
@@ -511,6 +519,7 @@
     </script>
 </body>
 </html>
+
 
 
 
