@@ -21,6 +21,7 @@
         .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
         .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
         .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; }
+        .header-topo {background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
     </style>
 
     <script type="importmap">
@@ -32,9 +33,25 @@
     <script src="conhecimentos_especificos.js"></script>
     <script src="informatica_basica.js"></script>
 </head>
-<body class="py-4 px-4">
+<body class="bg-gray-100">
+    <div class="header-topo w-full py-4 px-6 mb-6">
+        <div class="max-w-[1200px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-white font-black text-lg tracking-tight leading-none uppercase">SEDUC/RO</h1>
+                    <p class="text-blue-100 text-[10px] font-bold uppercase tracking-widest">Técnico Educacional</p>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <span class="text-white/50 text-[10px] font-medium border border-white/20 px-3 py-1 rounded-full uppercase">Simulado v25 Estável</span>
+            </div>
+        </div>
+    </div>
 
-    <div class="container-main">
+    <div class="container-main px-4">
         <div class="w-64 flex-shrink-0">
             <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 sticky top-4">
                 <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2 text-center">Desempenho</h2>
@@ -408,6 +425,7 @@ function render() {
     </script>
 </body>
 </html>
+
 
 
 
