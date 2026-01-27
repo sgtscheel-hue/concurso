@@ -227,8 +227,8 @@
 
     function popularFiltros() {
     const select = document.getElementById('filtroAssunto');
-    
-    // Se for "todas", não mostramos assuntos específicos, pois os bancos são diferentes
+    if (!select) return;
+
     if (window.materiaAtual === 'todas') {
         select.innerHTML = `<option value="todos">Selecione uma matéria para filtrar por assunto</option>`;
         select.disabled = true;
@@ -236,12 +236,20 @@
     }
 
     select.disabled = false;
-    const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
     
-    select.innerHTML = `
-        <option value="todos">Todos os assuntos de ${document.getElementById('nomeMateriaAtual').innerText}</option>
-        ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
-    `;
+    // Busca os dados na biblioteca correta
+    const dadosMateria = window.bibliotecas[window.materiaAtual] || [];
+    
+    // Extrai assuntos e remove duplicatas
+    const assuntos = [...new Set(dadosMateria.map(q => q.assunto).filter(Boolean))];
+    
+    const nomeMateriaTexto = document.getElementById('nomeMateriaAtual').innerText;
+    
+    let html = `<option value="todos">Todos os assuntos de ${nomeMateriaTexto}</option>`;
+    html += assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+    
+    select.innerHTML = html;
+    select.value = "todos"; // Reseta o filtro de assunto ao mudar a matéria
 }
            
     function aplicarFiltro() {
@@ -323,18 +331,17 @@
     function trocarMateria(materia, element) {
     window.materiaAtual = materia;
     
-    // Atualiza o visual do menu
+    // 1. Atualiza visual do Menu
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     element.classList.add('active');
     
-    // Atualiza o texto da matéria no dashboard
-    const nomeMateria = document.getElementById('nomeMateriaAtual');
-    if (nomeMateria) nomeMateria.innerText = element.innerText;
+    // 2. Atualiza o título da matéria no topo
+    document.getElementById('nomeMateriaAtual').innerText = element.innerText;
     
-    // CORREÇÃO: Chama a função que já existe no seu código para atualizar o Select
-    popularFiltros(); 
+    // 3. ATUALIZA O FILTRO DE ASSUNTOS (O passo que estava faltando)
+    popularFiltros();
     
-    // Aplica o filtro de questões
+    // 4. Carrega as questões da nova matéria
     aplicarFiltro();
 }
     
@@ -539,6 +546,7 @@
     </script>
 </body>
 </html>
+
 
 
 
