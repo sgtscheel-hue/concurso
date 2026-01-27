@@ -397,7 +397,7 @@ const banco_pt = [
         ano: "2024",
         banca: "IBADE",
         orgao: "Prefeitura de Joinville - SC",
-        enunciado: "Em qual modo e tempo o verbo que inicia o primeiro parágrafo do texto se encontra empregado?",
+        enunciado: " Imagine a seguinte situação: você chega na escola depois das férias, um novo colega vem se apresentar e, assim que ele pronuncia as primeiras palavras, você percebe que ele gagueja. Será que ele está nervoso, com medo, tímido ou envergonhado? Afinal de contas, é o primeiro dia em uma nova escola, e qualquer pessoa pode se sentir um pouco insegura e ansiosa, não é mesmo? MAS/MAIS os dias vão passando e esse colega continua gaguejando. HORA/ORA, se já fez novos amigos e a ansiedade do primeiro dia de aula não existe mais, por que a gagueira não acabou? <b>Em qual modo e tempo o verbo que inicia o primeiro parágrafo do texto se encontra empregado?</b>",
         a: "Indicativo | Tempo pretérito perfeito.",
         b: "Imperativo negativo | Sem marcação temporal.",
         c: "Indicativo | Tempo futuro do presente.",
@@ -3694,6 +3694,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
