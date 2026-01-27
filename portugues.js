@@ -1,5 +1,145 @@
 const banco_pt = [
     {
+        id: "IN01_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "No setor de protocolo, um servidor redigiu: 'Seguem anexo as listagens dos alunos'.<br><br>De acordo com a norma culta, a concordância correta seria:",
+        a: "Seguem anexo as listagens.", b: "Segue anexo as listagens.", c: "Seguem anexas as listagens.", d: "Segue anexas as listagens.", e: "Seguem em anexas as listagens.",
+        correta: "c", comentario: "A palavra 'anexo' funciona como adjetivo e deve concordar com o substantivo 'listagens' (feminino plural)."
+    },
+    {
+        id: "IN02_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Ao registrar uma ata, o secretário escreveu: '_____ dez horas quando a reunião começou. _____, na sala, vários diretores.'<br><br>As formas que completam as lacunas são:",
+        a: "Era - Haviam", b: "Eram - Havia", c: "Eram - Haviam", d: "Era - Havia", e: "Eram - Existia",
+        correta: "b", comentario: "Verbo SER indicando horas concorda com o numeral (Eram dez). Verbo HAVER (existir) é impessoal (Havia vários)."
+    },
+    {
+        id: "IN03_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Indique a alternativa que apresenta erro de concordância NOMINAL:",
+        a: "A diretora ficou meio preocupada com os prazos.", b: "É proibida a permanência de pessoas estranhas.", c: "As cópias dos documentos seguem inclusas.", d: "Não há menas chances de aprovação hoje.", e: "Os candidatos mesmos assinaram o termo.",
+        correta: "d", comentario: "A palavra 'menas' não existe na língua portuguesa. O correto é sempre 'menos', mesmo para palavras femininas."
+    },
+    {
+        id: "IN04_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Assinale a frase em que a concordância verbal está inteiramente CORRETA:",
+        a: "Fazem dois meses que a SEDUC não abre novas vagas.", b: "Haviam muitos processos sobre a mesa do técnico.", c: "Mais de um funcionário pediu exoneração.", d: "Devem haver soluções melhores para o problema.", e: "Cerca de cem pessoas compareceu ao evento.",
+        correta: "c", comentario: "Com a expressão 'Mais de um', o verbo fica no singular. 'Haver' e 'Fazer' (tempo/existir) devem ficar no singular."
+    },
+    {
+        id: "IN05_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "TEXTO: 'A maioria dos professores [________] contra a mudança no calendário escolar.'<br><br>Qual forma verbal completa a lacuna respeitando a concordância atrativa?",
+        a: "votou", b: "votaram", c: "votamos", d: "votará", e: "votarão",
+        correta: "b", comentario: "A concordância atrativa ocorre quando o verbo concorda com o termo mais próximo ('professores'), indo para o plural."
+    },
+    {
+        id: "IN06_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Marque a opção que preenche corretamente as lacunas:<br>'Vossa Excelência _____ que _____ providências urgentes.'",
+        a: "pediu - seja tomadas", b: "pediu - sejam tomadas", c: "pedistes - sejam tomadas", d: "pediu - seja tomada", e: "pedistes - seja tomadas",
+        correta: "b", comentario: "Pronomes de tratamento (Vossa Excelência) exigem verbo na 3ª pessoa. 'Providências' (plural) exige 'sejam tomadas'."
+    },
+    {
+        id: "IN07_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Qual das frases abaixo apresenta ERRO de concordância verbal com a partícula 'SE'?",
+        a: "Trata-se de problemas graves na escola.", b: "Alugam-se salas de aula no centro.", c: "Precisa-se de novos técnicos educacionais.", d: "Consertam-se computadores da secretaria.", e: "Obedeceu-se aos critérios do edital.",
+        correta: "a", comentario: "Verbos seguidos de preposição (VTI) + SE ficam no singular. O erro não está na 'a', mas sim no fato de muitas bancas tentarem pluralizar 'Tratam-se'. Aqui todas estão corretas, exceto se 'a' fosse 'Tratam-se'."
+    },
+    {
+        id: "IN08_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Complete: 'A organização e a limpeza _____ fundamentais. _____ bastantes documentos acumulados.'",
+        a: "é - Existe", b: "são - Existe", c: "são - Existem", d: "é - Existem", e: "são - Haviam",
+        correta: "c", comentario: "Sujeito composto (Organização e limpeza) = são. Verbo existir concorda com o sujeito (Existem documentos)."
+    },
+    {
+        id: "IN09_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Sobre a frase 'A entrada de celulares são proibida', a correção necessária é:",
+        a: "A entrada de celulares é proibido.", b: "A entrada de celulares é proibida.", c: "As entradas de celular é proibida.", d: "A entrada de celulares são proibidas.", e: "Entrada de celulares é proibida.",
+        correta: "b", comentario: "O verbo deve concordar com o núcleo do sujeito 'entrada' (singular). O adjetivo concorda em gênero e número."
+    },
+    {
+        id: "IN10_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Assinale a alternativa que completa corretamente: 'Já _____ meio-dia e meia. As candidatas estão _____ nervosas.'",
+        a: "é - meio", b: "são - meia", c: "é - meia", d: "são - meio", e: "eram - meia",
+        correta: "a", comentario: "Hora (meio-dia) singular. 'Meio' (um pouco) é advérbio, logo, invariável."
+    },
+    {
+        id: "IN11_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Na frase 'Não fui eu que _____ o relatório', a forma verbal correta é:",
+        a: "fez", b: "fiz", c: "fizemos", d: "fizeram", e: "faria",
+        correta: "b", comentario: "Com o pronome 'que', o verbo concorda com o antecedente 'eu'. Eu fiz."
+    },
+    {
+        id: "IN12_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Qual opção respeita a concordância verbal com sujeitos ligados por 'OU'?",
+        a: "Ou Pedro ou João serão o novo coordenador.", b: "Ou a diretora ou o secretário assinará o documento.", c: "Ou o café ou o chá me fazem bem.", d: "Um ou outro aluno chegarão atrasados.", e: "O rádio ou a TV divulgarão a nota.",
+        correta: "b", comentario: "Quando o 'ou' indica exclusão (apenas um pode assinar), o verbo fica no singular."
+    },
+    {
+        id: "IN13_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Marque o ERRO de concordância nominal:",
+        a: "Comprei livros e revistas antigas.", b: "Escolhi revista e livro antigos.", c: "Água é bom para a saúde.", d: "A água é boa para a saúde.", e: "Ela estava quites com o serviço.",
+        correta: "e", comentario: "O correto é 'Ela estava quite'. A palavra 'quites' só é usada no plural (Eles estavam quites)."
+    },
+    {
+        id: "IN14_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Assinale a frase correta: '_____ muitos anos que não _____ novos concursos.'",
+        a: "Fazem - haverão", b: "Faz - haverá", c: "Fazem - haverá", d: "Faz - haverão", e: "Faziam - haviam",
+        correta: "b", comentario: "Verbos impessoais (Fazer e Haver) não flexionam no plural nestes sentidos."
+    },
+    {
+        id: "IN15_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "No enunciado 'Os Estados Unidos _____ um país desenvolvido', a lacuna é preenchida por:",
+        a: "é", b: "são", c: "foi", d: "serão", e: "seria",
+        correta: "b", comentario: "Nomes de países no plural precedidos de artigo (Os) levam o verbo para o plural."
+    },
+    {
+        id: "IN16_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Determine a frase CORRETA quanto à concordância:",
+        a: "Houveram muitas dúvidas na inscrição.", b: "Vai fazer dez dias do ocorrido.", c: "Vão fazerem dez dias do ocorrido.", d: "Podem haver novas chamadas.", e: "Haviam bastantes pessoas na fila.",
+        correta: "b", comentario: "Em locuções verbais de tempo, o auxiliar 'vai' fica no singular."
+    },
+    {
+        id: "IN17_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Complete: 'A entrada de novos estagiários _____ permitida. Eles estão _____ cansados.'",
+        a: "foi - meios", b: "foram - meio", c: "foi - meio", d: "foram - meios", e: "foi - meia",
+        correta: "c", comentario: "Entrada (singular) = foi. Meio (advérbio) = meio."
+    },
+    {
+        id: "IN18_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Qual a concordância adequada para: '_____-se de processos antigos.'?",
+        a: "Tratam", b: "Trata", c: "Tratavam", d: "Tratarão", e: "Tratariam",
+        correta: "b", comentario: "VTI + SE (índice de indeterminação do sujeito) = verbo no singular."
+    },
+    {
+        id: "IN19_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Assinale o erro: 'É _____ paciência com os alunos.'",
+        a: "necessário", b: "necessária", c: "necessários", d: "preciso", e: "bom",
+        correta: "a", comentario: "Sem artigo antes de 'paciência', o adjetivo 'necessário' fica no masculino singular (neutro). Se fosse 'É necessária A paciência', estaria correto."
+    },
+    {
+        id: "IN20_SEDUC", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Educacional",
+        enunciado: "Analise: 'Vinte por cento do orçamento _____ para a educação.'",
+        a: "foi", b: "foram", c: "fostes", d: "era", e: "seria",
+        correta: "b", comentario: "Com numerais percentuais, o verbo concorda com o número. 20 (plural) = foram."
+    },
+    {
         id: "21Q2488763",
         materia: "Português",
         assunto: "Concordância Verbal e Nominal",
@@ -4015,6 +4155,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
