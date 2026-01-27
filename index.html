@@ -456,7 +456,7 @@ function render() {
             aplicarFiltro();
             updateDash();
         };
-        // CONFIGURAÇÃO DE ACESSO (Mude aqui)
+        // --- LOGICA DE LOGIN E INICIALIZAÇÃO UNIFICADA ---
 const CREDENCIAIS = {
     usuario: "admin",
     senha: "123"
@@ -468,26 +468,37 @@ function autenticar() {
     const erro = document.getElementById('login-erro');
 
     if (u === CREDENCIAIS.usuario && s === CREDENCIAIS.senha) {
-        // Salva que o usuário está logado nesta sessão
         sessionStorage.setItem('logado', 'true');
         document.getElementById('login-screen').style.display = 'none';
+        // Garante que as questões carreguem após o login
+        aplicarFiltro(); 
     } else {
         erro.classList.remove('hidden');
-        // Animação de erro (sacudir)
-        document.querySelector('.login-box').classList.add('animate-bounce');
-        setTimeout(() => document.querySelector('.login-box').classList.remove('animate-bounce'), 500);
+        const box = document.querySelector('.login-box');
+        box.classList.add('animate-bounce');
+        setTimeout(() => box.classList.remove('animate-bounce'), 500);
     }
 }
 
-// Verifica se já estava logado ao atualizar a página
-window.onload = function() {
+// ÚNICO WINDOW.ONLOAD PARA TODO O SITE
+window.onload = () => {
+    // 1. Inicializa o banco de questões e o gráfico (mesmo escondido)
+    atualizarBibliotecas();
+    popularFiltros();
+    aplicarFiltro();
+    updateDash();
+
+    // 2. Verifica se o usuário precisa logar
     if (sessionStorage.getItem('logado') === 'true') {
         document.getElementById('login-screen').style.display = 'none';
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
     }
-}        
+};       
     </script>
 </body>
 </html>
+
 
 
 
