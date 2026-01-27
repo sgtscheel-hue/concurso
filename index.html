@@ -53,6 +53,18 @@
                     <option value="todos">Todos os assuntos</option>
                 </select>
 
+                <div class="mt-2 space-y-1">
+    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+        <input type="checkbox" id="checkApenasErradas" onchange="aplicarFiltro()" class="mr-2"> 
+        Apenas as que errei
+    </label>
+    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+        <input type="checkbox" id="checkNaoRespondidas" onchange="aplicarFiltro()" class="mr-2"> 
+        Apenas não respondidas
+    </label>
+</div>
+
+                
                 <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
                     <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
                 </button>
@@ -213,43 +225,51 @@
         let myChart;
 
         function popularFiltros() {
-            const select = document.getElementById('filtroAssunto');
-            const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
-            
-            select.innerHTML = `
-                <option value="todos">Todos os assuntos</option>
-                <option value="erradas" style="color: #ef4444; font-weight: bold;">❌ Ver as que eu errei</option>
-                <option value="nao_respondidas" style="color: #3b82f6; font-weight: bold;">📝 Não respondidas</option>
-                <option disabled>──────────</option>
-            `;
-            
-            assuntos.forEach(a => select.innerHTML += `<option value="${a}">${a}</option>`);
-        }
+    const select = document.getElementById('filtroAssunto');
+    const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
+    
+    select.innerHTML = `
+        <optgroup label="Geral">
+            <option value="todos">Todos os assuntos (Tudo)</option>
+            <option value="erradas">❌ Todas as que eu errei</option>
+            <option value="nao_respondidas">📝 Todas não respondidas</option>
+        </optgroup>
+        <optgroup label="Por Assunto">
+            ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
+        </optgroup>
+    `;
+}
 
         function aplicarFiltro() {
-            const filtro = document.getElementById('filtroAssunto').value;
-            const todasDaMateria = window.bibliotecas[window.materiaAtual];
-            const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+    const filtroAssunto = document.getElementById('filtroAssunto').value;
+    const apenasErradas = document.getElementById('checkApenasErradas').checked;
+    const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
+    
+    const todasDaMateria = window.bibliotecas[window.materiaAtual];
+    const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-            if (filtro === 'todos') {
-                window.questoesFiltradas = todasDaMateria;
-            } else if (filtro === 'erradas') {
-                window.questoesFiltradas = todasDaMateria.filter(q => respondidasMap[q.id] === 'erro');
-            } else if (filtro === 'nao_respondidas') {
-                window.questoesFiltradas = todasDaMateria.filter(q => !respondidasMap[q.id]);
-            } else {
-                window.questoesFiltradas = todasDaMateria.filter(q => q.assunto === filtro);
-            }
-            
-            window.index = 0;
-            const btnAula = document.getElementById('btnAulaAssunto');
-            if (filtro !== 'todos' && filtro !== 'erradas' && filtro !== 'nao_respondidas' && aulasPorAssunto[window.materiaAtual]?.[filtro]) {
-                btnAula.classList.remove('hidden');
-            } else {
-                btnAula.classList.add('hidden');
-            }
-            render();
-        }
+    // 1. Primeiro filtramos o assunto (ou todos)
+    let resultado = todasDaMateria;
+    if (filtroAssunto !== 'todos' && filtroAssunto !== 'erradas' && filtroAssunto !== 'nao_respondidas') {
+        resultado = todasDaMateria.filter(q => q.assunto === filtroAssunto);
+    } else if (filtroAssunto === 'erradas') {
+        resultado = todasDaMateria.filter(q => respondidasMap[q.id] === 'erro');
+    } else if (filtroAssunto === 'nao_respondidas') {
+        resultado = todasDaMateria.filter(q => !respondidasMap[q.id]);
+    }
+
+    // 2. Depois aplicamos os filtros de status por cima (Cruzamento)
+    if (apenasErradas) {
+        resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
+    }
+    if (apenasNaoRespondidas) {
+        resultado = resultado.filter(q => !respondidasMap[q.id]);
+    }
+
+    window.questoesFiltradas = resultado;
+    window.index = 0;
+    render();
+}
 
         function abrirAulaAssunto() {
             const filtro = document.getElementById('filtroAssunto').value;
@@ -404,6 +424,7 @@
     </script>
 </body>
 </html>
+
 
 
 
