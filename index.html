@@ -215,19 +215,35 @@
         function popularFiltros() {
             const select = document.getElementById('filtroAssunto');
             const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
-            select.innerHTML = '<option value="todos">Todos os assuntos</option>';
+            
+            select.innerHTML = `
+                <option value="todos">Todos os assuntos</option>
+                <option value="erradas" style="color: #ef4444; font-weight: bold;">❌ Ver as que eu errei</option>
+                <option value="nao_respondidas" style="color: #3b82f6; font-weight: bold;">📝 Não respondidas</option>
+                <option disabled>──────────</option>
+            `;
+            
             assuntos.forEach(a => select.innerHTML += `<option value="${a}">${a}</option>`);
         }
 
         function aplicarFiltro() {
             const filtro = document.getElementById('filtroAssunto').value;
-            window.questoesFiltradas = filtro === 'todos' 
-                ? window.bibliotecas[window.materiaAtual] 
-                : window.bibliotecas[window.materiaAtual].filter(q => q.assunto === filtro);
+            const todasDaMateria = window.bibliotecas[window.materiaAtual];
+            const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+
+            if (filtro === 'todos') {
+                window.questoesFiltradas = todasDaMateria;
+            } else if (filtro === 'erradas') {
+                window.questoesFiltradas = todasDaMateria.filter(q => respondidasMap[q.id] === 'erro');
+            } else if (filtro === 'nao_respondidas') {
+                window.questoesFiltradas = todasDaMateria.filter(q => !respondidasMap[q.id]);
+            } else {
+                window.questoesFiltradas = todasDaMateria.filter(q => q.assunto === filtro);
+            }
             
             window.index = 0;
             const btnAula = document.getElementById('btnAulaAssunto');
-            if (filtro !== 'todos' && aulasPorAssunto[window.materiaAtual]?.[filtro]) {
+            if (filtro !== 'todos' && filtro !== 'erradas' && filtro !== 'nao_respondidas' && aulasPorAssunto[window.materiaAtual]?.[filtro]) {
                 btnAula.classList.remove('hidden');
             } else {
                 btnAula.classList.add('hidden');
@@ -288,11 +304,20 @@
                 return;
             }
 
-            // Reset do botão a cada nova questão
-            respondidaNaSessao = false;
+            // Sincroniza estado da questão com o histórico salvo
+            const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+            if (respondidasMap[q.id]) {
+                q.respondida = true;
+                respondidaNaSessao = true;
+            } else {
+                q.respondida = false;
+                respondidaNaSessao = false;
+            }
+
             const btnResponder = document.querySelector('button[onclick="verificar()"]');
-            btnResponder.disabled = false;
-            btnResponder.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnResponder.disabled = q.respondida;
+            if(q.respondida) btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
+            else btnResponder.classList.remove('opacity-50', 'cursor-not-allowed');
 
             document.getElementById('info-questao').innerHTML = `
                 <span class="tag-quest">${q.materia || materiaAtual}</span>
@@ -313,15 +338,13 @@
             }
             
             document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
-                q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
+                q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden" ${q.respondida ? 'disabled' : ''}><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
             ).join('');
             updateDash();
         }
 
-        function verificar() {
+       function verificar() {
             const q = window.questoesFiltradas[window.index];
-            
-            // TRAVA: Se já respondeu, ignora o clique
             if (q.respondida || respondidaNaSessao) return;
 
             const sel = document.querySelector('input[name="quiz"]:checked');
@@ -331,11 +354,11 @@
             const f = document.getElementById('feedback');
             f.classList.remove('hidden');
 
-            // MARCAÇÃO: Impede novo ponto nesta questão
             q.respondida = true;
             respondidaNaSessao = true;
+            
+            let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-            // BLOQUEIO VISUAL
             const btnResponder = document.querySelector('button[onclick="verificar()"]');
             btnResponder.disabled = true;
             btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
@@ -343,13 +366,17 @@
 
             if(sel.value === correta) {
                 acertos++; 
+                respondidasMap[q.id] = 'acerto';
                 f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
                 f.innerHTML = "<strong>✓ Correto!</strong>";
             } else {
                 erros++; 
+                respondidasMap[q.id] = 'erro';
                 f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
                 f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
             }
+
+            localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
             localStorage.setItem('seduc_acertos', acertos);
             localStorage.setItem('seduc_erros', erros);
             updateDash();
@@ -377,6 +404,7 @@
     </script>
 </body>
 </html>
+
 
 
 
