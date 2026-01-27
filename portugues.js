@@ -1,5 +1,326 @@
 const banco_pt = [
     {
+        id: "21Q2488763",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. São Felipe D`Oeste - RO",
+        ano: "2024",
+        prova: "Agente de Contratação",
+        enunciado: "TEXTO: 'Inteligência artificial contra o mosquito. Na batalha entre seres humanos e o mosquito Aedes aegypti, um grupo da UFMG [________] RECORRER à inteligência artificial... Um imóvel degradado tende a acumular entulho, onde se [________] REPRODUZIR os mosquitos. Um estudo de caso [________] INTEGRAR esses dados...' <br><br> Considerando-se a concordância verbal lógica, quais formas verbais preenchem adequadamente as lacunas?",
+        a: "recorreram | reproduzem | integraram",
+        b: "recorreu | reproduz | integrou",
+        c: "recorreram | reproduz | integrou",
+        d: "recorreu | reproduzem | integraram",
+        e: "recorreu | reproduzem | integrou",
+        correta: "e",
+        comentario: "1. 'Um grupo' (núcleo singular) recorreu. 2. 'Reproduzem-se os mosquitos' (sujeito plural). 3. 'Um estudo' (núcleo singular) integrou."
+    },
+    {
+        id: "22Q2486795",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. Jaru - RO",
+        ano: "2024",
+        prova: "Assistente Administrativo",
+        enunciado: "TEXTO: '...um grupo de amigas caminha pelo parque... nota-se um suspiro coletivo, revelando que, embora animadas, elas estão meia cansadas. O dia foi repleto de aventuras... preenchendo-as com memórias que se entrelaçam...'<br><br>Podemos afirmar que há um problema de concordância na seguinte frase:",
+        a: "“No crepúsculo suave da tarde, enquanto as últimas luzes do dia se despedem [...]”",
+        b: "“Mesmo assim, a cumplicidade entre elas permanece intacta [...]”",
+        c: "“O dia foi repleto de aventuras e experiências, preenchendo-as com memórias que se entrelaçam [...]”",
+        d: "“[...] ainda há espaço para a alegria compartilhada.”",
+        e: "“[...] elas estão meia cansadas.”",
+        correta: "e",
+        comentario: "O termo 'meio' quando significa 'um pouco' é advérbio e não varia. O correto é 'meio cansadas'."
+    },
+    {
+        id: "23Q2439633", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Recife", ano: "2024", prova: "Agente de Saúde",
+        enunciado: "Assinale a alternativa que contempla as assertivas corretas:",
+        a: "I, II, III e IV.", b: "I, II, III.", c: "II, III e IV.", d: "II e IV.", e: "III.",
+        correta: "c",
+        comentario: "I está errada (não se usa crase antes de verbo 'doar'). II (Alugam-se quartos), III (Sujeito composto) e IV (VTI + SE = impessoal) estão corretas."
+    },
+    {
+        id: "24Q2372376",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "SESDEC-RO",
+        ano: "2024",
+        enunciado: "TRECHO: “A violência contra as mulheres é uma temática MUITO abordada contemporaneamente, principalmente com a ênfase no movimento FEMINISTA... É CONSIDERADA mundialmente como um problema de saúde pública, além de VIOLAÇÃO de direitos humanos [...]”.<br><br>Qual das palavras em destaque NÃO poderá sofrer flexão de qualquer tipo, mesmo que haja alterações no enunciado?",
+        a: "“muito”",
+        b: "“feminista”",
+        c: "“considerada”",
+        d: "“violação”",
+        correta: "a",
+        comentario: "'Muito' modificando o adjetivo 'abordada' é advérbio de intensidade. Advérbios são classes gramaticais invariáveis."
+    },
+    {
+        id: "25Q2351788",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. Iúna - ES",
+        ano: "2024",
+        enunciado: "Identifique a concordância verbal correta na frase: <br><br> 'A maioria dos estudantes ____ na biblioteca agora.'",
+        a: "estuda.",
+        b: "estudam.",
+        c: "estudamos.",
+        d: "estudou.",
+        e: "estudavam.",
+        correta: "b",
+        comentario: "Com expressões partitivas (A maioria de...), a gramática permite concordar com o coletivo (estuda) ou com o plural que o segue (estudam). Entre as opções lógicas de tempo presente, 'estudam' é a correta."
+    },
+    {
+        id: "26Q3046260",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. Ibatiba - ES",
+        ano: "2023",
+        enunciado: "Já ______ mais de cinco anos que ___________ 19 mil candidatos no processo seletivo para novos astronautas.<br><br>As palavras que completam corretamente a frase acima são:",
+        a: "faz – havia.",
+        b: "fazem – haviam.",
+        c: "fazem – havia.",
+        d: "faz – haviam.",
+        e: "fizeram – houveram.",
+        correta: "a",
+        comentario: "Verbo 'fazer' indicando tempo e 'haver' no sentido de existir são impessoais (3ª pessoa do singular)."
+    },
+    {
+        id: "27Q2050495", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Faceli", ano: "2022", prova: "Técnico TI",
+        enunciado: "Marque abaixo quais são os processos sintáticos de concordância.",
+        a: "Concordância nominal e verbal.", b: "Sujeitos e indivíduos.", c: "Social e capital.", d: "Cores presentes e aparentes.", e: "Numeral e atlética.",
+        correta: "a",
+        comentario: "Questão teórica básica: os dois grandes tipos de concordância são a Nominal e a Verbal."
+    },
+    {
+        id: "28Q2050490", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Faceli", ano: "2022", prova: "Técnico TI",
+        enunciado: "Como identificar uma concordância verbal?",
+        a: "Identificando o verbo.", b: "Identificando o sujeito.", c: "Pela construção do enredo.", d: "Pelo tempo verbal.", e: "Quando o verbo se adapta ao número e à pessoa do sujeito.",
+        correta: "e",
+        comentario: "Definição técnica de concordância verbal: o verbo flexiona para harmonizar-se com o sujeito."
+    },
+    {
+        id: "31Q2037537",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. Barra de São Francisco - ES",
+        ano: "2022",
+        enunciado: "Assinale a alternativa que completa corretamente: <br> '________________ alguns dias que foi publicado o Edital... ________________ muitas candidatas para o cargo... mas ________________ poucas vagas.'",
+        a: "Fazem – haviam – existem.",
+        b: "Fazem – havia – existem.",
+        c: "Faz – haviam – existem.",
+        d: "Faz – havia – existe.",
+        e: "Faz – havia – existem.",
+        correta: "e",
+        comentario: "1. 'Faz' (tempo). 2. 'Havia' (existir/singular). 3. 'Existem' (concorda com o sujeito 'vagas')."
+    },
+    {
+        id: "35Q1953760", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Costa Marques/RO", ano: "2022", prova: "Técnico Seg. Trabalho",
+        enunciado: "Assinale a alternativa que RESPEITA as regras de concordância verbal:",
+        a: "Deu três horas.", b: "Os Lusíadas é uma ótima obra.", c: "Meu óculos foram achados.", d: "Choveu elogios.", e: "São proibidas entradas.",
+        correta: "b",
+        comentario: "Com títulos de obras no plural sem artigo, o verbo fica no singular. 'Os Lusíadas é...'. (Se fosse 'Meus óculos', seria plural)."
+    },
+    {
+        id: "36Q1952612",
+        materia: "Português",
+        assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE",
+        orgao: "Pref. Costa Marques - RO",
+        ano: "2022",
+        enunciado: "Assinale a alternativa que apresenta ERRO de concordância verbal.",
+        a: "Faz muitos anos que conversamos.",
+        b: "Devem haver muitos interessados na vaga.",
+        c: "Precisa-se de empregados.",
+        d: "Alugam-se imóveis novos.",
+        e: "A maioria dos entrevistados aprovou a ideia.",
+        correta: "b",
+        comentario: "Em locuções verbais com o verbo impessoal 'Haver' (sentido existir), o verbo auxiliar (devem) também deve permanecer no singular: 'Deve haver'."
+    },
+    {
+        id: "37Q1944533", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CRC-RO", ano: "2022", prova: "Assistente Administrativo",
+        enunciado: "Há erro de concordância verbal em:",
+        a: "Tem candidato esperando.", b: "Há somente cinco convidados.", c: "Foram inauguradas as quadras.", d: "Saíram as notas.", e: "Compareceu vinte pessoas.",
+        correta: "e",
+        comentario: "Sujeito 'vinte pessoas' exige verbo no plural: 'Compareceram'."
+    },
+    {
+        id: "1Q3200663", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Recife", ano: "2024", prova: "Técnico Seg. Trabalho",
+        enunciado: "Em qual das alternativas todas as regras das normas de concordância não foram respeitadas?",
+        a: "Havia cadeiras suficientes em casa.",
+        b: "Faz dois anos que eu não viajo.",
+        c: "Ainda falta dar os últimos retoques na organização.",
+        d: "Cem metros é muito.",
+        e: "Não sou eu que está atrasando você.",
+        correta: "e",
+        comentario: "Com o pronome 'que', o verbo concorda com o antecedente. O correto seria: 'Não sou eu que ESTOU'."
+    },
+    {
+        id: "2Q3123753", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Florianópolis", ano: "2024", prova: "Monitor Escolar",
+        enunciado: "Quanto à concordância nominal, em qual alternativa o uso está de acordo com a norma culta?",
+        a: "Ela usava tênis e bolsa amarelas.",
+        b: "Ela mesmo trará as compras.",
+        c: "É proibido a entrada.",
+        d: "Ele comprou dois ternos cinzas.",
+        e: "O hospital comprou vários instrumentos médico-cirúrgicos.",
+        correta: "e",
+        comentario: "Em adjetivos compostos, apenas o último elemento flexiona. 'Cinza' (cor de objeto) é invariável."
+    },
+    {
+        id: "3Q3123718", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Florianópolis", ano: "2024", prova: "Auxiliar de Sala",
+        enunciado: "Marque a alternativa correta quanto à concordância que apresenta a mesma regra de: 'Elas próprias foram buscar o pai doente; há vários candidatos aqui.'",
+        a: "Elas mesmas fizeram o bolo da festa; faz três dias que o furacão passou.",
+        b: "Eles mesmo foram buscar a mãe para viajar; bastam de tantas molecagens.",
+        c: "Ela mesmo fez o dever de casa; fazem dois dias que não o vejo.",
+        d: "Nós não estamos só; devem haver cinco doentes hoje na UPA.",
+        e: "Ele próprio fez o carro funcionar; já passam das dez horas da manhã.",
+        correta: "a",
+        comentario: "'Mesmas' concorda com o sujeito e 'faz' indica tempo decorrido (impessoal), assim como 'há'."
+    },
+    {
+        id: "4Q3102955", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CRC-MS", ano: "2024", prova: "Auxiliar Administrativo",
+        enunciado: "Na frase 'Fazem muitos dias que eu não o vejo', a forma correta do verbo para manter a concordância é:",
+        a: "fazem.", b: "fazia.", c: "fizer.", d: "faz.", e: "fez.",
+        correta: "d",
+        comentario: "Verbo fazer indicando tempo decorrido não vai para o plural."
+    },
+    {
+        id: "5Q3100382", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Ouro Preto/RO", ano: "2024", prova: "Agente de Limpeza",
+        enunciado: "Marque a alternativa que apresenta ERRO no emprego do pronome (concordância):",
+        a: "Ele não trouxe as cartas, mas ficou de enviar-lhes amanhã.",
+        b: "Fizemos o relatório e entregamos eles ao professor.",
+        c: "Eles sempre ajudam a mim e aos meus irmãos.",
+        d: "Eu pedi que me enviassem os documentos ainda hoje.",
+        e: "Ela trouxe os livros e os entregou a mim.",
+        correta: "a",
+        comentario: "O verbo 'enviar' (VTD) pede 'as' ou 'las' para cartas, e não 'lhes'."
+    },
+    {
+        id: "6Q3100380", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Ouro Preto/RO", ano: "2024", prova: "Agente de Limpeza",
+        enunciado: "Marque a alternativa que indica erro de concordância verbal.",
+        a: "O menino trouxe seus livros.", b: "Nós chegamos cedo na escola.", c: "As mulheres foi ao mercado.", d: "Eles estavam felizes.", e: "O aluno fez a lição.",
+        correta: "c",
+        comentario: "Sujeito plural (Mulheres) exige verbo no plural (foram)."
+    },
+    {
+        id: "7Q3100293", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Ouro Preto/RO", ano: "2024", prova: "Agente Administrativo",
+        enunciado: "Assinale a alternativa em que há erro de concordância verbal:",
+        a: "A diretora e o coordenador saíram.", b: "Os alunos assistiram à palestra.", c: "Nem o professor nem os alunos chegou cedo.", d: "O cachorro e o gato brincavam.", e: "João e Maria comemoraram.",
+        correta: "c",
+        comentario: "Com a conjunção 'nem...nem' e sujeitos no plural, o verbo deve ir para o plural (chegaram)."
+    },
+    {
+        id: "8Q3097606", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Câmara Ouro Preto/RO", ano: "2024", prova: "Motorista",
+        enunciado: "Assinale a alternativa em que a concordância verbal está correta.",
+        a: "Fazem três anos que nos casamos.", b: "Haviam muitos dias sem chuva.", c: "O grupo de amigos saíram para jantar.", d: "Existe muitas razões.", e: "Seguem, em anexo, os documentos solicitados.",
+        correta: "e",
+        comentario: "Documentos (sujeito) seguem (verbo). As outras possuem verbos impessoais no plural, o que é errado."
+    },
+    {
+        id: "9Q3097605", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Câmara Ouro Preto/RO", ano: "2024", prova: "Motorista",
+        enunciado: "Escolha a alternativa que apresenta a concordância verbal correta.",
+        a: "Fazem três dias.", b: "Havia pessoas na festa.", c: "É melhor vocês ir.", d: "A menina e o menino estava feliz.", e: "Mais de um aluno se feriram.",
+        correta: "b",
+        comentario: "Haver (existir) fica no singular. 'Mais de um' exige verbo no singular."
+    },
+    {
+        id: "10Q3097488", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Câmara Ouro Preto/RO", ano: "2024", prova: "Agente Administrativo",
+        enunciado: "Complete a frase corretamente: '_____ cinco anos que ele se formou.'",
+        a: "À.", b: "A.", c: "Haviam.", d: "Fazem.", e: "Faz.",
+        correta: "e",
+        comentario: "Tempo decorrido = Faz."
+    },
+    {
+        id: "11Q3028208", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CRMV-PB", ano: "2024", prova: "Fiscal",
+        enunciado: "Assinale a alternativa em que a concordância verbal está correta.",
+        a: "Faz dez meses.", b: "Fazem dez meses.", c: "Fizeram dez meses.", d: "Vão fazer dez meses.", e: "Vão fazerem dez meses.",
+        correta: "a",
+        comentario: "O verbo principal (faz) ou auxiliar em locução de tempo (vai fazer) ficam no singular."
+    },
+    {
+        id: "12Q3028202", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CRMV-PB", ano: "2024", prova: "Fiscal",
+        enunciado: "Assinale a alternativa em que a concordância nominal está correta.",
+        a: "Eles estão quite.", b: "Maria está meio confusa.", c: "Menino e menina disciplinadas.", d: "Há menas professoras.", e: "Ela tem bastante conflitos.",
+        correta: "b",
+        comentario: "'Meio' (um pouco) é advérbio e não varia. 'Menas' não existe."
+    },
+    {
+        id: "13Q3028016", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CRMV-PB", ano: "2024", prova: "Assistente Administrativo",
+        enunciado: "Assinale a alternativa em que a concordância verbal está correta:",
+        a: "Haviam muitos prédios.", b: "Haverão muitos prédios.", c: "Deve haver muitos prédios.", d: "Devem haver muitos prédios.", e: "Deve haverem muitos prédios.",
+        correta: "c",
+        comentario: "Haver (existir) contamina o auxiliar 'Deve' com sua impessoalidade."
+    },
+    {
+        id: "15Q2631200", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Jaru/RO", ano: "2024", prova: "Pedreiro",
+        enunciado: "Indique a opção na qual a concordância está devidamente empregada.",
+        a: "A multidão não ultrapassou o limite.", b: "Aluga-se apartamentos.", c: "Haviam pessoas.", d: "Soraia está menas cansada.", e: "Os relógios é caro.",
+        correta: "a",
+        comentario: "Multidão (coletivo singular) = ultrapassou (singular). 'Alugam-se' seria o correto no item B."
+    },
+    {
+        id: "16Q2537646", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Vila Velha/ES", ano: "2024", prova: "Endemias",
+        enunciado: "Na frase 'A forma como alguns participantes do BBB24 tratam Davi...', a concordância do verbo destacado está:",
+        a: "correta, concorda com 'alguns'.", b: "incorreta, deveria concordar com 'a forma'.", c: "correta, concorda com 'participantes'.", d: "incorreta, concordar com 'Davi'.", e: "correta, concorda com racismo.",
+        correta: "c",
+        comentario: "O sujeito de tratam é 'alguns participantes'."
+    },
+    {
+        id: "17Q2537472", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "Pref. Vila Velha/ES", ano: "2024", prova: "Saúde",
+        enunciado: "Na frase '...tornar seu quadro de eleitores mais diverso.', a concordância de 'diverso' está:",
+        a: "incorreta, plural.", b: "correta, concorda com 'quadro'.", c: "incorreta, concorda com Academia.", d: "correta, é o sujeito.", e: "incorreta, feminino.",
+        correta: "b",
+        comentario: "O adjetivo concorda com o núcleo do objeto direto 'quadro'."
+    },
+    {
+        id: "18Q2507320", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CISDESTE/MG", ano: "2024", prova: "Assistente Administrativo",
+        enunciado: "Analise a veracidade: I. Alunos chegou (F) | II. Maioria preferem (V) | III. Time venceu (V) | IV. Equipe preparado (F) | V. Notícias foram (V)",
+        a: "F, F, F, V, F.", b: "V, V, F, V, V.", c: "F, F, V, F, V.", d: "V, F, V, F, F.", e: "F, V, V, F, V.",
+        correta: "e",
+        comentario: "I (Erro: chegaram), II (Certo: maioria de + plural), III (Certo: time), IV (Erro: preparada)."
+    },
+    {
+        id: "19Q2507258", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CISDESTE/MG", ano: "2024", prova: "Auxiliar Administrativo",
+        enunciado: "Assinale a alternativa em que a concordância verbal está correta:",
+        a: "haviam muitos funcionários.", b: "haverão muitos.", c: "deve haver muitos.", d: "devem haver.", e: "deve haverem.",
+        correta: "c",
+        comentario: "Haver (existir) é impessoal."
+    },
+    {
+        id: "20Q2506590", materia: "Português", assunto: "Concordância Verbal e Nominal",
+        banca: "IBADE", orgao: "CISDESTE/MG", ano: "2024", prova: "Auxiliar Farmácia",
+        enunciado: "Assinale a alternativa em que a concordância verbal está correta:",
+        a: "Faz quinze anos.", b: "Fazem quinze.", c: "Fizeram quinze.", d: "Vão fazer quinze.", e: "Vão fazerem quinze.",
+        correta: "a",
+        comentario: "Tempo decorrido não varia."
+    },
+    {
         id: "IBADE_VERB_01",
         materia: "Português",
         assunto: "Verbos",
@@ -3694,6 +4015,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
