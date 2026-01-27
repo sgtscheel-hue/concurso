@@ -225,7 +225,7 @@
         let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
         let myChart;
 
-        function popularFiltros() {
+    function popularFiltros() {
     const select = document.getElementById('filtroAssunto');
     
     // Se for "todas", não mostramos assuntos específicos, pois os bancos são diferentes
@@ -244,7 +244,38 @@
     `;
 }
 
-        function aplicarFiltro() {
+    function atualizarListaAssuntos(materiaSelecionada) {
+    const selectAssunto = document.getElementById('filtro-assunto'); // Verifique se o ID é este mesmo
+    if (!selectAssunto) return;
+
+    // 1. Limpa as opções atuais, mantendo apenas a primeira ("Todos")
+    selectAssunto.innerHTML = '<option value="todos">Todos os Assuntos</option>';
+
+    if (materiaSelecionada === 'todas') return;
+
+    // 2. Filtra todos os assuntos ÚNICOS daquela matéria específica
+    // Juntamos todos os seus bancos aqui para a busca
+    const todosOsDados = [...banco_ro, ...banco_esp, ...banco_inf, ...banco_port]; 
+    
+    const assuntosMap = todosOsDados
+        .filter(q => q.materia === materiaSelecionada || q.assunto === materiaSelecionada)
+        .map(q => q.assunto);
+
+    // Remove duplicatas
+    const assuntosUnicos = [...new Set(assuntosMap)];
+
+    // 3. Adiciona os novos assuntos ao select
+    assuntosUnicos.forEach(assunto => {
+        if (assunto) {
+            const opt = document.createElement('option');
+            opt.value = assunto;
+            opt.textContent = assunto;
+            selectAssunto.appendChild(opt);
+        }
+    });
+}
+        
+    function aplicarFiltro() {
     const filtroAssunto = document.getElementById('filtroAssunto').value;
     const apenasErradas = document.getElementById('checkApenasErradas').checked;
     const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
@@ -289,7 +320,7 @@
     render();
 }
 
-        function abrirAulaAssunto() {
+    function abrirAulaAssunto() {
             const filtro = document.getElementById('filtroAssunto').value;
             const aulas = aulasPorAssunto[window.materiaAtual]?.[filtro];
             
@@ -308,11 +339,11 @@
             }
         }
 
-        function fecharModalAulas() {
+    function fecharModalAulas() {
             document.getElementById('modalAulas').classList.add('hidden');
         }
 
-        function carregarVideoNoPlayer(url) {
+    function carregarVideoNoPlayer(url) {
             const panel = document.getElementById('panel-video');
             panel.style.display = 'block'; 
             document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${url}" frameborder="0" allowfullscreen></iframe>`;
@@ -320,7 +351,7 @@
             panel.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function trocarMateria(materia, element) {
+    function trocarMateria(materia, element) {
     window.materiaAtual = materia;
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     element.classList.add('active');
@@ -350,7 +381,7 @@
         // VARIÁVEL NOVA PARA CONTROLE
         let respondidaNaSessao = false;
 
-        function render() {
+    function render() {
     const q = window.questoesFiltradas[window.index];
     document.getElementById('feedback').classList.add('hidden');
     
@@ -405,7 +436,7 @@
     updateDash();
 }
 
-       function verificar() {
+    function verificar() {
     const q = window.questoesFiltradas[window.index];
     
     // 1. Verificação de segurança: a questão tem ID?
@@ -464,7 +495,7 @@
     // Se você tiver um elemento de áudio de acerto/erro, pode tocar aqui
     updateDash(); 
 }       
-       function updateDash() {
+    function updateDash() {
     // Atualiza as variáveis globais com o que está no Storage para não perder a conta
     acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
     erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
@@ -519,6 +550,7 @@
     </script>
 </body>
 </html>
+
 
 
 
