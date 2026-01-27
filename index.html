@@ -268,55 +268,58 @@
             render();
         }
 
-        // 4. Funções de Renderização
-        function render() {
-            const q = window.questoesFiltradas[window.index];
-            const feedback = document.getElementById('feedback');
-            const btnResp = document.getElementById('btnResponder');
-            
-            feedback.classList.add('hidden');
-            document.getElementById('panel-comment').style.display = 'none';
-            document.getElementById('panel-video').style.display = 'none';
+        // 4. Funções de Renderização (VERSÃO COM CORES E NOVAS TAGS)
+function render() {
+    const q = window.questoesFiltradas[window.index];
+    const feedback = document.getElementById('feedback');
+    const btnResp = document.getElementById('btnResponder');
+    
+    feedback.classList.add('hidden');
+    document.getElementById('panel-comment').style.display = 'none';
+    document.getElementById('panel-video').style.display = 'none';
 
-            if (!q) {
-                document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
-                document.getElementById('alternativas').innerHTML = "";
-                document.getElementById('posicao').innerText = "0/0";
-                document.getElementById('info-questao').innerHTML = "";
-                return;
-            }
+    if (!q) {
+        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
+        document.getElementById('alternativas').innerHTML = "";
+        document.getElementById('posicao').innerText = "0/0";
+        document.getElementById('info-questao').innerHTML = "";
+        return;
+    }
 
-            respondidaNaSessao = false;
-            btnResp.disabled = false;
-            btnResp.classList.remove('opacity-50');
+    respondidaNaSessao = false;
+    btnResp.disabled = false;
+    btnResp.classList.remove('opacity-50');
 
-            document.getElementById('info-questao').innerHTML = `
-                <span class="tag-quest">${q.ano || 'N/A'}</span>
-                <span class="tag-quest">${q.banca || 'IBADE'}</span>
-                <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
-            `;
-            
-            document.getElementById('enunciado').innerHTML = q.enunciado;
-            document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
-            document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário.';
+    // CABEÇALHO COLORIDO E COMPLETO
+    document.getElementById('info-questao').innerHTML = `
+        <span class="tag-quest bg-blue-600 text-white border-none">${q.materia || 'Matéria'}</span>
+        <span class="tag-quest bg-emerald-100 text-emerald-700 border-emerald-200 font-bold">${q.orgao || 'Órgão'}</span>
+        <span class="tag-quest bg-amber-50 text-amber-700 border-amber-200">${q.banca || 'Banca'}</span>
+        <span class="tag-quest bg-gray-100 text-gray-600">${q.ano || 'Ano'}</span>
+        <span class="tag-quest text-blue-600 font-black border-blue-100 uppercase text-[9px]">${q.assunto || 'Assunto'}</span>
+        <span class="tag-quest italic text-gray-400 border-none">Prova: ${q.prova || 'Geral'}</span>
+    `;
+    
+    document.getElementById('enunciado').innerHTML = q.enunciado;
+    document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
+    document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário.';
 
-            document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
-                q[l] ? `<label class="block">
-                            <input type="radio" name="quiz" value="${l}" class="hidden">
-                            <div class="alternativa-card">
-                                <span class="letra-circulo uppercase">${l}</span>
-                                <div class="text-gray-700 text-[13px]">${q[l]}</div>
-                            </div>
-                        </label>` : ''
-            ).join('');
-            
-            // Controle do botão de aula
-            const filtro = document.getElementById('filtroAssunto').value;
-            const temAula = aulasPorAssunto[window.materiaAtual]?.[filtro];
-            document.getElementById('btnAulaAssunto').classList.toggle('hidden', !temAula);
-            
-            updateDash();
-        }
+    document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+        q[l] ? `<label class="block">
+                    <input type="radio" name="quiz" value="${l}" class="hidden">
+                    <div class="alternativa-card">
+                        <span class="letra-circulo uppercase">${l}</span>
+                        <div class="text-gray-700 text-[13px]">${q[l]}</div>
+                    </div>
+                </label>` : ''
+    ).join('');
+    
+    const filtro = document.getElementById('filtroAssunto').value;
+    const temAula = aulasPorAssunto[window.materiaAtual]?.[filtro];
+    document.getElementById('btnAulaAssunto').classList.toggle('hidden', !temAula);
+    
+    updateDash();
+}
 
         function verificar() {
             const q = window.questoesFiltradas[window.index];
@@ -404,4 +407,5 @@
     </script>
 </body>
 </html>
+
 
