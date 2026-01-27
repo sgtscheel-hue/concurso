@@ -20,7 +20,7 @@
         .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
         .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
         .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
-        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; }
+        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; /* Evita que a tag quebre em duas linhas */ }
     </style>
 
     <script type="importmap">
@@ -335,14 +335,14 @@
     const q = window.questoesFiltradas[window.index];
     document.getElementById('feedback').classList.add('hidden');
     
-    // Escondemos os painéis apenas se NÃO houver um vídeo de aula tocando
-    const panelVideo = document.getElementById('panel-video');
+    // Mantém o painel de comentário fechado ao trocar de questão
     document.getElementById('panel-comment').style.display = 'none';
 
     if (!q) {
         document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
         document.getElementById('alternativas').innerHTML = "";
         document.getElementById('posicao').innerText = "0 / 0";
+        document.getElementById('info-questao').innerHTML = "";
         return;
     }
 
@@ -351,22 +351,36 @@
     btnResponder.disabled = false;
     btnResponder.classList.remove('opacity-50', 'cursor-not-allowed');
 
+    // CABEÇALHO DA QUESTÃO COM AS INFORMAÇÕES SOLICITADAS
     document.getElementById('info-questao').innerHTML = `
-        <span class="tag-quest">${q.materia || window.materiaAtual}</span>
-        <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
+        <span class="tag-quest text-blue-700 bg-blue-50 border-blue-200">${q.materia || window.materiaAtual}</span>
+        <span class="tag-quest">${q.ano || 'Ano N/A'}</span>
+        <span class="tag-quest">${q.banca || 'Banca N/A'}</span>
+        <span class="tag-quest">${q.orgao || 'Órgão N/A'}</span>
+        <span class="tag-quest">${q.prova || 'Prova N/A'}</span>
+        <span class="tag-quest text-emerald-700 bg-emerald-50 border-emerald-200 font-bold">${q.assunto || 'Geral'}</span>
     `;
     
     document.getElementById('enunciado').innerHTML = q.enunciado;
     document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
-    document.getElementById('ai-resumo').innerHTML = `<p>${q.comentario || 'Sem comentário.'}</p>`;
+    document.getElementById('ai-resumo').innerHTML = `<p>${q.comentario || 'Sem comentário disponível.'}</p>`;
 
-    // Se a questão tem vídeo próprio, carrega. Se não, limpa o player (a menos que o aluno tenha aberto aula por assunto)
+    // Lógica de vídeo (Questão ou Aula)
+    const videoContainer = document.getElementById('video-container');
     if (q.videoUrl) {
-        document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
+        videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
     }
 
+    // Renderização das Alternativas
     document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
-        q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden"><div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span><div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
+        q[l] ? `
+            <label class="block">
+                <input type="radio" name="quiz" value="${l}" class="hidden">
+                <div class="alternativa-card">
+                    <span class="letra-circulo uppercase">${l}</span>
+                    <div class="text-gray-700 text-[13px]">${q[l]}</div>
+                </div>
+            </label>` : ''
     ).join('');
     
     updateDash();
@@ -447,6 +461,7 @@
     </script>
 </body>
 </html>
+
 
 
 
