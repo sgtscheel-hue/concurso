@@ -179,124 +179,96 @@
     </script>
 
     <script>
-        // CORRIGIDO: Adicionadas vírgulas e aspas que faltavam no seu objeto
-        const aulasPorAssunto = {
-            'portugues': {
-                'Verbos': [
-                    { titulo: 'Aula 01: Tudo sobre Verbos', url: 'https://www.youtube.com/embed/_G8y60xyXpU?si=rFGeC6XTIkWdZ15l' },
-                    { titulo: 'Aula 02: Verbo Haver', url: 'https://www.youtube.com/embed/Rgfb9KAYbLs?si=4NcFFaWrby43yTHy' },
-                    { titulo: 'Aula 02: Vozes Verbais', url: 'https://www.youtube.com/embed/NgR2w2v3lDg?si=DjiE-efgSK9_jVJu' },
-                    { titulo: 'Aula 02: Correlação Verbal', url: 'https://www.youtube.com/embed/mncbUqIW5JI?si=JdB2ugXOMS1zPnsJ' }
-                ],
-                'Ortografia Oficial': [
-                    { titulo: 'Aula 01: Ortografia Oficial', url: 'https://www.youtube.com/embed/xD5NDLCUhaU?si=DqhQFLYJnZo5rHPX' }
-                ],
-                'Formação das Palavras': [
-                    { titulo: 'Aula 01: Processso de Formação das Palavras', url: 'https://www.youtube.com/embed/Xw74aXTBaoY?si=28SAVGVF8NGmIwoo' }
-                ],
-                'Acentuação Gráfica': [
-                    { titulo: 'Aula 01: Regras Gerais', url: 'https://www.youtube.com/embed/nWQVPQmxWTk?si=yGR4H6DJHDrLRWXn' },
-                    { titulo: 'Aula 02: Exercícios Comentados', url: 'https://www.youtube.com/embed/URL_2' }
-                ],
-                'Classes de Palavras': [
-                    { titulo: 'Classe das Palavras', url: 'https://www.youtube.com/embed/ltrzPijgKi4?si=eYAIPdDj4ryAfIBm' },
-                    { titulo: 'Conjunções', url: 'https://www.youtube.com/embed/tKJkDQSMdh0?si=KCbnoh96kIYpY0OE' }
-                ]
-            },
-            'rondonia': {
-                'História de Rondônia': [
-                    { titulo: 'Ciclo da Borracha', url: 'https://www.youtube.com/embed/URL_4' },
-                    { titulo: 'Criação do Estado', url: 'https://www.youtube.com/embed/URL_5' }
-                ]
-            }
-        };
+        // 1. BANCO DE AULAS CORRIGIDO
+    const aulasPorAssunto = {
+        'portugues': {
+            'Verbos': [
+                { titulo: 'Aula 01: Tudo sobre Verbos', url: 'https://www.youtube.com/embed/_G8y60xyXpU' },
+                { titulo: 'Aula 02: Verbo Haver', url: 'https://www.youtube.com/embed/Rgfb9KAYbLs' }
+            ],
+            'Ortografia Oficial': [{ titulo: 'Aula 01: Ortografia', url: 'https://www.youtube.com/embed/xD5NDLCUhaU' }]
+        },
+        'rondonia': {
+            'Hist e Geo RO': [{ titulo: 'História de Rondônia', url: 'https://www.youtube.com/embed/URL_RO' }]
+        }
+    };
 
-        window.bibliotecas = {
-            'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
-            'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
-            'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
-            'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
-        };
+       // 2. INICIALIZAÇÃO DOS BANCOS
+    window.bibliotecas = {
+        'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+        'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+        'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+        'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+    };
 
-        window.materiaAtual = 'portugues';
-        window.index = 0;
-        window.questoesFiltradas = [];
-        let acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
-        let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
-        let myChart;
-
-    function popularFiltros() {
-    const select = document.getElementById('filtroAssunto');
-    if (!select) return;
-
-    if (window.materiaAtual === 'todas') {
-        select.innerHTML = `<option value="todos">Selecione uma matéria para filtrar por assunto</option>`;
-        select.disabled = true;
-        return;
-    }
-
-    select.disabled = false;
-    
-    // Busca os dados na biblioteca correta
-    const dadosMateria = window.bibliotecas[window.materiaAtual] || [];
-    
-    // Extrai assuntos e remove duplicatas
-    const assuntos = [...new Set(dadosMateria.map(q => q.assunto).filter(Boolean))];
-    
-    const nomeMateriaTexto = document.getElementById('nomeMateriaAtual').innerText;
-    
-    let html = `<option value="todos">Todos os assuntos de ${nomeMateriaTexto}</option>`;
-    html += assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
-    
-    select.innerHTML = html;
-    select.value = "todos"; // Reseta o filtro de assunto ao mudar a matéria
-}
-           
-    function aplicarFiltro() {
-    const filtroAssunto = document.getElementById('filtroAssunto').value;
-    const apenasErradas = document.getElementById('checkApenasErradas').checked;
-    const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
-    const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-
-    // 1. Pega a base da matéria atual ou todas
-    let resultado = [];
-    if (window.materiaAtual === 'todas') {
-        resultado = Object.values(window.bibliotecas).flat();
-    } else {
-        resultado = [...(window.bibliotecas[window.materiaAtual] || [])];
-    }
-
-    // 2. FILTRO DE ASSUNTO (Só aplica se não for "todos" e se não for a opção de aviso)
-    if (filtroAssunto !== 'todos' && filtroAssunto !== 'Selecione uma matéria para filtrar por assunto') {
-        resultado = resultado.filter(q => q.assunto === filtroAssunto);
-    }
-
-    // 3. FILTRO DE DESEMPENHO (Sempre deve rodar)
-    if (apenasErradas) {
-        resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
-    }
-    
-    if (apenasNaoRespondidas) {
-        resultado = resultado.filter(q => !respondidasMap[q.id]);
-    }
-
-    // 4. Atualiza estado e interface
-    window.questoesFiltradas = resultado;
+    window.materiaAtual = 'portugues';
     window.index = 0;
+    window.questoesFiltradas = [];
+    let acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+    let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+    let myChart;
+    let respondidaNaSessao = false;
 
-    // Lógica do botão de aula
-    const btnAula = document.getElementById('btnAulaAssunto');
-    const temAula = aulasPorAssunto[window.materiaAtual] && aulasPorAssunto[window.materiaAtual][filtroAssunto];
-    
-    if (temAula && filtroAssunto !== 'todos') {
-        btnAula.classList.remove('hidden');
-    } else {
-        btnAula.classList.add('hidden');
+    // 3. FUNÇÃO PARA POPULAR FILTROS (CORRIGIDA)
+    function popularFiltros() {
+        const select = document.getElementById('filtroAssunto');
+        if (!select) return;
+
+        if (window.materiaAtual === 'todas') {
+            select.innerHTML = `<option value="todos">Filtro desativado para "Todas"</option>`;
+            select.disabled = true;
+            return;
+        }
+
+        select.disabled = false;
+        const banco = window.bibliotecas[window.materiaAtual] || [];
+        const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
+        
+        const nomeMateria = document.getElementById('nomeMateriaAtual').innerText;
+        
+        select.innerHTML = `<option value="todos">Todos os assuntos de ${nomeMateria}</option>` + 
+                          assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+        select.value = "todos";
     }
+        // 4. TROCAR MATÉRIA (CORRIGIDA - SEM FUNÇÃO DUPLICADA DENTRO)
+    function trocarMateria(materia, element) {
+        window.materiaAtual = materia;
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+        
+        popularFiltros();
+        aplicarFiltro();
+    }
+           
+    // 5. APLICAR FILTROS
+    function aplicarFiltro() {
+        const filtroAssunto = document.getElementById('filtroAssunto').value;
+        const apenasErradas = document.getElementById('checkApenasErradas').checked;
+        const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
+        const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
 
-    render();
-}
+        let resultado = (window.materiaAtual === 'todas') 
+            ? Object.values(window.bibliotecas).flat() 
+            : [...(window.bibliotecas[window.materiaAtual] || [])];
 
+        if (filtroAssunto !== 'todos') {
+            resultado = resultado.filter(q => q.assunto === filtroAssunto);
+        }
+
+        if (apenasErradas) resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
+        if (apenasNaoRespondidas) resultado = resultado.filter(q => !respondidasMap[q.id]);
+
+        window.questoesFiltradas = resultado;
+        window.index = 0;
+        
+        // Botão de aula
+        const btnAula = document.getElementById('btnAulaAssunto');
+        const temAula = aulasPorAssunto[window.materiaAtual]?.[filtroAssunto];
+        btnAula.classList.toggle('hidden', !(temAula && filtroAssunto !== 'todos'));
+
+        render();
+    }
     function abrirAulaAssunto() {
             const filtro = document.getElementById('filtroAssunto').value;
             const aulas = aulasPorAssunto[window.materiaAtual]?.[filtro];
@@ -377,175 +349,106 @@
         // VARIÁVEL NOVA PARA CONTROLE
         let respondidaNaSessao = false;
 
+    // 6. RENDERIZAÇÃO E LÓGICA DE BOTÕES
     function render() {
-    const q = window.questoesFiltradas[window.index];
-    document.getElementById('feedback').classList.add('hidden');
-    
-    // Mantém o painel de comentário fechado ao trocar de questão
-    document.getElementById('panel-comment').style.display = 'none';
+        const q = window.questoesFiltradas[window.index];
+        const feedback = document.getElementById('feedback');
+        feedback.classList.add('hidden');
+        document.getElementById('panel-comment').style.display = 'none';
 
-    if (!q) {
-        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
-        document.getElementById('alternativas').innerHTML = "";
-        document.getElementById('posicao').innerText = "0 / 0";
-        document.getElementById('info-questao').innerHTML = "";
-        return;
-    }
-
-    respondidaNaSessao = false;
-    const btnResponder = document.querySelector('button[onclick="verificar()"]');
-    btnResponder.disabled = false;
-    btnResponder.classList.remove('opacity-50', 'cursor-not-allowed');
-
-    // CABEÇALHO DA QUESTÃO COM AS INFORMAÇÕES SOLICITADAS
-    document.getElementById('info-questao').innerHTML = `
-        <span class="tag-quest text-blue-700 bg-blue-50 border-blue-200">${q.materia || window.materiaAtual}</span>
-        <span class="tag-quest">${q.ano || 'Ano N/A'}</span>
-        <span class="tag-quest">${q.banca || 'Banca N/A'}</span>
-        <span class="tag-quest">${q.orgao || 'Órgão N/A'}</span>
-        <span class="tag-quest">${q.prova || 'Prova N/A'}</span>
-        <span class="tag-quest text-emerald-700 bg-emerald-50 border-emerald-200 font-bold">${q.assunto || 'Geral'}</span>
-    `;
-    
-    document.getElementById('enunciado').innerHTML = q.enunciado;
-    document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
-    document.getElementById('ai-resumo').innerHTML = `<p>${q.comentario || 'Sem comentário disponível.'}</p>`;
-
-    // Lógica de vídeo (Questão ou Aula)
-    const videoContainer = document.getElementById('video-container');
-    if (q.videoUrl) {
-        videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${q.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // Renderização das Alternativas
-    document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
-        q[l] ? `
-            <label class="block">
-                <input type="radio" name="quiz" value="${l}" class="hidden">
-                <div class="alternativa-card">
-                    <span class="letra-circulo uppercase">${l}</span>
-                    <div class="text-gray-700 text-[13px]">${q[l]}</div>
-                </div>
-            </label>` : ''
-    ).join('');
-    
-    updateDash();
-}
-
-    function verificar() {
-    const q = window.questoesFiltradas[window.index];
-    
-    // 1. Verificação de segurança: a questão tem ID?
-    if (!q || !q.id) {
-        alert("Erro técnico: Esta questão não possui um ID válido.");
-        return;
-    }
-
-    if (respondidaNaSessao) return;
-
-    const sel = document.querySelector('input[name="quiz"]:checked');
-    if (!sel) {
-        alert("Por favor, selecione uma alternativa.");
-        return;
-    }
-
-    const correta = q.correta.toLowerCase().trim();
-    const selecionada = sel.value.toLowerCase().trim();
-    const f = document.getElementById('feedback');
-    f.classList.remove('hidden');
-
-    respondidaNaSessao = true; 
-
-    // Bloqueio visual dos inputs e botão
-    const btnResponder = document.querySelector('button[onclick="verificar()"]');
-    if (btnResponder) {
-        btnResponder.disabled = true;
-        btnResponder.classList.add('opacity-50', 'cursor-not-allowed');
-    }
-    document.querySelectorAll('input[name="quiz"]').forEach(input => input.disabled = true);
-
-    // Carrega o mapa de respostas
-    let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-
-    if (selecionada === correta) {
-        f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
-        f.innerHTML = "<strong>✓ Correto!</strong>";
-        respondidasMap[q.id] = 'acerto';
-    } else {
-        f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
-        f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + correta.toUpperCase();
-        respondidasMap[q.id] = 'erro';
-    }
-
-    // 2. NOVA LÓGICA DE CONTABILIZAÇÃO (À prova de erros)
-    // Em vez de somar/subtrair, contamos os valores do mapa
-    const valores = Object.values(respondidasMap);
-    acertos = valores.filter(v => v === 'acerto').length;
-    erros = valores.filter(v => v === 'erro').length;
-
-    // Salva tudo imediatamente
-    localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
-    localStorage.setItem('seduc_acertos', acertos);
-    localStorage.setItem('seduc_erros', erros);
-    
-    // Se você tiver um elemento de áudio de acerto/erro, pode tocar aqui
-    updateDash(); 
-}       
-    function updateDash() {
-    // Atualiza as variáveis globais com o que está no Storage para não perder a conta
-    acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
-    erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
-
-    document.getElementById('dashAcertos').innerText = acertos;
-    document.getElementById('dashErros').innerText = erros;
-    
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    const total = acertos + erros;
-    
-    const data = { 
-        datasets: [{ 
-            data: total === 0 ? [1, 0] : [acertos, erros], 
-            backgroundColor: total === 0 ? ['#E5E7EB', '#E5E7EB'] : ['#10B981', '#EF4444'], 
-            borderWidth: 0 
-        }] 
-    };
-
-    if (myChart) { 
-        myChart.data = data; 
-        myChart.update(); 
-    } else { 
-        myChart = new Chart(ctx, { 
-            type: 'doughnut', 
-            data: data, 
-            options: { cutout: '75%', plugins: { legend: { display: false } } } 
-        }); 
-    }
-}
-
-        function togglePanel(id) {
-            const p = document.getElementById(id);
-            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        if (!q) {
+            document.getElementById('enunciado').innerText = "Nenhuma questão encontrada.";
+            document.getElementById('alternativas').innerHTML = "";
+            document.getElementById('posicao').innerText = "0/0";
+            return;
         }
 
-        function resetar() { if(confirm("Zerar desempenho?")) { localStorage.clear(); location.reload(); } }
-        function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
-        function anterior() { if(window.index > 0) { window.index--; render(); } }
+        respondidaNaSessao = false;
+        const btnResp = document.querySelector('button[onclick="verificar()"]');
+        btnResp.disabled = false;
+        btnResp.classList.remove('opacity-50');
+
+        document.getElementById('info-questao').innerHTML = `
+            <span class="tag-quest">${q.ano || '2024'}</span>
+            <span class="tag-quest">${q.banca || 'IBADE'}</span>
+            <span class="tag-quest font-bold text-blue-600">${q.assunto}</span>
+        `;
         
-        window.onload = () => {
-    // Inicializa os bancos de dados caso os scripts demorem a carregar
-    window.bibliotecas = {
-        'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
-        'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
-        'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
-        'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+        document.getElementById('enunciado').innerHTML = q.enunciado;
+        document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
+        document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário.';
+
+        document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+            q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden">
+                    <div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span>
+                    <div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
+        ).join('');
+        updateDash();
+    }
+
+    function verificar() {
+        const q = window.questoesFiltradas[window.index];
+        const sel = document.querySelector('input[name="quiz"]:checked');
+        if (!sel || respondidaNaSessao) return;
+
+        respondidaNaSessao = true;
+        const f = document.getElementById('feedback');
+        f.classList.remove('hidden');
+        
+        let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+        if (sel.value === q.correta.toLowerCase()) {
+            f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+            f.innerHTML = "✓ Correto!";
+            respondidasMap[q.id] = 'acerto';
+        } else {
+            f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+            f.innerHTML = "✕ Errado. Gabarito: " + q.correta.toUpperCase();
+            respondidasMap[q.id] = 'erro';
+        }
+
+        localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
+        const valores = Object.values(respondidasMap);
+        localStorage.setItem('seduc_acertos', valores.filter(v => v === 'acerto').length);
+        localStorage.setItem('seduc_erros', valores.filter(v => v === 'erro').length);
+        updateDash();
+    }
+    function updateDash() {
+        acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+        erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+        document.getElementById('dashAcertos').innerText = acertos;
+        document.getElementById('dashErros').innerText = erros;
+        
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        if (myChart) myChart.destroy();
+        myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: (acertos + erros === 0) ? [1, 0] : [acertos, erros],
+                    backgroundColor: (acertos + erros === 0) ? ['#E5E7EB'] : ['#10B981', '#EF4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: { cutout: '75%', plugins: { legend: { display: false } } }
+        });
+    }
+
+    function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
+    function anterior() { if(window.index > 0) { window.index--; render(); } }
+    function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+    function resetar() { if(confirm("Zerar?")) { localStorage.clear(); location.reload(); } }
+    function fecharModalAulas() { document.getElementById('modalAulas').classList.add('hidden'); }
+
+    window.onload = () => {
+        popularFiltros();
+        aplicarFiltro();
     };
-    popularFiltros();
-    aplicarFiltro();
     updateDash();
 };
     </script>
 </body>
 </html>
+
 
 
 
