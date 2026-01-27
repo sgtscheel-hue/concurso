@@ -322,28 +322,48 @@
 
     function trocarMateria(materia, element) {
     window.materiaAtual = materia;
+    
+    // Atualiza o visual do menu
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     element.classList.add('active');
-    document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+    
+    // Atualiza o texto da matéria no dashboard
+    const nomeMateria = document.getElementById('nomeMateriaAtual');
+    if (nomeMateria) nomeMateria.innerText = element.innerText;
+    
+    // CORREÇÃO: Chama a função que já existe no seu código para atualizar o Select
+    popularFiltros(); 
+    
+    // Aplica o filtro de questões
+    aplicarFiltro();
+}
     
     function popularFiltros() {
     const select = document.getElementById('filtroAssunto');
-    
+    if (!select) return;
+
     if (window.materiaAtual === 'todas') {
-        select.innerHTML = `<option value="todos">Filtro por assunto desativado (Todas as Matérias)</option>`;
+        select.innerHTML = `<option value="todos">Selecione uma matéria para filtrar por assunto</option>`;
         select.disabled = true;
         return;
     }
 
     select.disabled = false;
-    // Pega assuntos únicos da matéria selecionada
-    const assuntos = [...new Set(window.bibliotecas[window.materiaAtual].map(q => q.assunto).filter(Boolean))];
     
-    let html = `<option value="todos">Todos os assuntos de ${document.getElementById('nomeMateriaAtual').innerText}</option>`;
-    html += assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+    // Busca os assuntos no banco da matéria selecionada
+    const banco = window.bibliotecas[window.materiaAtual] || [];
+    const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
     
-    select.innerHTML = html;
-    select.value = "todos"; // Força o reset do valor ao mudar de matéria
+    // Pega o nome amigável da matéria para o cabeçalho do select
+    const nomeExibicao = document.getElementById('nomeMateriaAtual').innerText;
+    
+    select.innerHTML = `
+        <option value="todos">Todos os assuntos de ${nomeExibicao}</option>
+        ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
+    `;
+    
+    // Importante: Volta o select para "todos" ao trocar de matéria
+    select.value = "todos"; 
 }
     aplicarFiltro();
 }      
@@ -519,6 +539,7 @@
     </script>
 </body>
 </html>
+
 
 
 
