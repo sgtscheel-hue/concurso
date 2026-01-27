@@ -20,7 +20,7 @@
         .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
         .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
         .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
-        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; /* Evita que a tag quebre em duas linhas */ }
+        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; }
     </style>
 
     <script type="importmap">
@@ -41,13 +41,13 @@
                 <div class="h-32 mb-4"><canvas id="performanceChart"></canvas></div>
                 
                 <h2 class="text-xs font-black text-gray-400 uppercase mb-2 border-t pt-4">Matérias</h2>
-<nav class="space-y-1 mb-4">
-    <div onclick="trocarMateria('todas', this)" class="menu-item">Todas as Matérias</div>
-    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
-    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
-    <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
-    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
-</nav>
+                <nav class="space-y-1 mb-4">
+                    <div onclick="trocarMateria('todas', this)" class="menu-item">Todas as Matérias</div>
+                    <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
+                    <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
+                    <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
+                    <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
+                </nav>
 
                 <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2">Filtrar Assunto</h2>
                 <select id="filtroAssunto" onchange="aplicarFiltro()" class="w-full text-[11px] p-2 rounded border border-gray-200 bg-gray-50 outline-none">
@@ -55,16 +55,13 @@
                 </select>
 
                 <div class="mt-2 space-y-1">
-    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
-        <input type="checkbox" id="checkApenasErradas" onchange="aplicarFiltro()" class="mr-2"> 
-        Apenas as que errei
-    </label>
-    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
-        <input type="checkbox" id="checkNaoRespondidas" onchange="aplicarFiltro()" class="mr-2"> 
-        Apenas não respondidas
-    </label>
-</div>
-
+                    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+                        <input type="checkbox" id="checkApenasErradas" onchange="aplicarFiltro()" class="mr-2"> Apenas as que errei
+                    </label>
+                    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+                        <input type="checkbox" id="checkNaoRespondidas" onchange="aplicarFiltro()" class="mr-2"> Apenas não respondidas
+                    </label>
+                </div>
                 
                 <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
                     <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
@@ -90,13 +87,13 @@
 
                     <div class="mt-4 flex items-center justify-between border-t pt-4">
                         <div class="flex gap-2">
-                            <button onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
+                            <button id="btnResponder" onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
                             <button onclick="togglePanel('panel-comment')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-gray-200">Comentário</button>
                             <button onclick="togglePanel('panel-video')" class="bg-red-50 text-red-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-red-100">Vídeo Aula</button>
                         </div>
                         <div class="flex gap-4 items-center">
                             <button onclick="anterior()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-left"></i></button>
-                            <span id="posicao" class="text-[10px] text-gray-400 font-bold uppercase">1/20</span>
+                            <span id="posicao" class="text-[10px] text-gray-400 font-bold uppercase">0/0</span>
                             <button onclick="proxima()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
@@ -135,8 +132,7 @@
                 <h3 class="font-bold text-sm uppercase"><i class="fa-solid fa-layer-group mr-2"></i> Escolha a Vídeo Aula</h3>
                 <button onclick="fecharModalAulas()" class="hover:text-amber-200"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <div id="listaAulas" class="p-4 space-y-2 max-h-80 overflow-y-auto">
-                </div>
+            <div id="listaAulas" class="p-4 space-y-2 max-h-80 overflow-y-auto"></div>
         </div>
     </div>
 
@@ -160,12 +156,9 @@
             chat.scrollTop = chat.scrollHeight;
 
             try {
-                const lista = window.questoesFiltradas;
-                const idx = window.index;
-                const q = lista[idx];
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", apiVersion: "v1" }, { apiVersion: 'v1' });
-
-                const context = `Você é um Professor de Concursos. Materia: ${window.materiaAtual}. Questão: ${q.enunciado}. Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
+                const q = window.questoesFiltradas[window.index];
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const context = `Você é um Professor de Concursos. Matéria: ${window.materiaAtual}. Questão: ${q.enunciado}. Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
                 const result = await model.generateContent(context);
                 const response = await result.response;
                 loading.innerText = response.text();
@@ -179,294 +172,212 @@
     </script>
 
     <script>
-        // 1. BANCO DE AULAS CORRIGIDO
-    const aulasPorAssunto = {
-        'portugues': {
-            'Verbos': [
-                { titulo: 'Aula 01: Tudo sobre Verbos', url: 'https://www.youtube.com/embed/_G8y60xyXpU' },
-                { titulo: 'Aula 02: Verbo Haver', url: 'https://www.youtube.com/embed/Rgfb9KAYbLs' }
-            ],
-            'Ortografia Oficial': [{ titulo: 'Aula 01: Ortografia', url: 'https://www.youtube.com/embed/xD5NDLCUhaU' }]
-        },
-        'rondonia': {
-            'Hist e Geo RO': [{ titulo: 'História de Rondônia', url: 'https://www.youtube.com/embed/URL_RO' }]
-        }
-    };
+        // 1. Configurações Iniciais
+        const aulasPorAssunto = {
+            'portugues': {
+                'Verbos': [
+                    { titulo: 'Aula 01: Tudo sobre Verbos', url: 'https://www.youtube.com/embed/_G8y60xyXpU' },
+                    { titulo: 'Aula 02: Verbo Haver', url: 'https://www.youtube.com/embed/Rgfb9KAYbLs' }
+                ]
+            }
+        };
 
-       // 2. INICIALIZAÇÃO DOS BANCOS
-    window.bibliotecas = {
-        'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
-        'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
-        'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
-        'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
-    };
-
-    window.materiaAtual = 'portugues';
-    window.index = 0;
-    window.questoesFiltradas = [];
-    let acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
-    let erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
-    let myChart;
-    let respondidaNaSessao = false;
-
-    // 3. FUNÇÃO PARA POPULAR FILTROS (CORRIGIDA)
-    function popularFiltros() {
-        const select = document.getElementById('filtroAssunto');
-        if (!select) return;
-
-        if (window.materiaAtual === 'todas') {
-            select.innerHTML = `<option value="todos">Filtro desativado para "Todas"</option>`;
-            select.disabled = true;
-            return;
-        }
-
-        select.disabled = false;
-        const banco = window.bibliotecas[window.materiaAtual] || [];
-        const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
-        
-        const nomeMateria = document.getElementById('nomeMateriaAtual').innerText;
-        
-        select.innerHTML = `<option value="todos">Todos os assuntos de ${nomeMateria}</option>` + 
-                          assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
-        select.value = "todos";
-    }
-        // 4. TROCAR MATÉRIA (CORRIGIDA - SEM FUNÇÃO DUPLICADA DENTRO)
-    function trocarMateria(materia, element) {
-        window.materiaAtual = materia;
-        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-        element.classList.add('active');
-        document.getElementById('nomeMateriaAtual').innerText = element.innerText;
-        
-        popularFiltros();
-        aplicarFiltro();
-    }
-           
-    // 5. APLICAR FILTROS
-    function aplicarFiltro() {
-        const filtroAssunto = document.getElementById('filtroAssunto').value;
-        const apenasErradas = document.getElementById('checkApenasErradas').checked;
-        const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
-        const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-
-        let resultado = (window.materiaAtual === 'todas') 
-            ? Object.values(window.bibliotecas).flat() 
-            : [...(window.bibliotecas[window.materiaAtual] || [])];
-
-        if (filtroAssunto !== 'todos') {
-            resultado = resultado.filter(q => q.assunto === filtroAssunto);
-        }
-
-        if (apenasErradas) resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
-        if (apenasNaoRespondidas) resultado = resultado.filter(q => !respondidasMap[q.id]);
-
-        window.questoesFiltradas = resultado;
+        window.materiaAtual = 'portugues';
         window.index = 0;
-        
-        // Botão de aula
-        const btnAula = document.getElementById('btnAulaAssunto');
-        const temAula = aulasPorAssunto[window.materiaAtual]?.[filtroAssunto];
-        btnAula.classList.toggle('hidden', !(temAula && filtroAssunto !== 'todos'));
+        window.questoesFiltradas = [];
+        let respondidaNaSessao = false;
+        let myChart = null;
 
-        render();
-    }
-    function abrirAulaAssunto() {
+        // 2. Inicializar Bibliotecas
+        function atualizarBibliotecas() {
+            window.bibliotecas = {
+                'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+                'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+                'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+                'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+            };
+        }
+
+        // 3. Funções de Controle de Interface
+        function trocarMateria(materia, element) {
+            window.materiaAtual = materia;
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+            
+            popularFiltros();
+            aplicarFiltro();
+        }
+
+        function popularFiltros() {
+            const select = document.getElementById('filtroAssunto');
+            if (window.materiaAtual === 'todas') {
+                select.innerHTML = '<option value="todos">Selecione uma matéria específica</option>';
+                select.disabled = true;
+                return;
+            }
+            select.disabled = false;
+            const banco = window.bibliotecas[window.materiaAtual] || [];
+            const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
+            select.innerHTML = `<option value="todos">Todos os assuntos</option>` + 
+                              assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+            select.value = "todos";
+        }
+
+        function aplicarFiltro() {
+            const filtroAssunto = document.getElementById('filtroAssunto').value;
+            const apenasErradas = document.getElementById('checkApenasErradas').checked;
+            const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
+            const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+
+            let resultado = (window.materiaAtual === 'todas') 
+                ? Object.values(window.bibliotecas).flat() 
+                : [...(window.bibliotecas[window.materiaAtual] || [])];
+
+            if (filtroAssunto !== 'todos') {
+                resultado = resultado.filter(q => q.assunto === filtroAssunto);
+            }
+            if (apenasErradas) resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
+            if (apenasNaoRespondidas) resultado = resultado.filter(q => !respondidasMap[q.id]);
+
+            window.questoesFiltradas = resultado;
+            window.index = 0;
+            render();
+        }
+
+        // 4. Funções de Renderização
+        function render() {
+            const q = window.questoesFiltradas[window.index];
+            const feedback = document.getElementById('feedback');
+            const btnResp = document.getElementById('btnResponder');
+            
+            feedback.classList.add('hidden');
+            document.getElementById('panel-comment').style.display = 'none';
+            document.getElementById('panel-video').style.display = 'none';
+
+            if (!q) {
+                document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
+                document.getElementById('alternativas').innerHTML = "";
+                document.getElementById('posicao').innerText = "0/0";
+                document.getElementById('info-questao').innerHTML = "";
+                return;
+            }
+
+            respondidaNaSessao = false;
+            btnResp.disabled = false;
+            btnResp.classList.remove('opacity-50');
+
+            document.getElementById('info-questao').innerHTML = `
+                <span class="tag-quest">${q.ano || 'N/A'}</span>
+                <span class="tag-quest">${q.banca || 'IBADE'}</span>
+                <span class="tag-quest text-blue-600">${q.assunto || 'Geral'}</span>
+            `;
+            
+            document.getElementById('enunciado').innerHTML = q.enunciado;
+            document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
+            document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário.';
+
+            document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+                q[l] ? `<label class="block">
+                            <input type="radio" name="quiz" value="${l}" class="hidden">
+                            <div class="alternativa-card">
+                                <span class="letra-circulo uppercase">${l}</span>
+                                <div class="text-gray-700 text-[13px]">${q[l]}</div>
+                            </div>
+                        </label>` : ''
+            ).join('');
+            
+            // Controle do botão de aula
+            const filtro = document.getElementById('filtroAssunto').value;
+            const temAula = aulasPorAssunto[window.materiaAtual]?.[filtro];
+            document.getElementById('btnAulaAssunto').classList.toggle('hidden', !temAula);
+            
+            updateDash();
+        }
+
+        function verificar() {
+            const q = window.questoesFiltradas[window.index];
+            const sel = document.querySelector('input[name="quiz"]:checked');
+            if (!sel || respondidaNaSessao) return;
+
+            respondidaNaSessao = true;
+            document.getElementById('btnResponder').disabled = true;
+            document.getElementById('btnResponder').classList.add('opacity-50');
+
+            const f = document.getElementById('feedback');
+            f.classList.remove('hidden');
+            
+            let map = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+            if (sel.value === q.correta.toLowerCase()) {
+                f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+                f.innerHTML = "<strong>✓ Correto!</strong>";
+                map[q.id] = 'acerto';
+            } else {
+                f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+                f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + q.correta.toUpperCase();
+                map[q.id] = 'erro';
+            }
+
+            localStorage.setItem('seduc_respondidas_map', JSON.stringify(map));
+            const vals = Object.values(map);
+            localStorage.setItem('seduc_acertos', vals.filter(v => v === 'acerto').length);
+            localStorage.setItem('seduc_erros', vals.filter(v => v === 'erro').length);
+            updateDash();
+        }
+
+        function updateDash() {
+            const acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+            const erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+            document.getElementById('dashAcertos').innerText = acertos;
+            document.getElementById('dashErros').innerText = erros;
+            
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: (acertos + erros === 0) ? [1, 0] : [acertos, erros],
+                        backgroundColor: (acertos + erros === 0) ? ['#E5E7EB'] : ['#10B981', '#EF4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { cutout: '75%', plugins: { legend: { display: false } } }
+            });
+        }
+
+        // Funções de Navegação e Utilitários
+        function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
+        function anterior() { if(window.index > 0) { window.index--; render(); } }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+        function resetar() { if(confirm("Deseja zerar seu progresso?")) { localStorage.clear(); location.reload(); } }
+        function fecharModalAulas() { document.getElementById('modalAulas').classList.add('hidden'); }
+        
+        function abrirAulaAssunto() {
             const filtro = document.getElementById('filtroAssunto').value;
             const aulas = aulasPorAssunto[window.materiaAtual]?.[filtro];
-            
-            if (aulas && aulas.length > 0) {
-                const modal = document.getElementById('modalAulas');
+            if (aulas) {
                 const lista = document.getElementById('listaAulas');
-                lista.innerHTML = '';
-                aulas.forEach((aula, idx) => {
-                    lista.innerHTML += `
-                        <button onclick="carregarVideoNoPlayer('${aula.url}')" class="w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-amber-50 border border-gray-200 rounded-lg transition group text-left">
-                            <div class="w-8 h-8 bg-amber-100 group-hover:bg-amber-500 group-hover:text-white text-amber-600 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">${idx + 1}</div>
-                            <span class="text-xs font-semibold text-gray-700 group-hover:text-amber-700">${aula.titulo}</span>
-                        </button>`;
-                });
-                modal.classList.remove('hidden');
+                lista.innerHTML = aulas.map((a, i) => `
+                    <button onclick="carregarVideo('${a.url}')" class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-amber-50 text-xs font-bold border mb-2">
+                        ${i+1}. ${a.titulo}
+                    </button>`).join('');
+                document.getElementById('modalAulas').classList.remove('hidden');
             }
         }
 
-    function fecharModalAulas() {
-            document.getElementById('modalAulas').classList.add('hidden');
-        }
-
-    function carregarVideoNoPlayer(url) {
-            const panel = document.getElementById('panel-video');
-            panel.style.display = 'block'; 
+        function carregarVideo(url) {
+            document.getElementById('panel-video').style.display = 'block';
             document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${url}" frameborder="0" allowfullscreen></iframe>`;
             fecharModalAulas();
-            panel.scrollIntoView({ behavior: 'smooth' });
         }
 
-    function trocarMateria(materia, element) {
-    window.materiaAtual = materia;
-    
-    // 1. Atualiza visual do Menu
-    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-    element.classList.add('active');
-    
-    // 2. Atualiza o título da matéria no topo
-    document.getElementById('nomeMateriaAtual').innerText = element.innerText;
-    
-    // 3. ATUALIZA O FILTRO DE ASSUNTOS (O passo que estava faltando)
-    popularFiltros();
-    
-    // 4. Carrega as questões da nova matéria
-    aplicarFiltro();
-}
-    
-    function popularFiltros() {
-    const select = document.getElementById('filtroAssunto');
-    if (!select) return;
-
-    if (window.materiaAtual === 'todas') {
-        select.innerHTML = `<option value="todos">Selecione uma matéria para filtrar por assunto</option>`;
-        select.disabled = true;
-        return;
-    }
-
-    select.disabled = false;
-    
-    // Busca os assuntos no banco da matéria selecionada
-    const banco = window.bibliotecas[window.materiaAtual] || [];
-    const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
-    
-    // Pega o nome amigável da matéria para o cabeçalho do select
-    const nomeExibicao = document.getElementById('nomeMateriaAtual').innerText;
-    
-    select.innerHTML = `
-        <option value="todos">Todos os assuntos de ${nomeExibicao}</option>
-        ${assuntos.map(a => `<option value="${a}">${a}</option>`).join('')}
-    `;
-    
-    // Importante: Volta o select para "todos" ao trocar de matéria
-    select.value = "todos"; 
-}
-    aplicarFiltro();
-}      
-        // VARIÁVEL NOVA PARA CONTROLE
-        let respondidaNaSessao = false;
-
-    // 6. RENDERIZAÇÃO E LÓGICA DE BOTÕES
-    function render() {
-        const q = window.questoesFiltradas[window.index];
-        const feedback = document.getElementById('feedback');
-        feedback.classList.add('hidden');
-        document.getElementById('panel-comment').style.display = 'none';
-
-        if (!q) {
-            document.getElementById('enunciado').innerText = "Nenhuma questão encontrada.";
-            document.getElementById('alternativas').innerHTML = "";
-            document.getElementById('posicao').innerText = "0/0";
-            return;
-        }
-
-        respondidaNaSessao = false;
-        const btnResp = document.querySelector('button[onclick="verificar()"]');
-        btnResp.disabled = false;
-        btnResp.classList.remove('opacity-50');
-
-        document.getElementById('info-questao').innerHTML = `
-            <span class="tag-quest">${q.ano || '2024'}</span>
-            <span class="tag-quest">${q.banca || 'IBADE'}</span>
-            <span class="tag-quest font-bold text-blue-600">${q.assunto}</span>
-        `;
-        
-        document.getElementById('enunciado').innerHTML = q.enunciado;
-        document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
-        document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário.';
-
-        document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
-            q[l] ? `<label class="block"><input type="radio" name="quiz" value="${l}" class="hidden">
-                    <div class="alternativa-card"><span class="letra-circulo uppercase">${l}</span>
-                    <div class="text-gray-700 text-[13px]">${q[l]}</div></div></label>` : ''
-        ).join('');
-        updateDash();
-    }
-
-    function verificar() {
-        const q = window.questoesFiltradas[window.index];
-        const sel = document.querySelector('input[name="quiz"]:checked');
-        if (!sel || respondidaNaSessao) return;
-
-        respondidaNaSessao = true;
-        const f = document.getElementById('feedback');
-        f.classList.remove('hidden');
-        
-        let respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
-        if (sel.value === q.correta.toLowerCase()) {
-            f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
-            f.innerHTML = "✓ Correto!";
-            respondidasMap[q.id] = 'acerto';
-        } else {
-            f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
-            f.innerHTML = "✕ Errado. Gabarito: " + q.correta.toUpperCase();
-            respondidasMap[q.id] = 'erro';
-        }
-
-        localStorage.setItem('seduc_respondidas_map', JSON.stringify(respondidasMap));
-        const valores = Object.values(respondidasMap);
-        localStorage.setItem('seduc_acertos', valores.filter(v => v === 'acerto').length);
-        localStorage.setItem('seduc_erros', valores.filter(v => v === 'erro').length);
-        updateDash();
-    }
-    function updateDash() {
-        acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
-        erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
-        document.getElementById('dashAcertos').innerText = acertos;
-        document.getElementById('dashErros').innerText = erros;
-        
-        const ctx = document.getElementById('performanceChart').getContext('2d');
-        if (myChart) myChart.destroy();
-        myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: (acertos + erros === 0) ? [1, 0] : [acertos, erros],
-                    backgroundColor: (acertos + erros === 0) ? ['#E5E7EB'] : ['#10B981', '#EF4444'],
-                    borderWidth: 0
-                }]
-            },
-            options: { cutout: '75%', plugins: { legend: { display: false } } }
-        });
-    }
-
-    function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
-    function anterior() { if(window.index > 0) { window.index--; render(); } }
-    function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
-    function resetar() { if(confirm("Zerar?")) { localStorage.clear(); location.reload(); } }
-    function fecharModalAulas() { document.getElementById('modalAulas').classList.add('hidden'); }
-
-    window.onload = () => {
-        popularFiltros();
-        aplicarFiltro();
-    };
-    updateDash();
-};
+        window.onload = () => {
+            atualizarBibliotecas();
+            popularFiltros();
+            aplicarFiltro();
+            updateDash();
+        };
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
