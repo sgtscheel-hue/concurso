@@ -2731,6 +2731,7 @@ const banco_pt = [
         resumo: "A relação entre nomes e verbos é fundamental no estudo da formação de palavras."
     },
 {
+    id: "CP-01",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2748,6 +2749,7 @@ const banco_pt = [
     resumo: "<b>Causa:</b> Indica o motivo. Pode aparecer de forma reduzida (Por + infinitivo) ou desenvolvida (Porque, visto que, já que)."
 },
 {
+    id: "CP-02",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2766,6 +2768,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-03",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2783,6 +2786,7 @@ const banco_pt = [
     resumo: "Os 'As' da Língua:<br>• <b>Preposição:</b> Liga termos (exigida por regência).<br>• <b>Artigo:</b> Acompanha substantivo.<br>• <b>Pronome:</b> Substitui um nome (ela)."
 },
 {
+    id: "CP-04",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2800,6 +2804,7 @@ const banco_pt = [
     resumo: "Valores do 'OU': Pode indicar exclusão, inclusão (sinonímia) ou retificação/correção."
 },
 {
+    id: "CP-05",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2817,6 +2822,7 @@ const banco_pt = [
     resumo: "Polissemia das Conjunções: O 'E' pode ser aditivo (soma), adversativo (oposição) ou consecutivo (consequência)."
 },
 {
+    id: "CP-06",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2834,6 +2840,7 @@ const banco_pt = [
     resumo: "Adjetivos Eruditos:<br>• Plúmbeo: Chumbo.<br>• Ebúrneo: Marfim.<br>• Argênteo: Prata.<br>• Viperino: Víbora."
 },
 {
+    id: "CP-07",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2851,6 +2858,7 @@ const banco_pt = [
     resumo: "Concordância Nominal: O adjetivo deve concordar em gênero e número com o substantivo a que se refere, mesmo que estejam distantes na frase."
 },
 {
+    id: "CP-08",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2868,6 +2876,7 @@ const banco_pt = [
     resumo: "Graus do Substantivo: Além do tamanho, o diminutivo pode indicar carinho ou ironia/desprezo."
 },
 {
+    id: "CP-09",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2885,6 +2894,7 @@ const banco_pt = [
     resumo: "Falso Aumentativo: Nem toda palavra terminada em 'ão' é aumentativo (ex: cartão, portão, coração)."
 },
 {
+    id: "CP-10",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2902,6 +2912,7 @@ const banco_pt = [
     resumo: "Conjunções Consecutivas: 'Que' precedido de 'Tão, Tal, Tanto, Tamanho'."
 },
 {
+    id: "CP-011",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2919,6 +2930,7 @@ const banco_pt = [
     resumo: "Formas Sintéticas: <br>• Melhor (mais bom)<br>• Pior (mais mau)<br>• Maior (mais grande)<br>• Menor (mais pequeno)."
 },
 {
+    id: "CP-012",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2937,6 +2949,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-013",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2954,6 +2967,7 @@ const banco_pt = [
     resumo: "Substantivação: Ocorre quando um artigo, numeral ou pronome transforma qualquer classe de palavra em substantivo."
 },
 {
+    id: "CP-014",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2971,6 +2985,7 @@ const banco_pt = [
     resumo: "Valor Semântico: As conjunções podem assumir nuances diferentes dependendo do contexto, indo além da sua classificação básica."
 },
 {
+    id: "CP-015",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -2988,6 +3003,7 @@ const banco_pt = [
     resumo: "Pronome Relativo: Palavra que retoma um termo anterior (antecedente) e introduz uma oração subordinada adjetiva."
 },
 {
+    id: "CP-016",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -3005,6 +3021,7 @@ const banco_pt = [
     resumo: "Causa: Indica a origem ou o motivo de um fato. Pode ser introduzida por preposições (por, com, de) ou conjunções (porque, visto que)."
 },
 {
+    id: "CP-017",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -3022,6 +3039,7 @@ const banco_pt = [
     resumo: "Conformidade: Indica que algo ocorre conforme outro fato. Principais conectivos: como, conforme, segundo, consoante."
 },
 {
+    id: "CP-018",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -3039,6 +3057,7 @@ const banco_pt = [
     resumo: "Conjunções Coordenativas: <br>• Adversativas: mas, porém, contudo, todavia...<br>• Conclusivas: logo, portanto, pois (posposto ao verbo)."
 },
 {
+    id: "CP-019",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -3057,6 +3076,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-020",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3074,6 +3094,7 @@ const banco_pt = [
     resumo: "Plural de -ão: <br>1. <b>-ões:</b> maioria (balões). <br>2. <b>-ães:</b> pães, cães, alemães. <br>3. <b>-ãos:</b> cidadãos, cristãos, bênçãos."
 },
 {
+    id: "CP-021",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3091,6 +3112,7 @@ const banco_pt = [
     resumo: "O 'Que' Consecutivo: Sempre que vier após 'tão, tal, tanto, tamanho', indica consequência."
 },
 {
+    id: "CP-022",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3108,6 +3130,7 @@ const banco_pt = [
     resumo: "Substantivação: Quando colocamos um artigo antes de um adjetivo, ele vira substantivo (O sábio). Para ser adjetivo, deve qualificar um nome."
 },
 {
+    id: "CP-023",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3125,6 +3148,7 @@ const banco_pt = [
     resumo: "Grau do Substantivo: O diminutivo pode indicar tamanho real, mas também afetividade, carinho ou até desprezo (dependendo do contexto)."
 },
 {
+    id: "CP-024",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3142,6 +3166,7 @@ const banco_pt = [
     resumo: "Locuções Adjetivas: <br>• Apícola: abelha. <br>• Insípido: sem sabor. <br>• Pluvial: chuva. <br>• Fluvial: rio."
 },
 {
+    id: "CP-025",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3159,6 +3184,7 @@ const banco_pt = [
     resumo: "Advérbio de Intensidade: Modifica adjetivos, verbos ou outros advérbios. Ex: muito, mais, menos."
 },
 {
+    id: "CP-026",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3176,6 +3202,7 @@ const banco_pt = [
     resumo: "Oposição (Adversativas): mas, porém, contudo, todavia, entretanto."
 },
 {
+    id: "CP-027",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3193,6 +3220,7 @@ const banco_pt = [
     resumo: "Conjunção Conformativa: Expressa acordo ou conformidade. Ex: segundo, conforme, consoante, como."
 },
 {
+    id: "CP-028",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3210,6 +3238,7 @@ const banco_pt = [
     resumo: "Adversidade: Oposição de ideias. O fato de serem lindas não impediria serem iguais, mas o autor ressalta a diferença."
 },
 {
+    id: "CP-029",
     materia: "Português",
     ano: "2019",
     banca: "IBADE",
@@ -3228,6 +3257,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-030",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3245,6 +3275,7 @@ const banco_pt = [
     resumo: "Numerais:<br>• <b>Cardinais:</b> Quantidade (um, dois).<br>• <b>Ordinais:</b> Ordem (primeiro, segundo).<br>• <b>Multiplicativos:</b> Dobro, triplo.<br>• <b>Fracionários:</b> Meio, terço."
 },
 {
+    id: "CP-031",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3262,6 +3293,7 @@ const banco_pt = [
     resumo: "Conjunção Integrante: Introduz orações substantivas. Não possui função sintática própria e não retoma termos anteriores (diferente do pronome relativo)."
 },
 {
+    id: "CP-032",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3279,6 +3311,7 @@ const banco_pt = [
     resumo: "Pretérito Imperfeito: Indica ação habitual no passado ou, em certos contextos, uma hipótese/condição (quase como um futuro do pretérito)."
 },
 {
+    id: "CP-033",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3296,6 +3329,7 @@ const banco_pt = [
     resumo: "Conjunções Alternativas: ou... ou, ora... ora, quer... quer, seja... seja."
 },
 {
+    id: "CP-034",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3313,6 +3347,7 @@ const banco_pt = [
     resumo: "Pronome Relativo vs Integrante: O relativo sempre retoma um substantivo anterior. O advérbio 'nunca' é invariável e indica circunstância de tempo."
 },
 {
+    id: "CP-035",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3330,6 +3365,7 @@ const banco_pt = [
     resumo: "Locução Conjuntiva: Grupo de palavras com valor de conjunção. Geralmente terminam em 'que'. Exemplos: visto que, ainda que, desde que."
 },
 {
+    id: "CP-036",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3348,6 +3384,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-037",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3365,6 +3402,7 @@ const banco_pt = [
     resumo: "Locuções Adjetivas Eruditas:<br>• Pluvial = Chuva.<br>• Fluvial = Rio.<br>• Insular = Ilha.<br>• Argênteo = Prata."
 },
 {
+    id: "CP-038",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3382,6 +3420,7 @@ const banco_pt = [
     resumo: "Numeral: Palavra que indica quantidade exata (cardinal), ordem (ordinal), multiplicação (multiplicativo) ou divisão (fracionário)."
 },
 {
+    id: "CP-039",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3399,6 +3438,7 @@ const banco_pt = [
     resumo: "Pronome Relativo 'Que': Substitui um termo anterior. Para testar, troque por 'o qual/a qual'. Sintaticamente, ele assume o papel do termo que substituiu."
 },
 {
+    id: "CP-040",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3416,6 +3456,7 @@ const banco_pt = [
     resumo: "Advérbio de Modo: Indica o 'como' da ação. Exemplos: bem, mal, depressa, e a maioria dos terminados em -mente."
 },
 {
+    id: "CP-041",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3434,6 +3475,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-042",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3451,6 +3493,7 @@ const banco_pt = [
     resumo: "Conjunções Adversativas: Indicam contraste ou oposição. Exemplos: mas, porém, contudo, todavia, entretanto, no entanto."
 },
 {
+    id: "CP-043",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3468,6 +3511,7 @@ const banco_pt = [
     resumo: "Adjetivo: Palavra que caracteriza o substantivo. Atenção: algumas palavras podem ser substantivos ou adjetivos dependendo do contexto (Ex: 'O jovem' = substantivo / 'Ele é jovem' = adjetivo)."
 },
 {
+    id: "CP-044",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3485,6 +3529,7 @@ const banco_pt = [
     resumo: "Sinônimos Adversativos: mas = porém = contudo = todavia = entretanto = no entanto."
 },
 {
+    id: "CP-045",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3502,6 +3547,7 @@ const banco_pt = [
     resumo: "Verbo: Classe que exprime ação, estado, mudança de estado ou fenômeno da natureza, variando em tempo, modo, número e pessoa."
 },
 {
+    id: "CP-046",
     materia: "Português",
     ano: "2020",
     banca: "IBADE",
@@ -3520,6 +3566,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-047",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3537,6 +3584,7 @@ const banco_pt = [
     resumo: "Morfossintaxe: Analisa a classe da palavra (morfologia) e sua função na frase (sintaxe) simultaneamente."
 },
 {
+    id: "CP-048",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3554,6 +3602,7 @@ const banco_pt = [
     resumo: "Conjunção Integrante: Une a oração principal à subordinada substantiva. Macete: substitua a oração iniciada pelo 'que' por 'ISSO'."
 },
 {
+    id: "CP-049",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3571,6 +3620,7 @@ const banco_pt = [
     resumo: "Semântica das Preposições: A preposição 'de' pode indicar origem, causa, matéria ou posse (Ex: Carro <b>de</b> João)."
 },
 {
+    id: "CP-050",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3588,6 +3638,7 @@ const banco_pt = [
     resumo: "Adjetivo vs. Numeral: O adjetivo qualifica; o numeral quantifica, ordena, multiplica ou fraciona."
 },
 {
+    id: "CP-051",
     materia: "Português",
     ano: "2021",
     banca: "IBADE",
@@ -3606,6 +3657,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-052",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3624,6 +3676,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-053",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3641,6 +3694,7 @@ const banco_pt = [
     resumo: "Funções das Classes:<br>• Nomear = Substantivo.<br>• Substituir = Pronome.<br>• <b>Qualificar = Adjetivo.</b><br>• Ação = Verbo.<br>• Quantificar = Numeral."
 },
 {
+    id: "CP-054",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3658,6 +3712,7 @@ const banco_pt = [
     resumo: "Abreviaturas: Reduções de palavras que terminam geralmente em ponto final. Siglas: Iniciais de nomes próprios ou instituições."
 },
 {
+    id: "CP-055",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3675,6 +3730,7 @@ const banco_pt = [
     resumo: "<b>Onde vs. Aonde:</b><br>• <b>Onde:</b> Lugar estático (repouso). Verbos como morar, estar, trabalhar.<br>• <b>Aonde:</b> Movimento/Destino. Verbos como ir, chegar, dirigir-se."
 },
 {
+    id: "CP-056",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3693,6 +3749,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-057",
     materia: "Português",
     ano: "2023",
     banca: "IBADE",
@@ -3710,6 +3767,7 @@ const banco_pt = [
     resumo: "Sufixos: O sufixo '-mente' transforma adjetivos em advérbios. Ex: Feliz (adj) + mente = Felizmente (adv)."
 },
 {
+    id: "CP-058",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3727,6 +3785,7 @@ const banco_pt = [
     resumo: "Classes Gramaticais: Existem 10 classes oficiais. Dica: 'Numerólogo' é uma profissão, a classe correta é 'Numeral'."
 },
 {
+    id: "CP-059",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3744,6 +3803,7 @@ const banco_pt = [
     resumo: "Adjetivo: Sempre procure a palavra que está 'dando uma nota' ou característica para um nome (substantivo)."
 },
 {
+    id: "CP-060",
     materia: "Português",
     ano: "2022",
     banca: "IBADE",
@@ -3762,6 +3822,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-061",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3778,6 +3839,7 @@ const banco_pt = [
     resumo: "Substantivação: Ocorre quando uma palavra de outra classe gramatical passa a funcionar como substantivo, geralmente precedida de artigo ou flexionada em número."
 },
 {
+    id: "CP-062",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3795,6 +3857,7 @@ const banco_pt = [
     resumo: "Cores como Adjetivos: As cores são a forma mais comum de adjetivação em provas de nível fundamental e médio."
 },
 {
+    id: "CP-063",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3812,6 +3875,7 @@ const banco_pt = [
     resumo: "Adjetivo: Palavra variável que qualifica o substantivo."
 },
 {
+    id: "CP-064",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3830,6 +3894,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-065",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3847,6 +3912,7 @@ const banco_pt = [
     resumo: "Conjunções Consecutivas: Iniciam uma oração que indica a consequência do que foi dito antes. Comumente aparecem após termos intensificadores como: tão, tal, tanto, tamanho."
 },
 {
+    id: "CP-066",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3864,6 +3930,7 @@ const banco_pt = [
     resumo: "Preposição Agentiva: É aquela que introduz o agente da passiva (quem realiza a ação na frase passiva). Exemplo: O livro foi escrito <b>por</b> Machado de Assis."
 },
 {
+    id: "CP-067",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3882,6 +3949,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-068",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3899,6 +3967,7 @@ const banco_pt = [
     resumo: "Cognatos: Palavras que compartilham o mesmo radical. Exemplo: Culpa/Culpar, Medo/Amedrontar, Salto/Saltar."
 },
 {
+    id: "CP-069",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3916,6 +3985,7 @@ const banco_pt = [
     resumo: "Preposições: Palavras invariáveis que ligam dois termos. Ex: a, ante, após, até, com, contra, de, desde, em, para, per, perante, por, sem, sob, sobre, trás."
 },
 {
+    id: "CP-070",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3933,6 +4003,7 @@ const banco_pt = [
     resumo: "Adjetivo: Classe que caracteriza o substantivo. Dica: Tente colocar no plural; se variar com o substantivo (viagens incríveis), reforça a função de adjetivo."
 },
 {
+    id: "CP-071",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3951,6 +4022,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-072",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3968,6 +4040,7 @@ const banco_pt = [
     resumo: "Substantivo Coletivo: Nome comum que, no singular, designa um conjunto de seres da mesma espécie. Exemplos: Caravana (viajantes), Elenco (atores), Alcatéia (lobos)."
 },
 {
+    id: "CP-073",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -3985,6 +4058,7 @@ const banco_pt = [
     resumo: "<b>Advérbio:</b> Modifica verbo, adjetivo ou outro advérbio (circunstância). <br><b>Adjetivo:</b> Modifica o substantivo (qualidade/estado)."
 },
 {
+    id: "CP-074",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4002,6 +4076,7 @@ const banco_pt = [
     resumo: "Substantivo Abstrato: Nomeia ações, estados, qualidades ou sentimentos que não possuem existência independente (dependem de alguém que os sinta ou realize)."
 },
 {
+    id: "CP-075",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4020,6 +4095,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-076",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4037,6 +4113,7 @@ const banco_pt = [
     resumo: "Adjetivos: São palavras que atribuem qualidades, estados ou características aos substantivos."
 },
 {
+    id: "CP-077",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4054,6 +4131,7 @@ const banco_pt = [
     resumo: "Substantivo: Classe que nomeia seres, objetos e fenômenos. Dica: Geralmente aceita um artigo antes."
 },
 {
+    id: "CP-078",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4071,6 +4149,7 @@ const banco_pt = [
     resumo: "Grau do Substantivo: O diminutivo pode ser formado por sufixos como -inho, -ito, ou eruditos como <b>-ila</b> (moçoila) e <b>-éu</b> (fogaréu)."
 },
 {
+    id: "CP-079",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4089,6 +4168,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-080",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4106,6 +4186,7 @@ const banco_pt = [
     resumo: "Adjetivo: Classe de palavra que expressa qualidade, defeito, estado ou característica do substantivo."
 },
 {
+    id: "CP-081",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4123,6 +4204,7 @@ const banco_pt = [
     resumo: "O adjetivo funciona como um modificador do substantivo, concordando com ele em gênero e número."
 },
 {
+    id: "CP-082",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4140,6 +4222,7 @@ const banco_pt = [
     resumo: "Conjunções Causais: Introduzem uma oração que é causa do acontecimento da oração principal. Ex: porque, pois, como, visto que."
 },
 {
+    id: "CP-083",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4158,6 +4241,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-084",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4176,6 +4260,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-085",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4194,6 +4279,7 @@ const banco_pt = [
 },
 
 {
+    id: "CP-086",
     materia: "Português",
     ano: "2025",
     banca: "IBADE",
@@ -4212,6 +4298,7 @@ const banco_pt = [
 },
 
     {
+        id: "AG-001",
         materia: "Português",
         ano: "2022",
         banca: "IBADE",
@@ -4229,6 +4316,7 @@ const banco_pt = [
         resumo: "Proparoxítonas: Todas as palavras proparoxítonas (tônica na antepenúltima) devem ser acentuadas."
     },
     {
+        id: "AG-002",
         materia: "Português",
         ano: "2022",
         banca: "IBADE",
@@ -4246,6 +4334,7 @@ const banco_pt = [
         resumo: "Proparoxítonas: A tônica recai na antepenúltima sílaba."
     },
     {
+        id: "AG-003",
         materia: "Português",
         ano: "2022",
         banca: "IBADE",
@@ -4263,6 +4352,7 @@ const banco_pt = [
         resumo: "Vogais Dobradas: O acento circunflexo foi removido de palavras terminadas em 'eem' e 'oom' (creem, veem, leem, voo)."
     },
     {
+        id: "AG-004",
         materia: "Português",
         ano: "2021",
         banca: "IBADE",
@@ -4280,6 +4370,7 @@ const banco_pt = [
         resumo: "Regra do Hiato: Acentuam-se o 'i' ou 'u' tônicos que formam hiato com a vogal anterior, sozinhos ou com 's' na sílaba."
     },
     {
+        id: "AG-005",
         materia: "Português",
         ano: "2021",
         banca: "IBADE",
@@ -4297,6 +4388,7 @@ const banco_pt = [
         resumo: "Regra do Hiato: I e U tônicos em hiato."
     },
     {
+        id: "AG-006",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4314,6 +4406,7 @@ const banco_pt = [
         resumo: "Proparoxítonas: Tônica na antepenúltima."
     },
     {
+        id: "AG-007",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4331,6 +4424,7 @@ const banco_pt = [
         resumo: "Proparoxítonas: Regra universal de acentuação."
     },
     {
+        id: "AG-008",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4348,6 +4442,7 @@ const banco_pt = [
         resumo: "Hiatos: I e U tônicos."
     },
     {
+        id: "AG-009",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4365,6 +4460,7 @@ const banco_pt = [
         resumo: "Novo Acordo: Paroxítonas com ditongos abertos EI e OI perderam o acento."
     },
     {
+        id: "AG-0010",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4382,6 +4478,7 @@ const banco_pt = [
         resumo: "Regras Gerais: Atenção à posição da tônica e terminações."
     },
     {
+        id: "AG-0011",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4399,6 +4496,7 @@ const banco_pt = [
         resumo: "Ditongos Abertos: Nas paroxítonas, EI e OI não são mais acentuados."
     },
     {
+        id: "AG-0012",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4416,6 +4514,7 @@ const banco_pt = [
         resumo: "Norma Padrão: Uso correto dos acentos agudos e circunflexos."
     },
     {
+        id: "AG-0013",
         materia: "Português",
         ano: "2020",
         banca: "IBADE",
@@ -4433,6 +4532,7 @@ const banco_pt = [
         resumo: "Justificativa de Acento: Depende da tonicidade (posição) e da terminação, não apenas do timbre da vogal."
     },
     {
+        id: "AG-0014",
         materia: "Português",
         ano: "2019",
         banca: "IBADE",
@@ -4450,6 +4550,7 @@ const banco_pt = [
         resumo: "Regras Gerais: Oxítonas, Paroxítonas e Monossílabos."
     },
     {
+        id: "AG-0015",
         materia: "Português",
         ano: "2019",
         banca: "IBADE",
@@ -4467,6 +4568,7 @@ const banco_pt = [
         resumo: "Hiato OO: Perdeu o acento circunflexo."
     },
     {
+        id: "AG-0016",
         materia: "Português",
         ano: "2019",
         banca: "IBADE",
@@ -4484,6 +4586,7 @@ const banco_pt = [
         resumo: "Ditongos em Paroxítonas: Perda do acento em EI e OI."
     },
     {
+        id: "AG-0017",
         materia: "Português",
         ano: "2019",
         banca: "IBADE",
@@ -4501,6 +4604,7 @@ const banco_pt = [
         resumo: "Norma Culta: Aplicação das regras de acentuação vigentes."
     },
     {
+        id: "AG-0018",
         materia: "Português",
         ano: "2019",
         banca: "IBADE",
@@ -4519,6 +4623,7 @@ const banco_pt = [
     },
 
 {
+    id: "AG-0019",
     materia: "Português",
     ano: "2025",
     banca: "IBADE",
@@ -4536,6 +4641,7 @@ const banco_pt = [
     resumo: "Oxítonas 'Perigosas': Palavras como cateter, ruim, Nobel, sutil e condor são oxítonas e frequentemente confundidas em provas."
 },
 {
+    id: "AG-0020",
     materia: "Português",
     ano: "2025",
     banca: "IBADE",
@@ -4554,6 +4660,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0021",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4572,6 +4679,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0022",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4590,6 +4698,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0023",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4608,6 +4717,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0024",
     materia: "Português",
     ano: "2023",
     banca: "IBADE",
@@ -4626,6 +4736,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0025",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4644,6 +4755,7 @@ const banco_pt = [
 },
 
 {
+    id: "AG-0026",
     materia: "Português",
     ano: "2024",
     banca: "IBADE",
@@ -4662,6 +4774,7 @@ const banco_pt = [
 },
 
     {
+        id: "AG-0027",
         materia: "Português", ano: "2023", banca: "IBADE", orgao: "Prefeitura de Vila Velha", prova: "Auxiliar de Secretaria",
         enunciado: "Assinale a alternativa em que a palavra tenha sido acentuada seguindo a mesma regra de 'estatística':",
         a: "história",
@@ -4674,6 +4787,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0028",
         materia: "Português", ano: "2024", banca: "IBADE", orgao: "Prefeitura Municipal", prova: "Agente Administrativo",
         enunciado: "De acordo com as regras de acentuação vigentes, assinale a opção em que a palavra é acentuada por ser uma paroxítona terminada em ditongo crescente:",
         a: "Amazônia",
@@ -4686,6 +4800,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0029",
         materia: "Português", ano: "2022", banca: "IBADE", orgao: "IBGE", prova: "Recenseador",
         enunciado: "As palavras 'país' e 'saúde' são acentuadas devido à regra do:",
         a: "Ditongo aberto.",
@@ -4698,6 +4813,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0030",
         materia: "Português", ano: "2023", banca: "IBADE", orgao: "Câmara Municipal", prova: "Assistente",
         enunciado: "Assinale a alternativa que apresenta uma palavra que NÃO deveria estar acentuada segundo o atual Acordo Ortográfico:",
         a: "Heróico",
@@ -4709,7 +4825,7 @@ const banco_pt = [
         comentario: "Com o Novo Acordo, os ditongos abertos 'ei' e 'oi' perderam o acento nas palavras paroxítonas (como 'heroico', 'ideia', 'assembleia').",
         assunto: "Acentuação Gráfica"
     },
-    {
+    {id: "AG-0031",
         materia: "Português", ano: "2021", banca: "IBADE", orgao: "Polícia Militar", prova: "Soldado",
         enunciado: "A palavra 'você' recebe acento gráfico por ser uma:",
         a: "Oxítona terminada em 'e'.",
@@ -4722,6 +4838,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0032",
         materia: "Português", ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Técnico",
         enunciado: "Qual das palavras abaixo segue a mesma regra de acentuação de 'útil'?",
         a: "Dólar",
@@ -4734,6 +4851,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0033",
         materia: "Português", ano: "2023", banca: "IBADE", orgao: "Prefeitura", prova: "Guarda Municipal",
         enunciado: "Assinale a alternativa onde o acento diferencial foi usado corretamente de acordo com a norma culta:",
         a: "Eles tem muitos livros.",
@@ -4746,6 +4864,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0034",
         materia: "Português", ano: "2022", banca: "IBADE", orgao: "SANESUL", prova: "Agente",
         enunciado: "A palavra 'tênis' é acentuada porque é uma:",
         a: "Paroxítona terminada em 'is'.",
@@ -4758,6 +4877,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0035",
         materia: "Português", ano: "2020", banca: "IBADE", orgao: "Prefeitura de Linhares", prova: "Professor",
         enunciado: "As palavras 'última', 'público' e 'prática' são acentuadas porque:",
         a: "São oxítonas terminadas em 'a' e 'o'.",
@@ -4770,6 +4890,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0036",
         materia: "Português", ano: "2023", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor",
         enunciado: "Assinale a alternativa em que a palavra NÃO é acentuada pela regra das oxítonas:",
         a: "Pará",
@@ -4782,6 +4903,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0037",
         materia: "Português", ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Enfermeiro",
         enunciado: "Assinale o grupo em que todas as palavras estão acentuadas corretamente:",
         a: "Vôo, enjôo, lêem.",
@@ -4794,6 +4916,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0038",
         materia: "Português", ano: "2022", banca: "IBADE", orgao: "IBGE", prova: "Supervisor",
         enunciado: "A palavra 'nível' recebe acento por ser uma paroxítona terminada em 'l'. Qual outra palavra segue a mesma regra?",
         a: "Fácil",
@@ -4806,6 +4929,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0039",
         materia: "Português", ano: "2023", banca: "IBADE", orgao: "Prefeitura", prova: "Técnico",
         enunciado: "Marque a alternativa que contém uma palavra acentuada por ser paroxítona terminada em 'r':",
         a: "Caráter",
@@ -4818,6 +4942,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0040",
         materia: "Português", ano: "2021", banca: "IBADE", orgao: "PM-ES", prova: "Soldado",
         enunciado: "A alternativa em que as palavras são acentuadas por regras distintas é:",
         a: "Relógio / História",
@@ -4830,6 +4955,7 @@ const banco_pt = [
         assunto: "Acentuação Gráfica"
     },
     {
+        id: "AG-0041",
         materia: "Português", ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Motorista",
         enunciado: "Assinale a alternativa correta quanto à acentuação da palavra 'ônibus':",
         a: "É uma paroxítona terminada em 'us'.",
@@ -4844,6 +4970,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
