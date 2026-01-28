@@ -1,5 +1,341 @@
 const banco_pt = [
     {
+        id: "SED_CRA_01", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "O técnico de secretaria enviou o memorando ________ diretoria e ________ todas as coordenações.",
+        a: "à / à", b: "a / a", c: "à / a", d: "a / à", e: "à / às",
+        correta: "c", comentario: "Antes de 'diretoria' (feminino determinado) ocorre crase. Antes de 'todas' (pronome indefinido) a crase é proibida."
+    },
+    {
+        id: "SED_CRA_02", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Assinale a alternativa que apresenta o uso CORRETO do acento grave:",
+        a: "O servidor começou à redigir o ofício.",
+        b: "A reunião terá início às nove horas.",
+        c: "Entreguei o documento à ele ontem.",
+        d: "As inscrições estão abertas de segunda à sexta.",
+        e: "Não assisti à nenhuma palestra.",
+        correta: "b", comentario: "Horas exatas exigem crase. Erros: 'redigir' (verbo), 'ele' (masculino), 'segunda a sexta' (paralelismo), 'nenhuma' (pronome)."
+    },
+    {
+        id: "SED_CRA_03", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "A crase é FACULTATIVA na seguinte frase:",
+        a: "Refiro-me à lei estadual.",
+        b: "O técnico foi à escola.",
+        c: "Enviei o e-mail à minha colega de setor.",
+        d: "Às vezes, os prazos são curtos.",
+        e: "Chegamos à conclusão de que o sistema falhou.",
+        correta: "c", comentario: "Antes de pronomes possessivos femininos no singular (minha, sua, tua), a crase é facultativa."
+    },
+    {
+        id: "SED_CRA_04", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Marque a opção em que a crase foi empregada por indicar locução adverbial feminina:",
+        a: "Ele se dirigiu à sala de aula.",
+        b: "Obedeça à sinalização.",
+        c: "O relatório foi entregue à tarde.",
+        d: "Daremos assistência àquelas crianças.",
+        e: "Aspiramos à vaga de técnico.",
+        correta: "c", comentario: "'À tarde' é locução adverbial de tempo. As outras são complementos de verbos (Regência)."
+    },
+    {
+        id: "SED_CRA_05", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Complete: 'O acesso ____ informações é restrito ____ pessoas autorizadas.'",
+        a: "a / a", b: "à / a", c: "as / às", d: "às / a", e: "a / às",
+        correta: "e", comentario: "Acesso 'a' + 'informações' (sem artigo) = a. Restrito 'a' + 'as' (artigo de pessoas) = às. 'A pessoas' também estaria correto se fosse apenas preposição."
+    },
+    {
+        id: "SED_CRA_06", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Assinale o erro de crase em relação a nomes de lugares:",
+        a: "Fui à Porto Velho de meus sonhos.",
+        b: "Iremos à Ji-Paraná em breve.",
+        c: "Retornaremos à Amazônia amanhã.",
+        d: "Fui à Bahia nas férias.",
+        e: "Eles foram à Curitiba dos pinheirais.",
+        correta: "b", comentario: "Quem vai a Ji-Paraná, volta DE Ji-Paraná (não aceita artigo). 'Bahia' e cidades especificadas (Porto Velho de meus sonhos) aceitam crase."
+    },
+    {
+        id: "SED_CRA_07", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Antes de nomes próprios femininos de pessoas famosas ou históricas, a IBADE segue a regra geral de que a crase é:",
+        a: "Obrigatória.", b: "Proibida.", c: "Facultativa.", d: "Usada apenas no plural.", e: "Dependente do verbo.",
+        correta: "b", comentario: "Pela norma gramatical seguida em concursos, não se usa artigo antes de personalidades célebres (Referiu-se a Clarice Lispector)."
+    },
+    {
+        id: "SED_CRA_08", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Analise: 'O técnico de secretariado ficou frente ____ frente com o problema e decidiu resolvê-lo ____ pressas.'",
+        a: "à / às", b: "a / as", c: "à / as", d: "a / às", e: "a / a",
+        correta: "d", comentario: "Proibida em palavras repetidas (frente a frente). Obrigatória em locução adverbial feminina (às pressas)."
+    },
+    {
+        id: "SED_CRA_09", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Complete corretamente: 'Dê ciência ________ funcionárias sobre ________ mudanças.'",
+        a: "às / as", b: "as / as", c: "às / às", d: "as / às", e: "a / as",
+        correta: "a", comentario: "Dar ciência 'A' (preposição) + 'as' (artigo de funcionárias). 'Mudanças' é objeto direto de 'sobre' (preposição), logo não tem crase."
+    },
+    {
+        id: "SED_CRA_10", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Indique a alternativa onde o uso da crase é PROIBIDO:",
+        a: "Chegamos à uma hora da tarde.",
+        b: "O documento foi entregue à própria diretora.",
+        c: "Referiu-se àquela situação.",
+        d: "Estamos dispostos à ajudar os alunos.",
+        e: "O atendimento é de segunda à sexta.",
+        correta: "d", comentario: "Proibida crase antes de verbos (ajudar)."
+    },
+    {
+        id: "SED_CRA_11", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Qual das frases abaixo está CORRETA?",
+        a: "Não dou valor à coisas materiais.",
+        b: "Peço à Vossa Excelência atenção ao caso.",
+        c: "O técnico compareceu à reunião pontualmente.",
+        d: "Vendemos material escolar à prazo.",
+        e: "Ele caminhava passo à passo.",
+        correta: "c", comentario: "Crase correta antes de 'reunião'. Erros: 'a coisas' (singular antes de plural), 'Vossa Excelência' (pronome tratamento), 'prazo' (masc), 'passo a passo' (repetida)."
+    },
+    {
+        id: "SED_CRA_12", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "No trecho 'O aluno não obedece ________ regras', a lacuna deve ser preenchida por:",
+        a: "as", b: "às", c: "à", d: "a", e: "com as",
+        correta: "b", comentario: "Verbo obedecer exige preposição 'A'. Regras (feminino plural) exige artigo 'as'. A+AS = ÀS."
+    },
+    {
+        id: "SED_CRA_13", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "O uso da crase é facultativo em qual situação abaixo?",
+        a: "Fomos até à porta da escola.",
+        b: "Vendeu a casa à vista.",
+        c: "À noite todos os gatos são pardos.",
+        d: "Saiu às pressas do trabalho.",
+        e: "Dedico-me à leitura de atas.",
+        correta: "a", comentario: "Após a preposição 'ATÉ', a crase é facultativa."
+    },
+    {
+        id: "SED_CRA_14", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Assinale a alternativa que completa: 'Iremos ____ Florianópolis visitar ____ praias.'",
+        a: "à / as", b: "à / às", c: "a / as", d: "a / às", e: "às / às",
+        correta: "c", comentario: "Quem vai A Florianópolis, volta DE Florianópolis (sem artigo). 'Praias' é objeto direto do verbo visitar (sem preposição)."
+    },
+    {
+        id: "SED_CRA_15", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Marque a opção em que a crase é OBRIGATÓRIA antes de pronome de tratamento:",
+        a: "Dirigi-me à Vossa Senhoria.",
+        b: "Entreguei o ofício à senhora diretora.",
+        c: "Falei à você sobre o concurso.",
+        d: "Enviei o arquivo à ela.",
+        e: "Desejo sorte à todos.",
+        correta: "b", comentario: "Senhora e Senhorita são os únicos pronomes de tratamento que admitem crase."
+    },
+    {
+        id: "SED_CRA_16", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "A locução conjuntiva que indica proporção e exige crase é:",
+        a: "A medida que", b: "À medida que", c: "As medidas que", d: "A medida de que", e: "À medida em que",
+        correta: "b", comentario: "A forma correta é 'À medida que'. (Cuidado: 'À medida em que' é considerada incorreta por muitos gramáticos)."
+    },
+    {
+        id: "SED_CRA_17", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Complete: 'Daqui ____ duas horas, o técnico chegará ____ sala de reuniões.'",
+        a: "a / à", b: "há / à", c: "à / à", d: "a / a", e: "à / a",
+        correta: "a", comentario: "'A' para tempo futuro. 'À' (preposição + artigo) para o destino 'sala'."
+    },
+    {
+        id: "SED_CRA_18", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Assinale a frase correta quanto ao paralelismo e uso da crase:",
+        a: "O curso será de 08:00 às 12:00.",
+        b: "O curso será das 08:00 à 12:00.",
+        c: "O curso será das 08:00 às 12:00.",
+        d: "O curso será de 08:00 à 12:00.",
+        e: "O curso será à partir das 08:00.",
+        correta: "c", comentario: "Se usou 'das' (de+as), deve usar 'às' (a+as). Se usou 'de', deve usar 'a'. 'À partir' é erro crasso (verbo)."
+    },
+    {
+        id: "SED_CRA_19", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Em 'Fez uma redação à Machado de Assis', a crase ocorre porque:",
+        a: "É facultativa antes de nomes masculinos.",
+        b: "Subentende-se a expressão 'à moda de'.",
+        c: "O verbo fazer exige preposição.",
+        d: "Machado de Assis é um nome feminino.",
+        e: "Houve erro na digitação da frase.",
+        correta: "b", comentario: "A crase é usada antes de nomes masculinos quando a expressão 'à moda de' está implícita."
+    },
+    {
+        id: "SED_CRA_20", materia: "Português", assunto: "Crase",
+        banca: "Inédita Estilo IBADE", orgao: "SEDUC-RO", ano: "2024",
+        enunciado: "Complete: 'Referi-me ____ alunas interessadas e não ____ que estavam conversando.'",
+        a: "às / às", b: "as / as", c: "às / as", d: "as / às", e: "à / à",
+        correta: "a", comentario: "1º lacuna: Referi-me 'a' + 'as alunas' = às. 2º lacuna: Referi-me 'a' + 'as' (pronome demonstrativo = aquelas que) = às."
+    },
+    {
+        id: "21Q2439629", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Analise o uso da crase: <br>I. Vai discursar à cerca de 200 parlamentares. <br>II. À anos reivindicamos as reformas. <br>III. Entreguei à família os documentos. <br>IV. Fomos ao restaurante e pedimos filé à parmegiana.",
+        a: "Apenas I e II.", b: "Apenas I e III.", c: "Apenas III.", d: "Apenas II e III.", e: "Apenas III e IV.",
+        correta: "e", comentario: "I: Errado (distância/quantidade aproximada é 'a cerca de'). II: Errado (tempo decorrido é 'há anos'). III: Correto (entregar a + a família). IV: Correto (moda de / maneira de)."
+    },
+    {
+        id: "22Q2372374", materia: "Português", assunto: "Crase", banca: "IBADE", orgao: "SESDEC-RO", ano: "2024",
+        enunciado: "Complete as lacunas: 'Em meio ___ uma onda... atinge ___ regiões... chamou ___ atenção... sensação chegou ___ quase 60°C.'",
+        a: "à | as | as | a | à", b: "à | às | a | a | as", c: "a | às | à | à | a", d: "a | as | a | a | a",
+        correta: "d", comentario: "1. Antes de 'uma' não há crase. 2. Atinge (VTD) pede apenas artigo 'as'. 3. Chamou a atenção (VTD). 4. Chegou a (antes de 'quase' não há artigo)."
+    },
+    {
+        id: "23Q2351811", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o uso da crase é OBRIGATÓRIO:",
+        a: "Assistirei a um filme no cinema.", b: "Ele se referiu a senhora diretora.", c: "A moça não estava presente na cerimônia.", d: "O jogador estava a jogar muito bem.", e: "Vou a pé para o trabalho.",
+        correta: "b", comentario: "O pronome de tratamento 'Senhora' é um dos poucos que aceita artigo, logo a crase é obrigatória: referiu-se à senhora."
+    },
+    {
+        id: "24Q2351551", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Complete: I. Vou __ Bahia. II. Estamos dispostos __ colaborar. III. Ficaram frente __ frente.",
+        a: "I. a; II. à; III. a.", b: "I. à; II. a; III. a.", c: "I. a; II. à; III. à.", d: "I. a; II. a; III. a.", e: "I. à; II. à; III. à.",
+        correta: "b", comentario: "I: 'Vou à Bahia, volto da Bahia' (tem crase). II: Antes de verbo (colaborar) crase proibida. III: Palavras repetidas crase proibida."
+    },
+    {
+        id: "25Q2351507", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Julgue: I. Você vai à escola hoje? II. Compareceu perante à Justiça. III. À medida em que cresce o número...",
+        a: "I, II e III.", b: "Apenas II.", c: "Apenas II e III.", d: "Apenas I e III.", e: "Apenas III.",
+        correta: "d", comentario: "I: Correto (Ir a + a escola). II: Errado (Após a preposição 'perante' não se usa crase). III: Correto (Locução conjuntiva proporcional feminina)."
+    },
+    {
+        id: "26Q3045381", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2023",
+        enunciado: "Analise a adaptação correta de: '[...] o recenseador é instruído a recorrer à polícia local.'",
+        a: "recorrer a polícias locais.", b: "recorrer à gestor.", c: "recorrer à síndico.", d: "recorrer à um policial.", e: "instruído à recorrer às polícias locais.",
+        correta: "a", comentario: "Na 'a', o 'a' está sozinho antes de plural, logo é apenas preposição (correto). As outras erram ao usar crase antes de masculinos, artigo indefinido ou verbo."
+    },
+    {
+        id: "29Q2034149", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2022",
+        enunciado: "Reescreva corretamente: 'não irei tanto a lojas físicas.'",
+        a: "não irei tanto às lojas físicas.", b: "não irei tanto à qualquer loja.", c: "não irei tanto à estabelecimento.", d: "não irei tanto à essas lojas.", e: "não irei tanto à lojas físicas.",
+        correta: "a", comentario: "Se o 'as' estiver no plural acompanhando 'lojas', a crase torna-se obrigatória (A preposição + AS artigo)."
+    },
+    {
+        id: "1Q3763125", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Qual das alternativas abaixo está correta em relação ao uso da crase?",
+        a: "Andamos à cavalo neste feriado.", b: "Ele chegou cedo à casa.", c: "Eu disse à ele a verdade.", d: "Nós fomos à praia ontem.", e: "Maria vai à pé para o trabalho.",
+        correta: "d", comentario: "Antes de substantivo feminino 'praia' (a+a). Proibido antes de masculino (cavalo, ele, pé). 'Casa' sem especificador não aceita crase."
+    },
+    {
+        id: "2Q3761801", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Assinale a alternativa que completa corretamente: 'É dever de todo cidadão obedecer _________ leis e às regras de convivência do país.'",
+        a: "as", b: "com", c: "para", d: "às", e: "sem",
+        correta: "d", comentario: "O verbo 'obedecer' exige preposição 'A'. Antes de 'leis' (feminino plural), ocorre a crase (às)."
+    },
+    {
+        id: "3Q3630418", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Em relação ao uso da crase, assinale a alternativa em que o emprego está correto.",
+        a: "Entreguei o relatório à gerente responsável.", b: "Vou à pé para a escola.", c: "Ele se referiu à todos os colegas.", d: "A aluna se dedicou a leitura.", e: "Cheguei a conclusão do trabalho.",
+        correta: "a", comentario: "Gerente é substantivo feminino que aceita artigo. 'Pé' e 'Todos' são masculinos. 'Leitura' e 'Conclusão' deveriam ter crase."
+    },
+    {
+        id: "4Q3365921", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Analise os termos destacados e assinale a alternativa que indica o correto uso de crase.",
+        a: "Fui à escola cedo.", b: "Cheguei a festa animada.", c: "Fui à pé para a escola.", d: "Enviei uma carta à meu amigo.", e: "Ela foi a praia no verão.",
+        correta: "a", comentario: "Fui a + a escola. 'Festa' e 'Praia' (nas outras opções) precisariam de crase para estarem corretas."
+    },
+    {
+        id: "5Q3364661", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Analise os termos destacados e assinale a alternativa que indica o correto uso da crase.",
+        a: "Fui à escola cedo.", b: "Cheguei a festa animada.", c: "Fui à pé para a escola.", d: "Enviei uma carta à meu amigo.", e: "Ela foi a praia no verão.",
+        correta: "a", comentario: "Mesma lógica da questão anterior. Crase obrigatória em 'à escola'."
+    },
+    {
+        id: "6Q3279024", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2025",
+        enunciado: "Marque a alternativa correta quanto ao uso da crase.",
+        a: "Viajarei à Roma.", b: "As vezes, vou ao baile.", c: "Nunca vou a festas juninas.", d: "Irei a terra de meus avós.", e: "Estávamos frente à frente no tribunal.",
+        correta: "c", comentario: "A no singular + palavra no plural (festas) não tem crase. Roma não aceita artigo. 'As vezes' (locução) deveria ter crase. 'Frente a frente' é proibida."
+    },
+    {
+        id: "7Q3471506", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o acento indicativo de crase foi utilizado corretamente:",
+        a: "eles estavam lado à lado;", b: "Maria começou à dançar;", c: "elas odiavam andar à cavalo;", d: "eu comecei à fazer o almoço;", e: "nós vamos à igreja todo domingo.",
+        correta: "e", comentario: "Igreja aceita artigo feminino. Proibido em palavras repetidas, antes de verbos e masculinos."
+    },
+    {
+        id: "8Q3471447", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o acento indicativo de crase foi utilizado corretamente.",
+        a: "Nós estávamos cara à cara.", b: "A casa fica à direita do bar.", c: "Eles gostavam de andar à pé.", d: "Eu comecei à ler novos livros.", e: "Ele demonstrou gratidão à todos.",
+        correta: "b", comentario: "Locuções adverbiais femininas indicando direção/lugar (à direita) levam crase."
+    },
+    {
+        id: "9Q3200667", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a única alternativa INCORRETA em relação ao uso do acento indicativo de crase.",
+        a: "Chegaremos as 14:00 horas.", b: "Entregamos as notas àquelas alunas.", c: "Há várias restrições à propaganda de cigarros.", d: "À medida que o tempo passa...", e: "O Professor referiu-se à Princesa Izabel.",
+        correta: "a", comentario: "Antes de horas exatas, a crase é OBRIGATÓRIA (às 14:00 horas)."
+    },
+    {
+        id: "10Q3097490", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a frase em que a crase está utilizada corretamente.",
+        a: "Vou à festa de aniversário da minha amiga.", b: "Ele se referiu aquela situação...", c: "Fui a escola e encontrei meu irmão.", d: "A professora entregou os cadernos as alunas.", e: "Cheguei à uma conclusão importante.",
+        correta: "a", comentario: "Fui a + a festa. 'Aquela', 'escola' e 'alunas' deveriam ter crase. Proibido antes de artigo indefinido 'uma'."
+    },
+    {
+        id: "11Q3028204", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o emprego do acento indicativo de crase é FACULTATIVO.",
+        a: "Caminhamos até à praia.", b: "O banco fica à direita do cinema.", c: "Nós fomos à reunião de professores.", d: "O cantor saiu do palco às escondidas.", e: "Ele venceu o jogo às custas de muito esforço.",
+        correta: "a", comentario: "Após a preposição 'ATÉ', a crase é facultativa antes de substantivos femininos."
+    },
+    {
+        id: "12Q3028009", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o acento indicativo de crase foi utilizado corretamente:",
+        a: "Comprei meu apartamento à prazo.", b: "Ele começou à jogar baralho.", c: "Dia à dia, ela se frustrava.", d: "As alunas saíram às pressas da sala de aula.", e: "Os nômades andavam à pé.",
+        correta: "d", comentario: "Locuções adverbiais de modo femininas (às pressas, às cegas) levam crase."
+    },
+    {
+        id: "13Q2516783", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Entre as cinco ocorrências da vogal A destacadas no texto, quais necessitam de acento grave?",
+        a: "Todas as ocorrências.", b: "A primeira e a terceira.", c: "A primeira, a segunda e a quinta.", d: "A segunda e a quarta.", e: "Nenhuma das ocorrências.",
+        correta: "d", comentario: "Questão baseada em análise de texto. Depende da regência verbal e presença de artigo feminino nas posições 2 e 4."
+    },
+    {
+        id: "14Q2507343", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o acento indicativo de crase foi utilizado corretamente:",
+        a: "José aplicou o remédio gota à gota;", b: "Ana começou à correr diariamente;", c: "Marivaldo saiu às pressas de casa;", d: "Alessandra disse a verdade à todos;", e: "Luciano chegará daqui à uma hora.",
+        correta: "c", comentario: "Uso correto em locução adverbial feminina 'às pressas'."
+    },
+    {
+        id: "15Q2507319", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "No texto de Maria, qual situação o uso da crase é INCORRETO?",
+        a: "Maria foi à festa...", b: "...assistir à apresentação...", c: "...foi direto à mesa...", d: "...dirigiu-se à amiga...", e: "...agradecendo à todos pela festa.",
+        correta: "e", comentario: "Nunca ocorre crase antes de 'todos' (pronome indefinido masculino)."
+    },
+    {
+        id: "16Q2506584", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Assinale a alternativa em que o emprego do acento indicativo de crase é FACULTATIVO:",
+        a: "Fica à esquerda da sala;", b: "Saiu às pressas;", c: "Chegou às sete horas;", d: "Entregou o prêmio à sua equipe;", e: "Ficou à vontade.",
+        correta: "d", comentario: "Antes de pronomes possessivos femininos no singular (minha, sua, tua), a crase é facultativa."
+    },
+    {
+        id: "17Q2486798", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Julgue: I. Explicou à senhora? II. Foi até à igreja. III. Às 8 horas toca o despertador. Estão CORRETAS:",
+        a: "apenas III;", b: "apenas I e III;", c: "apenas II e III;", d: "apenas II;", e: "I, II e III.",
+        correta: "e", comentario: "Senhora aceita crase. Após 'até' é facultativo. Horas exatas é obrigatório. Todas estão certas."
+    },
+    {
+        id: "18Q2486351", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Qual alternativa completa adequadamente as lacunas presentes no último parágrafo do texto?",
+        a: "a / a / a", b: "à / a / à", c: "à / à / a", d: "a / à / a", e: "à / à / à",
+        correta: "c", comentario: "Análise de lacunas: exige conhecimento de regência (preposição A) e análise de substantivos femininos determinados."
+    },
+    {
+        id: "19Q2483402", materia: "Português", assunto: "Crase", banca: "IBADE", ano: "2024",
+        enunciado: "Sobre as quatro ocorrências da vogal A sinalizadas no texto, quantas demandam o uso de crase?",
+        a: "Nenhuma.", b: "Somente uma.", c: "Duas.", d: "Três.", e: "Todas.",
+        correta: "c", comentario: "Análise textual: identifica-se a fusão da preposição com o artigo em apenas duas das marcações."
+    },
+    {
         id: "SED_REG_01", materia: "Português", assunto: "Regência Verbal",
         banca: "Simulado IBADE", orgao: "SEDUC-RO", ano: "2024", prova: "Técnico Secretariado",
         enunciado: "Ao redigir uma circular, o técnico deve observar a regência. Assinale a frase que respeita a norma culta:",
@@ -4508,6 +4844,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
