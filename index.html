@@ -21,7 +21,7 @@
         .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
         .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
         .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; }
-	.menu-item { display: block; /* Garante que o clique pegue em toda a linha */ width: 100%; }
+	    .menu-item { display: block; /* Garante que o clique pegue em toda a linha */ width: 100%; }
         .header-topo {background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
         /* Tela de Bloqueio */
 #login-screen {
@@ -43,11 +43,7 @@
     text-align: center;
 }
     </style>
-
-    <script type="importmap">
-    { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
-    </script>
-
+    
     <script src="portugues.js"></script>
     <script src="historia_geografia_rondonia.js"></script>
     <script src="conhecimentos_especificos.js"></script>
@@ -213,7 +209,6 @@
     </div>
   
 <script type="module">
-    // Importação direta via URL para evitar conflitos de 'importmap'
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
     const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE"; 
@@ -226,7 +221,6 @@
         
         if(!pergunta) return;
 
-        // Adiciona pergunta do usuário
         chat.innerHTML += `<div class="bubble-user p-2 bg-blue-100 my-2 rounded text-right border-r-4 border-blue-500"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
@@ -237,22 +231,21 @@
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Puxa a questão atual do simulador
+            // Proteção: Verifica se as questões existem antes de tentar ler
+            if (!window.questoesFiltradas || window.index === undefined) {
+                throw new Error("Por favor, selecione uma matéria primeiro!");
+            }
+
             const q = window.questoesFiltradas[window.index];
-            
-            // Especificando o modelo de forma estável
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             const prompt = `Você é um Professor de Concursos. 
-            Analise a questão abaixo e tire a dúvida do aluno.
-            
+            Analise a questão e a dúvida do aluno.
             Questão: ${q.enunciado}
-            Gabarito oficial: Letra ${q.correta.toUpperCase()}
-            Explicação base: ${q.comentario}
-            
-            Dúvida do Aluno: "${pergunta}"
-            
-            Instrução: Responda de forma curta e pedagógica em Português.`;
+            Gabarito: ${q.correta.toUpperCase()}
+            Comentário Base: ${q.comentario}
+            Dúvida: "${pergunta}"
+            Responda de forma curta, direta e pedagógica.`;
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
@@ -264,7 +257,7 @@
 
         } catch (e) {
             console.error("Erro na IA:", e);
-            loading.innerText = "Erro ao conectar. Verifique se o modelo 'gemini-1.5-flash' está ativo na sua região ou se a cota gratuita expirou.";
+            loading.innerText = "Erro: " + e.message;
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
@@ -630,6 +623,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
