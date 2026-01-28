@@ -563,7 +563,7 @@ const banco_pt = [
     {
         id: "23Q1921591",
         materia: "Português",
-        assunto: "Semântica/Morfologia",
+        assunto: "Semântica",
         ano: "2022",
         banca: "IBADE",
         orgao: "Prefeitura de São Paulo",
@@ -8726,6 +8726,7 @@ const banco_pt = [
     // Para brevidade, as demais 15 questões seguem o mesmo padrão lógico da banca IBADE.
 
 ];
+
 
 
 
