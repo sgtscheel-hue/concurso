@@ -209,8 +209,10 @@
     </div>
   
 <script type="module">
+    // Importação correta do SDK do Google
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
+    // Sua Chave de API
     const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE"; 
     const genAI = new GoogleGenerativeAI(API_KEY);
 
@@ -221,54 +223,45 @@
         
         if(!pergunta) return;
 
-        // Interface do usuário
-        chat.innerHTML += `<div class="bubble-user p-2 bg-blue-100 my-2 rounded text-right border-r-4 border-blue-500"><strong>Você:</strong> ${pergunta}</div>`;
+        // Adiciona a pergunta do aluno na tela
+        chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
         const loading = document.createElement("div");
-        loading.className = "bubble-ai p-2 bg-gray-100 my-2 rounded italic text-gray-500 border-l-4 border-gray-400";
-        loading.innerText = "O Professor está elaborando a resposta...";
+        loading.className = "bubble-ai italic text-gray-500";
+        loading.innerText = "O Professor está pensando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Tenta pegar a questão atual se ela existir
-            const lista = window.questoesFiltradas || [];
-            const idx = window.index;
-            const q = (lista.length > 0 && idx !== undefined) ? lista[idx] : null;
-
+            // Tenta obter o modelo
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-            // Montagem do Prompt Flexível
-            let contextoQuestao = "O aluno está apenas conversando ou tirando dúvidas gerais.";
-            if (q) {
-                contextoQuestao = `O aluno está visualizando uma questão de ${q.materia} sobre ${q.assunto}. 
-                Enunciado: ${q.enunciado}. Gabarito: ${q.correta}.`;
+            // Captura o contexto da questão (se houver uma carregada)
+            let contextoExtra = "";
+            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
+                const q = window.questoesFiltradas[window.index];
+                contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
             }
 
-            const prompt = `Você é o "Professor Gemini", especialista em concursos para a SEDUC/RO (Banca IBADE).
-            CONTEXTO ATUAL: ${contextoQuestao}
-            
-            DÚVIDA DO ALUNO: "${pergunta}"
-            
-            INSTRUÇÕES:
-            1. Se a pergunta for sobre a questão atual, explique-a.
-            2. Se for uma pergunta geral sobre Português, Informática, História de Rondônia ou Conhecimentos Pedagógicos, responda com autoridade acadêmica.
-            3. Seja didático, use bullet points se necessário.
-            4. Responda em Português do Brasil.
-            5. Se o aluno pedir para "resumir o edital" ou algo fora do banco de dados, use seu conhecimento geral para ajudar.`;
+            // Prompt focado em ser um Professor de Concurso da SEDUC/RO
+            const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
+            Responda de forma didática e técnica à dúvida do aluno. 
+            ${contextoExtra} 
+            Dúvida: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
 
-            loading.innerHTML = `<strong>Professor:</strong><br>${text}`;
+            // Exibe a resposta final
+            loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
             loading.classList.remove("italic", "text-gray-500");
-            loading.classList.add("border-green-500");
+            loading.style.color = "#0369A1"; // Cor azul do professor
 
         } catch (e) {
-            console.error("Erro na IA:", e);
-            loading.innerText = "Erro ao processar sua dúvida. Tente novamente.";
+            console.error("Erro detalhado:", e);
+            loading.innerHTML = "<strong>Erro:</strong> Não foi possível conectar ao Professor. Verifique sua conexão ou se a cota da API expirou.";
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
@@ -634,6 +627,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
