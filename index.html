@@ -220,11 +220,19 @@
 }
 </script>
 
+<script type="importmap">
+{
+  "imports": {
+    "@google/generative-ai": "https://esm.run/@google/generative-ai"
+  }
+}
+</script>
+
 <script type="module">
     import { GoogleGenerativeAI } from "@google/generative-ai";
 
-    // Nota: Se o erro persistir, gere uma nova chave no AI Studio
     const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE"; 
+    // Criamos a instância da IA
     const genAI = new GoogleGenerativeAI(API_KEY);
 
     window.perguntarGemini = async function() {
@@ -234,48 +242,51 @@
         
         if(!pergunta) return;
 
-        // Adiciona a pergunta visualmente
-        const userDiv = document.createElement("div");
-        userDiv.className = "bubble-user p-2 bg-blue-50 my-2 rounded text-right border-r-4 border-blue-500";
-        userDiv.innerText = pergunta;
-        chat.appendChild(userDiv);
-        
+        // UI: Pergunta do usuário
+        chat.innerHTML += `<div class="bubble-user p-2 bg-blue-100 my-2 rounded text-right"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
         const loading = document.createElement("div");
-        loading.className = "bubble-ai p-2 bg-gray-50 my-2 rounded italic text-gray-500 border-l-4 border-gray-400";
-        loading.innerText = "Analisando questão...";
+        loading.className = "bubble-ai p-2 bg-gray-100 my-2 rounded italic text-gray-500";
+        loading.innerText = "O Professor está analisando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Pegando a questão atual do seu objeto global
+            // Pegamos a questão atual que está rodando no seu simulador
             const q = window.questoesFiltradas[window.index];
             
-            // Forçando o uso do modelo 1.5-flash (mais estável para web)
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-            
-            const prompt = `Aja como um Professor de Português para Concursos.
-            Questão Atual: ${q.enunciado}
-            Gabarito Oficial: ${q.correta}
-            Explicação técnica: ${q.comentario}
-            
-            Dúvida do Aluno: ${pergunta}
-            
-            Responda de forma simples, direta e pedagógica.`;
+            // CONFIGURAÇÃO IMPORTANTE: Usando a versão estável do modelo
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-1.5-flash",
+            });
 
+            const prompt = `Você é um Professor de Concursos. 
+            Responda à dúvida do aluno sobre esta questão:
+            
+            Matéria: ${window.materiaAtual}
+            Enunciado: ${q.enunciado}
+            Gabarito: Letra ${q.correta.toUpperCase()}
+            Explicação: ${q.comentario}
+            
+            Dúvida do aluno: "${pergunta}"
+            
+            Instrução: Seja breve, didático e responda em português do Brasil.`;
+
+            // Chamada da geração de conteúdo
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
 
-            loading.innerText = text;
+            // Exibe a resposta
+            loading.innerHTML = `<strong>Professor Gemini:</strong><br>${text}`;
             loading.classList.remove("italic", "text-gray-500");
-            loading.classList.add("border-green-500");
 
         } catch (e) {
-            console.error("Erro na IA:", e);
-            loading.innerText = "Ocorreu um erro de segurança ou conexão. Verifique se a API Key está ativa no Google AI Studio.";
-            loading.className = "bubble-ai p-2 bg-red-50 my-2 rounded text-red-600 border-l-4 border-red-500";
+            console.error("Erro detalhado:", e);
+            // Se o erro 404 persistir, tentaremos o modelo pro como fallback
+            loading.innerText = "Erro ao encontrar o modelo. Verifique se sua API Key tem acesso ao Gemini 1.5 Flash.";
+            loading.style.color = "red";
         }
         chat.scrollTop = chat.scrollHeight;
     }
@@ -640,4 +651,5 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
