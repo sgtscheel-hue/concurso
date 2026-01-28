@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador SEDUC Pro - v25 Estável</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .container-main { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .alternativa-card { border: 1px solid #e5e7eb; transition: 0.2s; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: white; margin-bottom: 4px; }
+        input[type="radio"]:checked + .alternativa-card { border-color: #3b82f6; background: #eff6ff; }
+        .letra-circulo { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #6b7280; }
+        input[type="radio"]:checked + .alternativa-card .letra-circulo { background: #2563eb; border-color: #2563eb; color: white; }
+        .menu-item { cursor: pointer; transition: 0.2s; border-radius: 8px; padding: 10px; border-left: 4px solid transparent; font-size: 13px; }
+        .menu-item.active { background: #DBEAFE; border-left-color: #2563EB; color: #1E40AF; font-weight: 700; }
+        .extra-panel { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .bubble-ai { background: #E0F2FE; color: #0369A1; padding: 10px; border-radius: 12px 12px 12px 2px; align-self: flex-start; max-width: 85%; border-left: 3px solid #0EA5E9; font-size: 12px; }
+        .bubble-user { background: #F1F5F9; color: #475569; padding: 10px; border-radius: 12px 12px 2px 12px; align-self: flex-end; max-width: 85%; font-size: 12px; }
+        .tag-quest { background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; border: 1px solid #e2e8f0; white-space: nowrap; }
+	.menu-item { display: block; /* Garante que o clique pegue em toda a linha */ width: 100%; }
+        .header-topo {background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+        /* Tela de Bloqueio */
+#login-screen {
+    position: fixed;
+    inset: 0;
+    background: #1e3a8a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
+    </style>
+
+    <script type="importmap">
+    { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
+    </script>
+
+    <script src="portugues.js"></script>
+    <script src="historia_geografia_rondonia.js"></script>
+    <script src="conhecimentos_especificos.js"></script>
+    <script src="informatica_basica.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div id="login-screen">
+    <div class="login-box">
+        <i class="fa-solid fa-lock text-blue-600 text-4xl mb-4"></i>
+        <h2 class="text-xl font-bold text-gray-800 mb-1">Acesso Restrito</h2>
+        <p class="text-gray-500 text-xs mb-6">Simulador SEDUC/RO - v25</p>
+        
+        <input type="text" id="user" placeholder="Usuário" class="w-full p-3 mb-3 border rounded-lg outline-none focus:ring-2 ring-blue-500 text-sm">
+        <input type="password" id="pass" placeholder="Senha" class="w-full p-3 mb-6 border rounded-lg outline-none focus:ring-2 ring-blue-500 text-sm">
+        
+        <button onclick="autenticar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition text-sm">
+            Entrar no Portal
+        </button>
+        <p id="login-erro" class="text-red-500 text-[10px] mt-4 hidden font-bold uppercase tracking-wider">Usuário ou senha incorretos!</p>
+    </div>
+</div>
+    <div class="header-topo w-full py-4 px-6 mb-6">
+        <div class="max-w-[1200px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-white font-black text-lg tracking-tight leading-none uppercase">SEDUC/RO</h1>
+                    <p class="text-blue-100 text-[10px] font-bold uppercase tracking-widest">Técnico Educacional</p>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <span class="text-white/50 text-[10px] font-medium border border-white/20 px-3 py-1 rounded-full uppercase">Simulado v25 Estável</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main px-4">
+        <div class="w-64 flex-shrink-0">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 sticky top-4">
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2 text-center">Desempenho</h2>
+                <div class="h-32 mb-4"><canvas id="performanceChart"></canvas></div>
+                
+                <h2 class="text-xs font-black text-gray-400 uppercase mb-2 border-t pt-4">Matérias</h2>
+                <nav class="space-y-3 mb-4">
+    <div onclick="trocarMateria('todas', this)" class="menu-item">Todas as Matérias</div>
+    
+    <div>
+        <div onclick="trocarMateria('portugues', this)" class="menu-item active">Português</div>
+        <div class="w-full bg-gray-100 rounded-full h-1 mt-1 overflow-hidden">
+            <div id="progresso-portugues" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div onclick="trocarMateria('rondonia', this)" class="menu-item">Hist. e Geo. RO</div>
+        <div class="w-full bg-gray-100 rounded-full h-1 mt-1 overflow-hidden">
+            <div id="progresso-rondonia" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div onclick="trocarMateria('especificos', this)" class="menu-item">Conhec. Específicos</div>
+        <div class="w-full bg-gray-100 rounded-full h-1 mt-1 overflow-hidden">
+            <div id="progresso-especificos" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div onclick="trocarMateria('informatica', this)" class="menu-item">Informática</div>
+        <div class="w-full bg-gray-100 rounded-full h-1 mt-1 overflow-hidden">
+            <div id="progresso-informatica" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </div>
+</nav>
+
+                <h2 class="text-[10px] font-black text-gray-400 uppercase mb-2">Filtrar Assunto</h2>
+                <select id="filtroAssunto" onchange="aplicarFiltro()" class="w-full text-[11px] p-2 rounded border border-gray-200 bg-gray-50 outline-none">
+                    <option value="todos">Todos os assuntos</option>
+                </select>
+
+                <div class="mt-2 space-y-1">
+                    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+                        <input type="checkbox" id="checkApenasErradas" onchange="aplicarFiltro()" class="mr-2"> Apenas as que errei
+                    </label>
+                    <label class="flex items-center text-[10px] font-bold text-gray-500 uppercase cursor-pointer">
+                        <input type="checkbox" id="checkNaoRespondidas" onchange="aplicarFiltro()" class="mr-2"> Apenas não respondidas
+                    </label>
+                </div>
+                
+                <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
+                    <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-grow">
+            <div class="flex justify-between items-center mb-3 bg-white p-3 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex gap-6">
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Acertos</p><p id="dashAcertos" class="text-base font-bold text-emerald-600">0</p></div>
+                    <div class="text-center"><p class="text-[9px] text-gray-400 font-bold uppercase">Erros</p><p id="dashErros" class="text-base font-bold text-red-600">0</p></div>
+                    <div id="nomeMateriaAtual" class="ml-4 text-xs font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full uppercase italic">Português</div>
+                </div>
+                <button onclick="resetar()" class="text-gray-300 hover:text-red-500 p-2"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4">
+                    <div id="info-questao" class="flex flex-wrap gap-2 mb-4"></div>
+                    <div id="enunciado" class="text-gray-800 text-[15px] mb-4 font-medium leading-snug"></div>
+                    <div id="alternativas" class="space-y-0"></div>
+
+                    <div class="mt-4 flex items-center justify-between border-t pt-4">
+                        <div class="flex gap-2">
+                            <button id="btnResponder" onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
+                            <button onclick="togglePanel('panel-comment')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-gray-200">Comentário</button>
+                            <button onclick="togglePanel('panel-video')" class="bg-red-50 text-red-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-red-100">Vídeo Aula</button>
+                        </div>
+                        <div class="flex gap-4 items-center">
+                            <button onclick="anterior()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="posicao" class="text-[10px] text-gray-400 font-bold uppercase">0/0</span>
+                            <button onclick="proxima()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="feedback" class="hidden mt-4 p-3 rounded-lg border-l-4"></div>
+                    
+                    <div id="panel-comment" class="extra-panel">
+                        <h4 class="text-xs font-bold text-gray-700 mb-2">Comentário e Resumo:</h4>
+                        <div id="ai-resumo" class="text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-lg border"></div>
+                    </div>
+
+                    <div id="panel-video" class="extra-panel">
+                        <div id="video-container" class="aspect-video bg-black rounded-lg overflow-hidden flex items-center justify-center text-white text-xs">
+                            <p><i class="fa-brands fa-youtube text-red-600 text-2xl mr-2"></i> Selecione uma aula</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 bg-sky-50 p-4 rounded-xl border border-sky-100">
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase mb-2"><i class="fa-solid fa-robot mr-1"></i> Gemini AI Professor</h4>
+                        <div id="chatWindow" class="flex flex-col gap-2 max-h-48 overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg">
+                            <div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="geminiInput" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
+                            <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAulas" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="bg-amber-500 p-4 flex justify-between items-center text-white">
+                <h3 class="font-bold text-sm uppercase"><i class="fa-solid fa-layer-group mr-2"></i> Escolha a Vídeo Aula</h3>
+                <button onclick="fecharModalAulas()" class="hover:text-amber-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="listaAulas" class="p-4 space-y-2 max-h-80 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+        const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE";
+        const genAI = new GoogleGenerativeAI(API_KEY);
+
+        window.perguntarGemini = async function() {
+            const input = document.getElementById('geminiInput');
+            const chat = document.getElementById('chatWindow');
+            const pergunta = input.value.trim();
+            if(!pergunta) return;
+
+            chat.innerHTML += `<div class="bubble-user">${pergunta}</div>`;
+            input.value = "";
+            const loading = document.createElement("div");
+            loading.className = "bubble-ai italic text-gray-400";
+            loading.innerText = "O Professor está analisando...";
+            chat.appendChild(loading);
+            chat.scrollTop = chat.scrollHeight;
+
+            try {
+                const q = window.questoesFiltradas[window.index];
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const context = `Você é um Professor de Concursos. Matéria: ${window.materiaAtual}. Questão: ${q.enunciado}. Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
+                const result = await model.generateContent(context);
+                const response = await result.response;
+                loading.innerText = response.text();
+                loading.classList.remove("italic", "text-gray-400");
+            } catch (e) {
+                loading.innerText = "Erro ao conectar com a IA.";
+                loading.classList.add("text-red-500");
+            }
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
+
+    <script>
+        // 1. Configurações Iniciais
+        const aulasPorAssunto = {
+            'portugues': {
+                'Verbos': [
+                    { titulo: 'Aula 01: Tudo sobre Verbos', url: 'https://www.youtube.com/embed/_G8y60xyXpU?si=rFGeC6XTIkWdZ15l' },
+                    { titulo: 'Aula 02: Verbo Haver', url: 'https://www.youtube.com/embed/Rgfb9KAYbLs?si=4NcFFaWrby43yTHy' },
+                    { titulo: 'Aula 03: Vozes Verbais', url: 'https://www.youtube.com/embed/NgR2w2v3lDg?si=DjiE-efgSK9_jVJu' },
+                    { titulo: 'Aula 04: Correlação Verbal', url: 'https://www.youtube.com/embed/mncbUqIW5JI?si=JdB2ugXOMS1zPnsJ' }
+                ],
+                'Ortografia Oficial': [
+                    { titulo: 'Aula 01: Ortografia Oficial', url: 'https://www.youtube.com/embed/xD5NDLCUhaU?si=DqhQFLYJnZo5rHPX' }
+                ],
+                'Regência Verbal': [
+                    { titulo: 'Aula 01: Regência', url: 'https://www.youtube.com/embed/1G6rzf2VYgY?si=gCdRg45CNOulR6X6' },
+                    { titulo: 'Aula 02: Regência', url: 'https://www.youtube.com/embed/hA4ip53JcK8?si=UYVjmuTrLo7qSQoH' },
+                    { titulo: 'Aula 03: Regência', url: 'https://www.youtube.com/embed/bc8xUt0dNOU?si=Z_nw0tzzO2F3Zi4b' },
+                    { titulo: 'Aula 04: Questões', url: 'https://www.youtube.com/embed/WRXLPpJJwFs?si=yfjZlODDH4cE-w94' }           
+                ],
+              
+                'Concordância Verbal e Nominal': [
+                    { titulo: 'Aula 01: Concordância Verbal e Nominal', url: 'https://www.youtube.com/embed/jdqhnVUvqOc?si=ihCJQBvRKgi6cz7S' },
+                    { titulo: 'Aula 02: Concordância Verbal', url: 'https://www.youtube.com/embed/PHUcctXHayU?si=_zLPJaWoMLpTxdLu' },
+                    { titulo: 'Aula 03: Haver, Fazer e Existir', url: 'https://www.youtube.com/embed/IvFr7ELr7Jc?si=pFtrIuGKMozd3zmU' },
+                    { titulo: 'Aula 04: Resolvendo Questões', url: 'https://www.youtube.com/embed/WAm-doc0xgI?si=VG5mK_oya-cJAIW8' }
+                ],
+                'Formação das Palavras': [
+                    { titulo: 'Aula 01: Processso de Formação das Palavras', url: 'https://www.youtube.com/embed/Xw74aXTBaoY?si=28SAVGVF8NGmIwoo' }
+                ],
+                'Acentuação Gráfica': [
+                    { titulo: 'Aula 01: Regras Gerais', url: 'https://www.youtube.com/embed/nWQVPQmxWTk?si=yGR4H6DJHDrLRWXn' },
+                    { titulo: 'Aula 02: Exercícios Comentados', url: 'https://www.youtube.com/embed/HMVGucrVfkY?si=tvej3LWlrQVIFtGM' }
+                ],
+                'Classes de Palavras': [
+                    { titulo: 'Classe das Palavras', url: 'https://www.youtube.com/embed/ltrzPijgKi4?si=eYAIPdDj4ryAfIBm' },
+                    { titulo: 'Conjunções', url: 'https://www.youtube.com/embed/tKJkDQSMdh0?si=KCbnoh96kIYpY0OE' }
+                ],
+                'Crase': [
+                    { titulo: 'Aula 01: Crase Esquematizada', url: 'https://www.youtube.com/embed/uGDJj-dKnSw?si=yfT6B9BUgd3x6vge' },
+                    { titulo: 'Aula 02: Crase em 5 minutos', url: 'https://www.youtube.com/embed/6xBRE3Gp0fM?si=TziR9WjXy3cwJu5v' },
+                    { titulo: 'Aula 03: Questões', url: 'https://www.youtube.com/embed/rl_ij_yAXmg?si=z-bEHcdE9bPqpLiK' }
+                ]    
+            },
+            'rondonia': {
+                'História de Rondônia': [
+                    { titulo: 'Ciclo da Borracha', url: 'https://www.youtube.com/embed/URL_4' },
+                    { titulo: 'Criação do Estado', url: 'https://www.youtube.com/embed/URL_5' }
+                ]
+
+            }
+        };
+
+        window.materiaAtual = 'portugues';
+        window.index = 0;
+        window.questoesFiltradas = [];
+        let respondidaNaSessao = false;
+        let myChart = null;
+
+        // 2. Inicializar Bibliotecas
+        function atualizarBibliotecas() {
+            window.bibliotecas = {
+                'portugues': typeof banco_pt !== 'undefined' ? banco_pt : [],
+                'rondonia': typeof banco_ro !== 'undefined' ? banco_ro : [],
+                'especificos': typeof banco_esp !== 'undefined' ? banco_esp : [],
+                'informatica': typeof banco_inf !== 'undefined' ? banco_inf : []
+            };
+        }
+
+        // 3. Funções de Controle de Interface
+        function trocarMateria(materia, element) {
+            window.materiaAtual = materia;
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('nomeMateriaAtual').innerText = element.innerText;
+            
+            popularFiltros();
+            aplicarFiltro();
+        }
+
+        function popularFiltros() {
+            const select = document.getElementById('filtroAssunto');
+            if (window.materiaAtual === 'todas') {
+                select.innerHTML = '<option value="todos">Selecione uma matéria específica</option>';
+                select.disabled = true;
+                return;
+            }
+            select.disabled = false;
+            const banco = window.bibliotecas[window.materiaAtual] || [];
+            const assuntos = [...new Set(banco.map(q => q.assunto).filter(Boolean))];
+            select.innerHTML = `<option value="todos">Todos os assuntos</option>` + 
+                              assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
+            select.value = "todos";
+        }
+
+        function aplicarFiltro() {
+    const filtroAssunto = document.getElementById('filtroAssunto').value;
+    const apenasErradas = document.getElementById('checkApenasErradas').checked;
+    const apenasNaoRespondidas = document.getElementById('checkNaoRespondidas').checked;
+    
+    // Recupera o mapa de progresso do navegador
+    const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+
+    // 1. Define a base de dados (Todas ou Matéria Específica)
+    let resultado = (window.materiaAtual === 'todas') 
+        ? Object.values(window.bibliotecas).flat() 
+        : [...(window.bibliotecas[window.materiaAtual] || [])];
+
+    // 2. Filtro por Assunto
+    if (filtroAssunto !== 'todos') {
+        resultado = resultado.filter(q => q.assunto === filtroAssunto);
+    }
+
+    // 3. Filtro de Desempenho (Lógica booleana)
+    if (apenasErradas) {
+        resultado = resultado.filter(q => respondidasMap[q.id] === 'erro');
+    }
+    
+    if (apenasNaoRespondidas) {
+        resultado = resultado.filter(q => !respondidasMap[q.id]);
+    }
+
+    // Atualiza a lista global e reseta o ponteiro para a primeira questão
+    window.questoesFiltradas = resultado;
+    window.index = 0;
+    
+    render();
+}
+
+        // 4. Funções de Renderização (ORDEM PERSONALIZADA)
+function render() {
+    const q = window.questoesFiltradas[window.index];
+    const feedback = document.getElementById('feedback');
+    const btnResp = document.getElementById('btnResponder');
+    
+    feedback.classList.add('hidden');
+    document.getElementById('panel-comment').style.display = 'none';
+    document.getElementById('panel-video').style.display = 'none';
+
+    if (!q) {
+        document.getElementById('enunciado').innerText = "Nenhuma questão encontrada para este filtro.";
+        document.getElementById('alternativas').innerHTML = "";
+        document.getElementById('posicao').innerText = "0/0";
+        document.getElementById('info-questao').innerHTML = "";
+        return;
+    }
+
+    respondidaNaSessao = false;
+    btnResp.disabled = false;
+    btnResp.classList.remove('opacity-50');
+
+    // CABEÇALHO NA ORDEM EXATA PEDIDA
+    document.getElementById('info-questao').innerHTML = `
+        <span class="tag-quest bg-blue-600 text-white border-none">${q.materia || 'Português'}</span>
+        <span class="tag-quest bg-blue-50 text-blue-700 border-blue-200 font-bold">${q.assunto || 'Assunto'}</span>
+        <span class="tag-quest bg-amber-50 text-amber-700 border-amber-200">${q.banca || 'IBADE'}</span>
+        <span class="tag-quest bg-emerald-50 text-emerald-700 border-emerald-200">${q.orgao || 'IBGE'}</span>
+        <span class="tag-quest bg-gray-100 text-gray-600 border-gray-300">Prova: ${q.prova || 'Geral'}</span>
+        <span class="tag-quest bg-white text-gray-400 border-gray-200">${q.ano || '2019'}</span>
+    `;
+    
+    document.getElementById('enunciado').innerHTML = q.enunciado;
+    document.getElementById('posicao').innerText = `${window.index + 1} / ${window.questoesFiltradas.length}`;
+    document.getElementById('ai-resumo').innerHTML = q.comentario || 'Sem comentário disponível.';
+
+    document.getElementById('alternativas').innerHTML = ['a','b','c','d','e'].map(l => 
+        q[l] ? `<label class="block">
+                    <input type="radio" name="quiz" value="${l}" class="hidden">
+                    <div class="alternativa-card">
+                        <span class="letra-circulo uppercase">${l}</span>
+                        <div class="text-gray-700 text-[13px]">${q[l]}</div>
+                    </div>
+                </label>` : ''
+    ).join('');
+    
+    // Controle do botão de aula
+    const filtroAtivo = document.getElementById('filtroAssunto').value;
+    const temAulaDisponivel = aulasPorAssunto[window.materiaAtual]?.[filtroAtivo];
+    const btnAula = document.getElementById('btnAulaAssunto');
+    if (temAulaDisponivel && filtroAtivo !== 'todos') {
+        btnAula.classList.remove('hidden');
+    } else {
+        btnAula.classList.add('hidden');
+    }
+    
+    updateDash();
+}
+
+        function verificar() {
+    const q = window.questoesFiltradas[window.index];
+    const sel = document.querySelector('input[name="quiz"]:checked');
+    
+    // Se não selecionou nada ou já respondeu esta questão NESTA sessão, ignora
+    if (!sel || respondidaNaSessao) return;
+
+    respondidaNaSessao = true;
+    const btnResp = document.getElementById('btnResponder');
+    btnResp.disabled = true;
+    btnResp.classList.add('opacity-50');
+
+    const f = document.getElementById('feedback');
+    f.classList.remove('hidden');
+    
+    // 1. Carregar o mapa de respostas já existente
+    let map = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+    
+    // 2. Definir se acertou ou errou
+    const statusAtual = (sel.value === q.correta.toLowerCase()) ? 'acerto' : 'erro';
+    
+    if (statusAtual === 'acerto') {
+        f.className = "mt-4 p-3 rounded-lg border-l-4 bg-emerald-50 border-emerald-500 text-emerald-800 text-xs";
+        f.innerHTML = "<strong>✓ Correto!</strong>";
+    } else {
+        f.className = "mt-4 p-3 rounded-lg border-l-4 bg-red-50 border-red-500 text-red-800 text-xs";
+        f.innerHTML = "<strong>✕ Errado.</strong> Gabarito: " + q.correta.toUpperCase();
+    }
+
+    // 3. Salvar no mapa usando o ID único da questão
+    map[q.id] = statusAtual;
+    localStorage.setItem('seduc_respondidas_map', JSON.stringify(map));
+
+    // 4. RECONTAR TUDO do zero baseado no mapa (Isso evita erros de duplicidade)
+    const todosOsStatus = Object.values(map);
+    const totalAcertos = todosOsStatus.filter(v => v === 'acerto').length;
+    const totalErros = todosOsStatus.filter(v => v === 'erro').length;
+
+    // 5. Salvar os totais limpos
+    localStorage.setItem('seduc_acertos', totalAcertos);
+    localStorage.setItem('seduc_erros', totalErros);
+
+    // 6. Atualizar a interface e o gráfico
+    updateDash();
+    atualizarBarrasProgresso();
+}
+
+	function atualizarBarrasProgresso() {
+    const respondidasMap = JSON.parse(localStorage.getItem('seduc_respondidas_map')) || {};
+    const idsRespondidos = Object.keys(respondidasMap);
+
+    const materias = ['portugues', 'rondonia', 'especificos', 'informatica'];
+
+    materias.forEach(m => {
+        const banco = window.bibliotecas[m] || [];
+        if (banco.length === 0) return;
+
+        // Filtra quantos IDs do banco desta matéria estão no mapa de respondidas
+        const respondidasDaMateria = banco.filter(q => idsRespondidos.includes(String(q.id))).length;
+        
+        // Calcula a porcentagem
+        const porcentagem = Math.round((respondidasDaMateria / banco.length) * 100);
+        
+        // Atualiza a largura da barra visual
+        const barra = document.getElementById(`progresso-${m}`);
+        if (barra) {
+            barra.style.width = `${porcentagem}%`;
+            barra.title = `${porcentagem}% concluído`;
+        }
+    });
+}
+
+        function updateDash() {
+    // Busca os valores atualizados que acabamos de salvar na função verificar()
+    const acertos = parseInt(localStorage.getItem('seduc_acertos')) || 0;
+    const erros = parseInt(localStorage.getItem('seduc_erros')) || 0;
+    
+    document.getElementById('dashAcertos').innerText = acertos;
+    document.getElementById('dashErros').innerText = erros;
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    if (myChart) myChart.destroy();
+    
+    // Se não houver dados, mostra o gráfico cinza
+    const temDados = (acertos + erros > 0);
+    
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: temDados ? [acertos, erros] : [1, 0],
+                backgroundColor: temDados ? ['#10B981', '#EF4444'] : ['#E5E7EB'],
+                borderWidth: 0
+            }]
+        },
+        options: { 
+            cutout: '75%', 
+            plugins: { legend: { display: false } },
+            animation: { duration: 500 } // Animação suave ao atualizar
+        }
+    });
+}
+
+        // Funções de Navegação e Utilitários
+        function proxima() { if(window.index < window.questoesFiltradas.length - 1) { window.index++; render(); } }
+        function anterior() { if(window.index > 0) { window.index--; render(); } }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+        function resetar() { if(confirm("Deseja zerar seu progresso?")) { localStorage.clear(); location.reload(); } }
+        function fecharModalAulas() { document.getElementById('modalAulas').classList.add('hidden'); }
+        
+        function abrirAulaAssunto() {
+            const filtro = document.getElementById('filtroAssunto').value;
+            const aulas = aulasPorAssunto[window.materiaAtual]?.[filtro];
+            if (aulas) {
+                const lista = document.getElementById('listaAulas');
+                lista.innerHTML = aulas.map((a, i) => `
+                    <button onclick="carregarVideo('${a.url}')" class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-amber-50 text-xs font-bold border mb-2">
+                        ${i+1}. ${a.titulo}
+                    </button>`).join('');
+                document.getElementById('modalAulas').classList.remove('hidden');
+            }
+        }
+
+        function carregarVideo(url) {
+            document.getElementById('panel-video').style.display = 'block';
+            document.getElementById('video-container').innerHTML = `<iframe width="100%" height="100%" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+            fecharModalAulas();
+        }
+
+// --- LOGICA DE LOGIN E INICIALIZAÇÃO UNIFICADA ---
+const CREDENCIAIS = {
+    usuario: "admin",
+    senha: "admin"
+};
+
+function autenticar() {
+    const u = document.getElementById('user').value;
+    const s = document.getElementById('pass').value;
+    const erro = document.getElementById('login-erro');
+
+    if (u === CREDENCIAIS.usuario && s === CREDENCIAIS.senha) {
+        sessionStorage.setItem('logado', 'true');
+        document.getElementById('login-screen').style.display = 'none';
+        // Garante que as questões carreguem após o login
+        aplicarFiltro(); 
+    } else {
+        erro.classList.remove('hidden');
+        const box = document.querySelector('.login-box');
+        box.classList.add('animate-bounce');
+        setTimeout(() => box.classList.remove('animate-bounce'), 500);
+    }
+}
+
+// ÚNICO WINDOW.ONLOAD PARA TODO O SITE
+window.onload = () => {
+    // 1. Inicializa o banco de questões e o gráfico (mesmo escondido)
+    atualizarBibliotecas();
+    popularFiltros();
+    aplicarFiltro();
+    updateDash();
+    atualizarBarrasProgresso();
+
+    // 2. Verifica se o usuário precisa logar
+    if (sessionStorage.getItem('logado') === 'true') {
+        document.getElementById('login-screen').style.display = 'none';
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
+    }
+};       
+    </script>
+</body>
+</html>
