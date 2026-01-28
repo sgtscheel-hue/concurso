@@ -229,10 +229,10 @@
 </script>
 
 <script type="module">
-    import { GoogleGenerativeAI } from "@google/generative-ai";
+    // Importação direta via URL para evitar conflitos de 'importmap'
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
     const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE"; 
-    // Criamos a instância da IA
     const genAI = new GoogleGenerativeAI(API_KEY);
 
     window.perguntarGemini = async function() {
@@ -242,51 +242,46 @@
         
         if(!pergunta) return;
 
-        // UI: Pergunta do usuário
-        chat.innerHTML += `<div class="bubble-user p-2 bg-blue-100 my-2 rounded text-right"><strong>Você:</strong> ${pergunta}</div>`;
+        // Adiciona pergunta do usuário
+        chat.innerHTML += `<div class="bubble-user p-2 bg-blue-100 my-2 rounded text-right border-r-4 border-blue-500"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
         const loading = document.createElement("div");
-        loading.className = "bubble-ai p-2 bg-gray-100 my-2 rounded italic text-gray-500";
+        loading.className = "bubble-ai p-2 bg-gray-100 my-2 rounded italic text-gray-500 border-l-4 border-gray-400";
         loading.innerText = "O Professor está analisando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Pegamos a questão atual que está rodando no seu simulador
+            // Puxa a questão atual do simulador
             const q = window.questoesFiltradas[window.index];
             
-            // CONFIGURAÇÃO IMPORTANTE: Usando a versão estável do modelo
-            const model = genAI.getGenerativeModel({ 
-                model: "gemini-1.5-flash",
-            });
+            // Especificando o modelo de forma estável
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             const prompt = `Você é um Professor de Concursos. 
-            Responda à dúvida do aluno sobre esta questão:
+            Analise a questão abaixo e tire a dúvida do aluno.
             
-            Matéria: ${window.materiaAtual}
-            Enunciado: ${q.enunciado}
-            Gabarito: Letra ${q.correta.toUpperCase()}
-            Explicação: ${q.comentario}
+            Questão: ${q.enunciado}
+            Gabarito oficial: Letra ${q.correta.toUpperCase()}
+            Explicação base: ${q.comentario}
             
-            Dúvida do aluno: "${pergunta}"
+            Dúvida do Aluno: "${pergunta}"
             
-            Instrução: Seja breve, didático e responda em português do Brasil.`;
+            Instrução: Responda de forma curta e pedagógica em Português.`;
 
-            // Chamada da geração de conteúdo
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
 
-            // Exibe a resposta
-            loading.innerHTML = `<strong>Professor Gemini:</strong><br>${text}`;
+            loading.innerHTML = `<strong>Professor:</strong><br>${text}`;
             loading.classList.remove("italic", "text-gray-500");
+            loading.classList.add("border-green-500");
 
         } catch (e) {
-            console.error("Erro detalhado:", e);
-            // Se o erro 404 persistir, tentaremos o modelo pro como fallback
-            loading.innerText = "Erro ao encontrar o modelo. Verifique se sua API Key tem acesso ao Gemini 1.5 Flash.";
-            loading.style.color = "red";
+            console.error("Erro na IA:", e);
+            loading.innerText = "Erro ao conectar. Verifique se o modelo 'gemini-1.5-flash' está ativo na sua região ou se a cota gratuita expirou.";
+            loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
     }
@@ -651,5 +646,6 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
