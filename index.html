@@ -212,40 +212,74 @@
         </div>
     </div>
 
-    <script type="module">
-        import { GoogleGenerativeAI } from "@google/generative-ai";
-        const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE";
-        const genAI = new GoogleGenerativeAI(API_KEY);
+    <script type="importmap">
+{
+  "imports": {
+    "@google/generative-ai": "https://esm.run/@google/generative-ai"
+  }
+}
+</script>
 
-        window.perguntarGemini = async function() {
-            const input = document.getElementById('geminiInput');
-            const chat = document.getElementById('chatWindow');
-            const pergunta = input.value.trim();
-            if(!pergunta) return;
+<script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
 
-            chat.innerHTML += `<div class="bubble-user">${pergunta}</div>`;
-            input.value = "";
-            const loading = document.createElement("div");
-            loading.className = "bubble-ai italic text-gray-400";
-            loading.innerText = "O Professor está analisando...";
-            chat.appendChild(loading);
-            chat.scrollTop = chat.scrollHeight;
+    // Nota: Se o erro persistir, gere uma nova chave no AI Studio
+    const API_KEY = "AIzaSyCh78zQXbJ7F4IOniMNBJXxa3dfqv93BJE"; 
+    const genAI = new GoogleGenerativeAI(API_KEY);
 
-            try {
-                const q = window.questoesFiltradas[window.index];
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-                const context = `Você é um Professor de Concursos. Matéria: ${window.materiaAtual}. Questão: ${q.enunciado}. Gabarito: ${q.correta}. Dúvida: ${pergunta}`;
-                const result = await model.generateContent(context);
-                const response = await result.response;
-                loading.innerText = response.text();
-                loading.classList.remove("italic", "text-gray-400");
-            } catch (e) {
-                loading.innerText = "Erro ao conectar com a IA.";
-                loading.classList.add("text-red-500");
-            }
-            chat.scrollTop = chat.scrollHeight;
+    window.perguntarGemini = async function() {
+        const input = document.getElementById('geminiInput');
+        const chat = document.getElementById('chatWindow');
+        const pergunta = input.value.trim();
+        
+        if(!pergunta) return;
+
+        // Adiciona a pergunta visualmente
+        const userDiv = document.createElement("div");
+        userDiv.className = "bubble-user p-2 bg-blue-50 my-2 rounded text-right border-r-4 border-blue-500";
+        userDiv.innerText = pergunta;
+        chat.appendChild(userDiv);
+        
+        input.value = "";
+        
+        const loading = document.createElement("div");
+        loading.className = "bubble-ai p-2 bg-gray-50 my-2 rounded italic text-gray-500 border-l-4 border-gray-400";
+        loading.innerText = "Analisando questão...";
+        chat.appendChild(loading);
+        chat.scrollTop = chat.scrollHeight;
+
+        try {
+            // Pegando a questão atual do seu objeto global
+            const q = window.questoesFiltradas[window.index];
+            
+            // Forçando o uso do modelo 1.5-flash (mais estável para web)
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            
+            const prompt = `Aja como um Professor de Português para Concursos.
+            Questão Atual: ${q.enunciado}
+            Gabarito Oficial: ${q.correta}
+            Explicação técnica: ${q.comentario}
+            
+            Dúvida do Aluno: ${pergunta}
+            
+            Responda de forma simples, direta e pedagógica.`;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+
+            loading.innerText = text;
+            loading.classList.remove("italic", "text-gray-500");
+            loading.classList.add("border-green-500");
+
+        } catch (e) {
+            console.error("Erro na IA:", e);
+            loading.innerText = "Ocorreu um erro de segurança ou conexão. Verifique se a API Key está ativa no Google AI Studio.";
+            loading.className = "bubble-ai p-2 bg-red-50 my-2 rounded text-red-600 border-l-4 border-red-500";
         }
-    </script>
+        chat.scrollTop = chat.scrollHeight;
+    }
+</script>
 
     <script>
         // 1. Configurações Iniciais
@@ -606,3 +640,4 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
