@@ -215,14 +215,14 @@
 <script type="module">
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-    // 1. Inicialização da API
+    // 1. Tenta recuperar a chave do LocalStorage
     const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
+    
     let genAI = null;
     if (SAVED_KEY) {
         genAI = new GoogleGenerativeAI(SAVED_KEY);
     }
 
-    // 2. FUNÇÃO PERGUNTAR (Anexada ao window para o botão encontrar)
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
         const chat = document.getElementById('chatWindow');
@@ -230,69 +230,75 @@
         
         if(!pergunta) return;
 
+        // Verifica se a chave existe antes de prosseguir
         if (!genAI) {
-            alert("API Key não configurada! Clique no ícone da engrenagem.");
+            alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
             return;
         }
 
-        // Adiciona pergunta visualmente
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
-        // Balão de resposta temporário
-        const loadingId = "ai-" + Date.now();
-        chat.innerHTML += `<div id="${loadingId}" class="bubble-ai italic text-gray-500"><strong>Professor:</strong> Pensando...</div>`;
-        
-        // Scroll automático
+        const loading = document.createElement("div");
+        loading.className = "bubble-ai italic text-gray-500";
+        loading.innerText = "O Professor está pensando...";
+        chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            // Usando o modelo que você confirmou ter acesso (2.5-flash)
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
             let contextoExtra = "";
             if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
                 const q = window.questoesFiltradas[window.index];
-                contextoExtra = `O aluno está resolvendo uma questão de ${q.materia}. Enunciado: ${q.enunciado}. `;
+                contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
             }
 
-            const prompt = `Você é o Professor Gemini, mentor para concursos. Responda de forma didática: ${pergunta}. Contexto: ${contextoExtra}`;
+            const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
+            Responda de forma didática e técnica à dúvida do aluno. 
+            ${contextoExtra} 
+            Dúvida: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
 
-            // Atualiza o balão com a resposta real
-            const aiBubble = document.getElementById(loadingId);
-            aiBubble.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
-            aiBubble.classList.remove("italic", "text-gray-500");
-            aiBubble.style.color = "#0369A1";
+            loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
+            loading.classList.remove("italic", "text-gray-500");
+            loading.style.color = "#0369A1";
 
         } catch (e) {
-            console.error("Erro:", e);
-            document.getElementById(loadingId).innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique sua chave.";
+            console.error("Erro detalhado:", e);
+            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida ou se a cota expirou.";
+            loading.classList.add("text-red-600");
         }
+        chat.scrollTop = chat.scrollHeight;
+    }
 
-        // Scroll suave após carregar
-        setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100);
-    };
+    // --- NOVA LÓGICA PARA O ENTER ---
+    // Adiciona o evento de escuta no campo de texto
+    const inputField = document.getElementById('geminiInput');
+    if (inputField) {
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita quebra de linha ou comportamentos padrão
+                window.perguntarGemini();
+            }
+        });
+    }
 
-    // 3. FUNÇÃO CONFIGURAR (Anexada ao window)
+    // Função global para salvar a chave (chamada pelo botão de engrenagem)
     window.configurarChave = function() {
-        const novaChave = prompt("Insira sua Gemini API Key:");
-        if (novaChave && novaChave.trim() !== "") {
+        const novaChave = prompt("Insira sua Gemini API Key (ela ficará salva apenas no seu navegador):");
+        if (novaChave && novaChave.trim().length > 10) {
             localStorage.setItem('GEMINI_API_KEY', novaChave.trim());
-            alert("Chave salva! Reiniciando...");
+            alert("Chave configurada com sucesso! Recarregando a página...");
             location.reload();
+        } else {
+            alert("Chave inválida ou cancelado.");
         }
     };
-
-    // 4. ATALHO ENTER
-    document.getElementById('geminiInput').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            window.perguntarGemini();
-        }
-    });
 </script>
 <script>
         // 1. Configurações Iniciais
@@ -702,6 +708,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
