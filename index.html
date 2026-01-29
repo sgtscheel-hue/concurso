@@ -192,6 +192,18 @@
                         <div class="flex gap-2">
                             <input type="text" id="geminiInput" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
                             <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+							<button onclick="configurarChave()" class="text-sky-600 hover:text-sky-800 text-[10px] font-bold p-2"> <i class="fa-solid fa-gear"></i> CONFIGURAR IA</button>
+
+<script>
+    window.configurarChave = function() {
+        const novaChave = prompt("Insira sua Gemini API Key:");
+        if (novaChave) {
+            localStorage.setItem('GEMINI_API_KEY', novaChave);
+            alert("Chave salva com sucesso! A página será reiniciada.");
+            location.reload();
+        }
+    };
+</script>
                         </div>
                     </div>
                 </div>
@@ -210,12 +222,15 @@
     </div>
   
 <script type="module">
-    // Importação correta do SDK do Google
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        const API_KEY = "AIzaSyCwU4ykpKpmZOIystBFObMt8ysq7D2Zmsc"; // Coloque a chave nova aqui
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Use o 1.5-flash por estabilidade
+    // 1. Tenta recuperar a chave do LocalStorage
+    const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
+    
+    let genAI = null;
+    if (SAVED_KEY) {
+        genAI = new GoogleGenerativeAI(SAVED_KEY);
+    }
 
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
@@ -224,7 +239,12 @@
         
         if(!pergunta) return;
 
-        // Adiciona a pergunta do aluno na tela
+        // Verifica se a chave existe antes de prosseguir
+        if (!genAI) {
+            alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
+            return;
+        }
+
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
@@ -235,17 +255,15 @@
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Tenta obter o modelo
+            // Usando o modelo que você confirmou ter acesso (2.5-flash)
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-            // Captura o contexto da questão (se houver uma carregada)
             let contextoExtra = "";
             if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
                 const q = window.questoesFiltradas[window.index];
                 contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
             }
 
-            // Prompt focado em ser um Professor de Concurso da SEDUC/RO
             const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
             Responda de forma didática e técnica à dúvida do aluno. 
             ${contextoExtra} 
@@ -255,18 +273,29 @@
             const response = await result.response;
             const text = response.text();
 
-            // Exibe a resposta final
             loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
             loading.classList.remove("italic", "text-gray-500");
-            loading.style.color = "#0369A1"; // Cor azul do professor
+            loading.style.color = "#0369A1";
 
         } catch (e) {
             console.error("Erro detalhado:", e);
-            loading.innerHTML = "<strong>Erro:</strong> Não foi possível conectar ao Professor. Verifique sua conexão ou se a cota da API expirou.";
+            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida ou se a cota expirou.";
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
     }
+
+    // Função global para salvar a chave (chamada pelo botão de engrenagem)
+    window.configurarChave = function() {
+        const novaChave = prompt("Insira sua Gemini API Key (ela ficará salva apenas no seu navegador):");
+        if (novaChave && novaChave.trim().length > 10) {
+            localStorage.setItem('GEMINI_API_KEY', novaChave.trim());
+            alert("Chave configurada com sucesso! Recarregando a página...");
+            location.reload();
+        } else {
+            alert("Chave inválida ou cancelado.");
+        }
+    };
 </script>
 
 <script>
@@ -677,6 +706,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
