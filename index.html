@@ -42,6 +42,21 @@
     max-width: 350px;
     text-align: center;
 }
+
+
+#chatWindow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Começa pequeno e expande até 500px antes de mostrar o scroll */
+    min-height: 100px;
+    max-height: 500px; 
+    overflow-y: auto;
+    /* A mágica da expansão suave */
+    transition: all 0.5s ease-in-out; 
+    scroll-behavior: smooth;
+}
+		
     </style>
     
     <script src="portugues.js"></script>
@@ -273,11 +288,22 @@
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
+            // ... (seu código de gerar resposta)
             const text = response.text();
 
-            loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
-            loading.classList.remove("italic", "text-gray-500");
-            loading.style.color = "#0369A1";
+            // Atualiza o balão de resposta
+            const aiBubble = document.getElementById(loadingId);
+            aiBubble.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
+            aiBubble.classList.remove("italic", "text-gray-500");
+            aiBubble.style.color = "#0369A1";
+
+            // NOVO: Força o chat a descer suavemente após o texto aparecer
+            setTimeout(() => {
+                chat.scrollTo({
+                    top: chat.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
 
         } catch (e) {
             console.error("Erro detalhado:", e);
@@ -719,6 +745,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
