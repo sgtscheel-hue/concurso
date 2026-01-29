@@ -190,7 +190,7 @@
                             <div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
                         </div>
                         <div class="flex gap-2">
-                            <input type="text" id="geminiInput" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
+                            <input type="text" id="geminiInput" onkeyup="if(event.key === 'Enter') perguntarGemini()" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
                             <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
 							<button onclick="configurarChave()" class="text-sky-600 hover:text-sky-800 text-[10px] font-bold p-2"> <i class="fa-solid fa-gear"></i> CONFIGURAR IA</button>
 
@@ -283,6 +283,18 @@
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
+    }
+
+    // --- NOVA LÓGICA PARA O ENTER ---
+    // Adiciona o evento de escuta no campo de texto
+    const inputField = document.getElementById('geminiInput');
+    if (inputField) {
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita quebra de linha ou comportamentos padrão
+                window.perguntarGemini();
+            }
+        });
     }
 
     // Função global para salvar a chave (chamada pelo botão de engrenagem)
@@ -706,6 +718,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
