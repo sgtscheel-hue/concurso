@@ -213,9 +213,9 @@
     // Importação correta do SDK do Google
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-    // Sua Chave de API
-    const API_KEY = "AIzaSyC0zDIgVTwFKzf01VvJz_pi-DziFNoIB6s"; 
-    const genAI = new GoogleGenerativeAI(API_KEY);
+        const API_KEY = "AIzaSyA0XjZsznzdHv7KRUdg_oqWizvpD7DyXAk"; // Coloque a chave nova aqui
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Use o 1.5-flash por estabilidade
 
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
@@ -677,6 +677,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
