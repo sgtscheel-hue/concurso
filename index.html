@@ -362,6 +362,30 @@
             };
         }
 
+
+window.abrirResumoPDF = function() {
+    // Pega a questão atual que o aluno está vendo
+    const q = window.questoesFiltradas[window.index];
+    
+    if (!q) {
+        alert("Selecione uma questão primeiro.");
+        return;
+    }
+
+    const assunto = q.assunto;
+    const linkPDF = linksPDFPorAssunto[assunto];
+
+    if (linkPDF) {
+        // Abre o PDF em uma nova aba
+        window.open(linkPDF, '_blank');
+    } else {
+        alert("Ainda não temos um PDF disponível para o assunto: " + assunto);
+    }
+};
+
+	
+
+	
         // 3. Funções de Controle de Interface
         function trocarMateria(materia, element) {
             window.materiaAtual = materia;
@@ -653,6 +677,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
