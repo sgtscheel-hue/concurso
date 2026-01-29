@@ -186,9 +186,9 @@
                     
                     <div class="mt-8 bg-sky-50 p-4 rounded-xl border border-sky-100">
                         <h4 class="text-[10px] font-black text-sky-700 uppercase mb-2"><i class="fa-solid fa-robot mr-1"></i> Gemini AI Professor</h4>
-                        <div id="chatWindow" class="flex flex-col gap-2 max-h-48 overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg">
-                            <div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
-                        </div>
+                        <div id="chatWindow" class="flex flex-col gap-2 max-h-[500px] overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg transition-all duration-500 ease-in-out">
+    					<div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
+						</div>
                         <div class="flex gap-2">
                             <input type="text" id="geminiInput" onkeyup="if(event.key === 'Enter') perguntarGemini()" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
                             <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
@@ -233,57 +233,65 @@
     }
 
     window.perguntarGemini = async function() {
-        const input = document.getElementById('geminiInput');
-        const chat = document.getElementById('chatWindow');
-        const pergunta = input.value.trim();
-        
-        if(!pergunta) return;
+    const input = document.getElementById('geminiInput');
+    const chat = document.getElementById('chatWindow');
+    const pergunta = input.value.trim();
+    
+    if(!pergunta) return;
 
-        // Verifica se a chave existe antes de prosseguir
-        if (!genAI) {
-            alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
-            return;
-        }
-
-        chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
-        input.value = "";
-        
-        const loading = document.createElement("div");
-        loading.className = "bubble-ai italic text-gray-500";
-        loading.innerText = "O Professor está pensando...";
-        chat.appendChild(loading);
-        chat.scrollTop = chat.scrollHeight;
-
-        try {
-            // Usando o modelo que você confirmou ter acesso (2.5-flash)
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-            let contextoExtra = "";
-            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
-                const q = window.questoesFiltradas[window.index];
-                contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
-            }
-
-            const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
-            Responda de forma didática e técnica à dúvida do aluno. 
-            ${contextoExtra} 
-            Dúvida: ${pergunta}`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-
-            loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
-            loading.classList.remove("italic", "text-gray-500");
-            loading.style.color = "#0369A1";
-
-        } catch (e) {
-            console.error("Erro detalhado:", e);
-            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida ou se a cota expirou.";
-            loading.classList.add("text-red-600");
-        }
-        chat.scrollTop = chat.scrollHeight;
+    if (!genAI) {
+        alert("API Key não configurada!");
+        return;
     }
+
+    // Adiciona pergunta
+    chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
+    input.value = "";
+    
+    // Feedback visual de carregamento
+    const loading = document.createElement("div");
+    loading.className = "bubble-ai italic text-gray-500";
+    loading.innerHTML = "<strong>Professor:</strong><br>Pensando...";
+    chat.appendChild(loading);
+    
+    // Rolar para baixo imediatamente
+    chat.scrollTop = chat.scrollHeight;
+
+    try {
+        // Correção do modelo para o disponível (gemini-1.5-flash ou o que você usa)
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        let contextoExtra = "";
+        if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
+            const q = window.questoesFiltradas[window.index];
+            contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
+        }
+
+        const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. Responda de forma didática. ${contextoExtra} Dúvida: ${pergunta}`;
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+
+        // Insere a resposta e remove o estado de loading
+        loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
+        loading.classList.remove("italic", "text-gray-500");
+        loading.style.color = "#0369A1";
+
+    } catch (e) {
+        loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação.";
+        loading.classList.add("text-red-600");
+    }
+
+    // O SEGREDO DO AUTO-SCROLL:
+    // Um pequeno delay garante que o scroll aconteça após o navegador renderizar o texto novo
+    setTimeout(() => {
+        chat.scrollTo({
+            top: chat.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100);
+}
 
     // --- NOVA LÓGICA PARA O ENTER ---
     // Adiciona o evento de escuta no campo de texto
@@ -718,6 +726,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
