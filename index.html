@@ -194,16 +194,16 @@
                             <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
 							<button onclick="configurarChave()" class="text-sky-600 hover:text-sky-800 text-[10px] font-bold p-2"><i class="fa-solid fa-gear"></i> CONFIGURAR IA</button>
 
-<script>
-    window.configurarChave = function() {
-        const novaChave = prompt("Insira sua Gemini API Key:");
-        if (novaChave) {
-            localStorage.setItem('GEMINI_API_KEY', novaChave);
-            alert("Chave salva com sucesso! A página será reiniciada.");
-            location.reload();
-        }
-    };
-</script>
+//<script>
+  //  window.configurarChave = function() {
+   //     const novaChave = prompt("Insira sua Gemini API Key:");
+  //      if (novaChave) {
+  //          localStorage.setItem('GEMINI_API_KEY', novaChave);
+   //         alert("Chave salva com sucesso! A página será reiniciada.");
+   //         location.reload();
+  //      }
+ //   };
+//</script>
 
 
                         </div>
@@ -711,6 +711,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
