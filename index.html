@@ -257,11 +257,15 @@
     
     if(!pergunta) return;
 
-    if (!genAI) {
+    // 1. SEMPRE busque a chave do localStorage dentro da função
+    const apiKey = localStorage.getItem('GEMINI_API_KEY');
+
+    if (!apiKey) {
         alert("API Key não configurada! Clique no botão de engrenagem.");
         return;
     }
 
+    // Adiciona pergunta do usuário
     chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
     input.value = "";
     
@@ -269,13 +273,12 @@
     loading.className = "bubble-ai italic text-gray-500";
     loading.innerText = "O Professor está pensando...";
     chat.appendChild(loading);
-    
-    // Rola para baixo para mostrar o "Pensando..."
     chat.scrollTop = chat.scrollHeight;
 
     try {
-        // AJUSTE AQUI: Use o 1.5-flash (mais estável e gratuito)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // 2. Inicialize o GoogleGenerativeAI AQUI DENTRO com a chave fresca
+        const genAIInstance = new GoogleGenerativeAI(apiKey); 
+        const model = genAIInstance.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         let contextoExtra = "";
         if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
@@ -283,7 +286,7 @@
             contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
         }
 
-        const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. Responda de forma didática e técnica. ${contextoExtra} Dúvida: ${pergunta}`;
+        const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. Responda de forma didática. ${contextoExtra} Dúvida: ${pergunta}`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -295,12 +298,12 @@
 
     } catch (e) {
         console.error("Erro detalhado:", e);
-        loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida.";
+        // Se cair aqui, a chave provavelmente está errada ou a internet falhou
+        loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key está correta no botão de engrenagem.";
         loading.classList.add("text-red-600");
     }
 
-    // O SEGREDO PARA EXPANDIR E ROLAR PARA BAIXO:
-    // Espera 100ms para o texto renderizar e rola suavemente
+    // 3. Faz o chat expandir e rolar suavemente
     setTimeout(() => {
         chat.scrollTo({
             top: chat.scrollHeight,
@@ -308,7 +311,6 @@
         });
     }, 100);
 }
-
     // --- NOVA LÓGICA PARA O ENTER ---
     // Adiciona o evento de escuta no campo de texto
     const inputField = document.getElementById('geminiInput');
@@ -741,5 +743,6 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
