@@ -226,75 +226,50 @@
 <script type="module">
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-    // ESTA LINHA É A CHAVE: Anexa a função ao objeto window para o botão funcionar
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
         const chat = document.getElementById('chatWindow');
         const pergunta = input.value.trim();
-        
-        // Recupera a chave salva no localStorage
         const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
         
         if(!pergunta) return;
+        if (!SAVED_KEY) { alert("Configure a API Key na engrenagem!"); return; }
 
-        if (!SAVED_KEY) {
-            alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
-            return;
-        }
-
-        // Adiciona a pergunta do usuário na tela
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
-        // Balão de carregamento
         const loading = document.createElement("div");
         loading.className = "bubble-ai italic text-gray-500";
-        loading.innerText = "O Professor está pensando...";
+        loading.innerText = "Analisando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
             const genAI = new GoogleGenerativeAI(SAVED_KEY);
+            // IMPORTANTE: Use o 1.5-flash que é o mais compatível com contas gratuitas
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-            let contextoExtra = "";
-            // Tenta pegar o enunciado da questão que está na tela
-            const enunciadoElement = document.getElementById('enunciado');
-            if (enunciadoElement) {
-                contextoExtra = `O aluno está estudando a seguinte questão: "${enunciadoElement.innerText}".`;
-            }
-
-            const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
-            Responda de forma didática, técnica e encorajadora.
-            ${contextoExtra} 
-            Dúvida do aluno: ${pergunta}`;
+            const enunciado = document.getElementById('enunciado')?.innerText || "";
+            const prompt = `Professor de concurso. Questão: ${enunciado}. Dúvida: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
+            const text = result.response.text();
 
-            // Substitui o carregando pela resposta real
             loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
             loading.classList.remove("italic", "text-gray-500");
-            loading.style.color = "#0369A1";
 
         } catch (e) {
-            console.error("Erro na API:", e);
-            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação com a IA. Verifique se sua chave é válida ou se há conexão.";
+            console.error(e);
+            // DIAGNÓSTICO DETALHADO
+            let msgErro = "Falha na conexão.";
+            if (e.message.includes("API key not valid")) msgErro = "API Key Inválida! Recadastre na engrenagem.";
+            if (e.message.includes("model not found")) msgErro = "Modelo não encontrado. Verifique o nome do modelo no código.";
+            if (e.message.includes("429")) msgErro = "Limite de mensagens atingido. Aguarde um minuto.";
+            
+            loading.innerHTML = `<strong>Erro:</strong> ${msgErro}`;
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
-    }
-
-    // Atalho para o ENTER funcionar
-    const inputField = document.getElementById('geminiInput');
-    if (inputField) {
-        inputField.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                window.perguntarGemini();
-            }
-        });
     }
 </script>
 <script>
@@ -705,5 +680,6 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
