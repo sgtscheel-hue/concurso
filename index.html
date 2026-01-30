@@ -224,53 +224,84 @@
     </div>
   
 <script type="module">
+    // Importação do SDK
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
+    // Tornamos a função de pergunta global para o seu botão onclick="perguntarGemini()" funcionar
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
         const chat = document.getElementById('chatWindow');
         const pergunta = input.value.trim();
-        const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
         
         if(!pergunta) return;
-        if (!SAVED_KEY) { alert("Configure a API Key na engrenagem!"); return; }
 
+        // Pega a chave salva no seu navegador
+        const apiKey = localStorage.getItem('GEMINI_API_KEY');
+
+        if (!apiKey) {
+            alert("API Key não configurada! Clique na engrenagem.");
+            return;
+        }
+
+        // Adiciona a pergunta visualmente
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
+        // Balão de espera
         const loading = document.createElement("div");
-        loading.className = "bubble-ai italic text-gray-500";
-        loading.innerText = "Analisando...";
+        loading.className = "bubble-ai";
+        loading.style.fontStyle = "italic";
+        loading.innerHTML = "<strong>Professor:</strong> Pensando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            const genAI = new GoogleGenerativeAI(SAVED_KEY);
-            // IMPORTANTE: Use o 1.5-flash que é o mais compatível com contas gratuitas
+            // Inicialização correta
+            const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-            const enunciado = document.getElementById('enunciado')?.innerText || "";
-            const prompt = `Professor de concurso. Questão: ${enunciado}. Dúvida: ${pergunta}`;
+            // Captura o contexto da questão se existir
+            let contexto = "";
+            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
+                const q = window.questoesFiltradas[window.index];
+                contexto = `Estou na questão: "${q.enunciado}". Assunto: ${q.assunto}.`;
+            }
+
+            const prompt = `Você é o Professor Gemini da SEDUC/RO. Responda de forma direta. ${contexto} Pergunta do aluno: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
             const text = result.response.text();
 
+            // Substitui o "Pensando..." pela resposta real
+            loading.style.fontStyle = "normal";
+            loading.style.color = "#0369A1";
             loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
-            loading.classList.remove("italic", "text-gray-500");
 
-        } catch (e) {
-            console.error(e);
-            // DIAGNÓSTICO DETALHADO
-            let msgErro = "Falha na conexão.";
-            if (e.message.includes("API key not valid")) msgErro = "API Key Inválida! Recadastre na engrenagem.";
-            if (e.message.includes("model not found")) msgErro = "Modelo não encontrado. Verifique o nome do modelo no código.";
-            if (e.message.includes("429")) msgErro = "Limite de mensagens atingido. Aguarde um minuto.";
-            
-            loading.innerHTML = `<strong>Erro:</strong> ${msgErro}`;
-            loading.classList.add("text-red-600");
+        } catch (error) {
+            console.error(error);
+            loading.style.color = "red";
+            loading.innerHTML = "<strong>Erro:</strong> Não consegui conectar. Verifique sua chave API.";
         }
-        chat.scrollTop = chat.scrollHeight;
-    }
+
+        // Faz o chat expandir e rolar
+        setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100);
+    };
+
+    // Tornamos a função de configuração global para o botão de engrenagem
+    window.configurarChave = function() {
+        const chave = prompt("Cole sua API Key do Google Gemini aqui:");
+        if (chave) {
+            localStorage.setItem('GEMINI_API_KEY', chave.trim());
+            alert("Chave salva! Pode começar a perguntar.");
+        }
+    };
+
+    // Listener para o ENTER no campo de texto
+    document.getElementById('geminiInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            window.perguntarGemini();
+        }
+    });
 </script>
 <script>
         // 1. Configurações Iniciais
@@ -680,6 +711,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
