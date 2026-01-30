@@ -252,7 +252,7 @@
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-flash" });
 
             // Captura contexto da questão atual das variáveis globais do seu simulador
             let contexto = "";
@@ -705,6 +705,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
