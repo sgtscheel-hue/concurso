@@ -226,30 +226,27 @@
 <script type="module">
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-    // 1. Tenta recuperar a chave do LocalStorage
-    const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
-    
-    let genAI = null;
-    if (SAVED_KEY) {
-        genAI = new GoogleGenerativeAI(SAVED_KEY);
-    }
-
+    // ESTA LINHA É A CHAVE: Anexa a função ao objeto window para o botão funcionar
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
         const chat = document.getElementById('chatWindow');
         const pergunta = input.value.trim();
         
+        // Recupera a chave salva no localStorage
+        const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
+        
         if(!pergunta) return;
 
-        // Verifica se a chave existe antes de prosseguir
-        if (!genAI) {
+        if (!SAVED_KEY) {
             alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
             return;
         }
 
+        // Adiciona a pergunta do usuário na tela
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
+        // Balão de carregamento
         const loading = document.createElement("div");
         loading.className = "bubble-ai italic text-gray-500";
         loading.innerText = "O Professor está pensando...";
@@ -257,48 +254,48 @@
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Opção A (Mais estável e rápida):
-			const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const genAI = new GoogleGenerativeAI(SAVED_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             let contextoExtra = "";
-            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
-                const q = window.questoesFiltradas[window.index];
-                contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
+            // Tenta pegar o enunciado da questão que está na tela
+            const enunciadoElement = document.getElementById('enunciado');
+            if (enunciadoElement) {
+                contextoExtra = `O aluno está estudando a seguinte questão: "${enunciadoElement.innerText}".`;
             }
 
             const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
-            Responda de forma didática e técnica à dúvida do aluno. 
+            Responda de forma didática, técnica e encorajadora.
             ${contextoExtra} 
-            Dúvida: ${pergunta}`;
+            Dúvida do aluno: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
 
+            // Substitui o carregando pela resposta real
             loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
             loading.classList.remove("italic", "text-gray-500");
             loading.style.color = "#0369A1";
 
         } catch (e) {
-            console.error("Erro detalhado:", e);
-            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida ou se a cota expirou.";
+            console.error("Erro na API:", e);
+            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação com a IA. Verifique se sua chave é válida ou se há conexão.";
             loading.classList.add("text-red-600");
         }
         chat.scrollTop = chat.scrollHeight;
     }
 
-    // --- NOVA LÓGICA PARA O ENTER ---
-    // Adiciona o evento de escuta no campo de texto
+    // Atalho para o ENTER funcionar
     const inputField = document.getElementById('geminiInput');
     if (inputField) {
         inputField.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Evita quebra de linha ou comportamentos padrão
+                event.preventDefault();
                 window.perguntarGemini();
             }
         });
     }
-   
 </script>
 <script>
         // 1. Configurações Iniciais
@@ -708,4 +705,5 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
