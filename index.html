@@ -223,7 +223,7 @@
         if(!pergunta) return;
 
         // Pega a chave salva no seu navegador
-        const apiKey = localStorage.getItem('GEMINI_API_KEY');
+        const apiKey = localStorage.getItem('GEMINI_API_KEY')?.trim();
 
         if (!apiKey) {
             alert("API Key não configurada! Clique na engrenagem.");
@@ -257,7 +257,8 @@
             const prompt = `Você é o Professor Gemini da SEDUC/RO. Responda de forma direta. ${contexto} Pergunta do aluno: ${pergunta}`;
 
             const result = await model.generateContent(prompt);
-            const text = result.response.text();
+            const response = await result.response;
+            const text = response.text();
 
             // Substitui o "Pensando..." pela resposta real
             loading.style.fontStyle = "normal";
@@ -698,6 +699,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
