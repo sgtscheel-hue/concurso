@@ -42,6 +42,22 @@
     max-width: 350px;
     text-align: center;
 }
+
+	#chatWindow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Começa pequeno e expande até 500px antes de mostrar o scroll */
+    min-height: 100px;
+    max-height: 500px; 
+    overflow-y: auto;
+    /* A mágica da expansão suave */
+    transition: all 0.5s ease-in-out; 
+    scroll-behavior: smooth;
+}
+
+		
+		
     </style>
     
     <script src="portugues.js"></script>
@@ -725,4 +741,5 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
