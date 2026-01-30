@@ -211,7 +211,18 @@
     </div>
   
 <script type="module">
+    // 1. Importação do SDK oficial
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+    // 2. TORNAR AS FUNÇÕES GLOBAIS (O segredo para o botão 'onclick' funcionar)
+    window.configurarChave = function() {
+        const chave = prompt("Cole sua API Key do Google Gemini:");
+        if (chave) {
+            localStorage.setItem('GEMINI_API_KEY', chave.trim());
+            alert("Chave salva com sucesso! Reiniciando para aplicar...");
+            location.reload();
+        }
+    };
 
     window.perguntarGemini = async function() {
         const input = document.getElementById('geminiInput');
@@ -220,76 +231,65 @@
         
         if(!pergunta) return;
 
-        // 1. Limpeza rigorosa da chave (remove espaços, quebras de linha, etc)
+        // Recupera a chave e limpa possíveis aspas ou espaços
         const rawKey = localStorage.getItem('GEMINI_API_KEY');
         const apiKey = rawKey ? rawKey.trim().replace(/["']/g, "") : null;
 
         if (!apiKey) {
-            alert("API Key não configurada! Clique na engrenagem.");
+            alert("API Key não configurada! Clique no ícone da engrenagem.");
             return;
         }
 
+        // Interface: Adiciona pergunta do usuário
         chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
         input.value = "";
         
         const loading = document.createElement("div");
-        loading.className = "bubble-ai";
-        loading.style.fontStyle = "italic";
+        loading.className = "bubble-ai italic text-sky-700";
         loading.innerHTML = "<strong>Professor:</strong> Pensando...";
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            // 2. Modelo 1.5-flash é o mais estável para uso gratuito
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+            // Captura contexto da questão atual das variáveis globais do seu simulador
             let contexto = "";
-            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
+            if (window.questoesFiltradas && typeof window.index !== 'undefined') {
                 const q = window.questoesFiltradas[window.index];
-                contexto = `O aluno está resolvendo uma questão de ${q.materia} sobre ${q.assunto}. Enunciado: "${q.enunciado}".`;
+                if (q) {
+                    contexto = `O aluno está estudando para a SEDUC/RO. Ele está na questão: "${q.enunciado}". `;
+                }
             }
 
-            const prompt = `Aja como um Professor mentor para o concurso SEDUC/RO. 
-            Responda de forma curta e didática. 
-            ${contexto} 
-            Pergunta do aluno: ${pergunta}`;
+            const prompt = `${contexto} Responda de forma didática e curta à dúvida: ${pergunta}`;
 
-            // 3. O ERRO ESTAVA AQUI: É necessário usar await na resposta
+            // Execução da IA
             const result = await model.generateContent(prompt);
-            const response = await result.response; 
-            const text = response.text(); 
+            const response = await result.response;
+            const text = response.text(); // Resposta final
 
-            loading.style.fontStyle = "normal";
-            loading.style.color = "#0369A1";
+            // Atualiza o balão de carregamento com a resposta real
+            loading.classList.remove("italic");
             loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
 
         } catch (error) {
-            console.error("ERRO DETALHADO:", error);
+            console.error("Erro na API Gemini:", error);
             loading.style.color = "red";
             
-            // Tratamento de erro mais amigável
             if (error.message.includes("API key not valid")) {
-                loading.innerHTML = "<strong>Erro:</strong> Sua chave API é inválida. Clique na engrenagem e cole-a novamente.";
-            } else if (error.message.includes("location not supported")) {
-                loading.innerHTML = "<strong>Erro:</strong> O Google Gemini ainda não suporta sua região ou VPN.";
+                loading.innerHTML = "<strong>Erro:</strong> Chave API inválida. Verifique na engrenagem.";
             } else {
-                loading.innerHTML = "<strong>Erro:</strong> Não consegui conectar. Verifique se você está usando o 'Live Server' ou se a chave está correta.";
+                loading.innerHTML = "<strong>Erro:</strong> Não foi possível conectar. Verifique sua chave e a internet.";
             }
         }
-
+        
+        // Rola o chat para o fim
         setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100);
     };
 
-    window.configurarChave = function() {
-        const chave = prompt("Cole sua API Key do Google Gemini:");
-        if (chave) {
-            localStorage.setItem('GEMINI_API_KEY', chave.trim());
-            alert("Chave salva! Tente perguntar agora.");
-        }
-    };
-
-    // Correção do Listener (Enter)
+    // 3. ATALHO DO ENTER
     document.getElementById('geminiInput').addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -705,6 +705,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
