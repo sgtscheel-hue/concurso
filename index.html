@@ -42,22 +42,6 @@
     max-width: 350px;
     text-align: center;
 }
-
-	#chatWindow {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    /* Começa pequeno e expande até 500px antes de mostrar o scroll */
-    min-height: 100px;
-    max-height: 500px; 
-    overflow-y: auto;
-    /* A mágica da expansão suave */
-    transition: all 0.5s ease-in-out; 
-    scroll-behavior: smooth;
-}
-
-		
-		
     </style>
     
     <script src="portugues.js"></script>
@@ -201,23 +185,35 @@
                     </div>
                     
                     <div class="mt-8 bg-sky-50 p-4 rounded-xl border border-sky-100">
-                        <h4 class="text-[10px] font-black text-sky-700 uppercase mb-2">
-                            <i class="fa-solid fa-robot mr-1"></i> Gemini AI Professor
-                        </h4>
-                        <div id="chatWindow" class="flex flex-col gap-2 max-h-[400px] overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg">
-                            <div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
-                        </div>
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase mb-2"><i class="fa-solid fa-robot mr-1"></i> Gemini AI Professor</h4>
+                        <div id="chatWindow" class="flex flex-col gap-2 max-h-[500px] overflow-y-auto mb-3 bg-white/50 p-2 rounded-lg transition-all duration-500 ease-in-out">
+    					<div class="bubble-ai">Posso explicar qualquer alternativa desta questão. O que você quer saber?</div>
+						</div>
                         <div class="flex gap-2">
                             <input type="text" id="geminiInput" placeholder="Sua dúvida..." class="flex-grow text-xs p-2 rounded-md border border-sky-200 outline-none">
-                            <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                            <button onclick="configurarChave()" class="text-sky-600 hover:text-sky-800 text-[10px] font-bold p-2">
-                                <i class="fa-solid fa-gear"></i> CONFIGURAR IA
-                            </button>
+                            <button onclick="perguntarGemini()" class="bg-sky-600 text-white px-4 py-2 rounded-md text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+							<button onclick="configurarChave()" class="text-sky-600 hover:text-sky-800 text-[10px] font-bold p-2"><i class="fa-solid fa-gear"></i> CONFIGURAR IA</button>
+
+<script>
+    window.configurarChave = function() {
+        const novaChave = prompt("Insira sua Gemini API Key:");
+        if (novaChave) {
+            localStorage.setItem('GEMINI_API_KEY', novaChave);
+            alert("Chave salva com sucesso! A página será reiniciada.");
+            location.reload();
+        }
+    };
+</script>
+
+
                         </div>
                     </div>
-                </div> </div> </div> </div> <div id="modalAulas" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAulas" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
             <div class="bg-amber-500 p-4 flex justify-between items-center text-white">
                 <h3 class="font-bold text-sm uppercase"><i class="fa-solid fa-layer-group mr-2"></i> Escolha a Vídeo Aula</h3>
@@ -226,80 +222,95 @@
             <div id="listaAulas" class="p-4 space-y-2 max-h-80 overflow-y-auto"></div>
         </div>
     </div>
+  
+<script type="module">
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-    <script type="module">
-        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+    // 1. Tenta recuperar a chave do LocalStorage
+    const SAVED_KEY = localStorage.getItem('GEMINI_API_KEY');
+    
+    let genAI = null;
+    if (SAVED_KEY) {
+        genAI = new GoogleGenerativeAI(SAVED_KEY);
+    }
 
-        window.perguntarGemini = async function() {
-            const input = document.getElementById('geminiInput');
-            const chat = document.getElementById('chatWindow');
-            const pergunta = input.value.trim();
-            
-            if(!pergunta) return;
+    window.perguntarGemini = async function() {
+        const input = document.getElementById('geminiInput');
+        const chat = document.getElementById('chatWindow');
+        const pergunta = input.value.trim();
+        
+        if(!pergunta) return;
 
-            const apiKey = localStorage.getItem('GEMINI_API_KEY');
-            if (!apiKey) {
-                alert("API Key não configurada! Clique no botão de engrenagem.");
-                return;
+        // Verifica se a chave existe antes de prosseguir
+        if (!genAI) {
+            alert("API Key não configurada! Clique no botão de engrenagem para configurar.");
+            return;
+        }
+
+        chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
+        input.value = "";
+        
+        const loading = document.createElement("div");
+        loading.className = "bubble-ai italic text-gray-500";
+        loading.innerText = "O Professor está pensando...";
+        chat.appendChild(loading);
+        chat.scrollTop = chat.scrollHeight;
+
+        try {
+            // Usando o modelo que você confirmou ter acesso (2.5-flash)
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+            let contextoExtra = "";
+            if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
+                const q = window.questoesFiltradas[window.index];
+                contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
             }
 
-            // Interface
-            chat.innerHTML += `<div class="bubble-user"><strong>Você:</strong> ${pergunta}</div>`;
-            input.value = "";
-            
-            const loading = document.createElement("div");
-            loading.className = "bubble-ai italic text-gray-500";
-            loading.innerText = "O Professor está pensando...";
-            chat.appendChild(loading);
-            chat.scrollTop = chat.scrollHeight;
+            const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. 
+            Responda de forma didática e técnica à dúvida do aluno. 
+            ${contextoExtra} 
+            Dúvida: ${pergunta}`;
 
-            try {
-                const genAIInstance = new GoogleGenerativeAI(apiKey); 
-                const model = genAIInstance.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
 
-                let contextoExtra = "";
-                if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
-                    const q = window.questoesFiltradas[window.index];
-                    contextoExtra = `O aluno está estudando a questão: "${q.enunciado}".`;
-                }
+            loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
+            loading.classList.remove("italic", "text-gray-500");
+            loading.style.color = "#0369A1";
 
-                const prompt = `Você é o Professor Gemini, mentor do concurso SEDUC/RO. Responda de forma didática. ${contextoExtra} Dúvida: ${pergunta}`;
+        } catch (e) {
+            console.error("Erro detalhado:", e);
+            loading.innerHTML = "<strong>Erro:</strong> Falha na comunicação. Verifique se sua API Key é válida ou se a cota expirou.";
+            loading.classList.add("text-red-600");
+        }
+        chat.scrollTop = chat.scrollHeight;
+    }
 
-                const result = await model.generateContent(prompt);
-                const response = await result.response;
-                const text = response.text();
-
-                loading.innerHTML = `<strong>Professor:</strong><br>${text.replace(/\n/g, '<br>')}`;
-                loading.classList.remove("italic", "text-gray-500");
-                loading.style.color = "#0369A1";
-
-            } catch (e) {
-                console.error("Erro:", e);
-                loading.innerHTML = "<strong>Erro:</strong> Verifique sua chave API ou sua conexão.";
-                loading.classList.add("text-red-600");
-            }
-
-            setTimeout(() => {
-                chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
-            }, 100);
-        };
-
-        window.configurarChave = function() {
-            const novaChave = prompt("Insira sua Gemini API Key:");
-            if (novaChave && novaChave.trim().length > 10) {
-                localStorage.setItem('GEMINI_API_KEY', novaChave.trim());
-                alert("Chave salva! Reiniciando...");
-                location.reload();
-            }
-        };
-
-        document.getElementById('geminiInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
+    // --- NOVA LÓGICA PARA O ENTER ---
+    // Adiciona o evento de escuta no campo de texto
+    const inputField = document.getElementById('geminiInput');
+    if (inputField) {
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita quebra de linha ou comportamentos padrão
                 window.perguntarGemini();
             }
         });
-    </script>
+    }
+
+    // Função global para salvar a chave (chamada pelo botão de engrenagem)
+    window.configurarChave = function() {
+        const novaChave = prompt("Insira sua Gemini API Key (ela ficará salva apenas no seu navegador):");
+        if (novaChave && novaChave.trim().length > 10) {
+            localStorage.setItem('GEMINI_API_KEY', novaChave.trim());
+            alert("Chave configurada com sucesso! Recarregando a página...");
+            location.reload();
+        } else {
+            alert("Chave inválida ou cancelado.");
+        }
+    };
+</script>
 <script>
         // 1. Configurações Iniciais
         const aulasPorAssunto = {
@@ -708,6 +719,30 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
