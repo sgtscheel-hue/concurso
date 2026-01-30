@@ -257,8 +257,8 @@
         chat.scrollTop = chat.scrollHeight;
 
         try {
-            // Usando o modelo que você confirmou ter acesso (2.5-flash)
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+            // Opção A (Mais estável e rápida):
+			const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             let contextoExtra = "";
             if (window.questoesFiltradas && window.questoesFiltradas[window.index]) {
@@ -708,3 +708,4 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
