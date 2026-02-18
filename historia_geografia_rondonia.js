@@ -1,7 +1,7 @@
 const banco_ro = [
     {
         id: "ro01",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Como ocorreu o processo de ocupação das terras rondonienses, considerando a presença de povos indígenas e a chegada dos espanhóis?",
         a: "Os povos indígenas foram os primeiros habitantes da região, mantendo uma relação de harmonia e equilíbrio com a natureza antes da chegada dos espanhóis.",
@@ -13,7 +13,7 @@ const banco_ro = [
     },
     {
         id: "ro02",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia passou por diversas transformações desde a criação do Território Federal do Guaporé até os dias atuais. Sobre esse processo histórico, assinale a alternativa correta.",
         a: "O Território Federal do Guaporé foi criado em 1943 e posteriormente recebeu o nome de Rondônia em homenagem ao Marechal Cândido Rondon.",
@@ -25,7 +25,7 @@ const banco_ro = [
     },
     {
         id: "ro03",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o processo de transformação política e economia vivenciado por Rondônia, assinale a alternativa correta.",
         a: "Rondônia sempre foi um estado brasileiro, desde a Proclamação da República em 1889.",
@@ -37,7 +37,7 @@ const banco_ro = [
     },
     {
         id: "ro04",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Recepcionista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A economia de Rondônia passou por diversas fases ao longo do tempo. Qual atividade econômica listada abaixo foi importante para o desenvolvimento do estado?",
         a: "Extração de petróleo em larga escala.",
@@ -49,7 +49,7 @@ const banco_ro = [
     },
     {
         id: "ro05",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Fiscal de Regulação - AGERROM", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Fiscal de Regulação - AGERROM", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O INCRA - (Instituto Nacional de Colonização e Reforma Agrária) denominou os pequenos proprietários como colonos, posteriormente chamados de camponeses e, nos anos 1990, de:",
         a: "agricultores familiares.",
@@ -61,7 +61,7 @@ const banco_ro = [
     },
     {
         id: "ro06",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Agente Administrativo - AGERROM", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Agente Administrativo - AGERROM", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Acerca das transformações que ocorrem ao longo da segunda metade do século XX e início do século XXI, no território de Rondônia considere as afirmativas a seguir: I - Expansão do agronegócio; II - Rede urbana com centralidade em Ji-Paraná; III - Movimentos ambientalistas diminuíram a interiorização.",
         a: "Apenas a alternativa I está correta.",
@@ -73,7 +73,7 @@ const banco_ro = [
     },
     {
         id: "ro07",
-        ano: "2025", banca: "IBADE", orgao: "Câmara de Rolim de Moura - RO", prova: "Artífice de Copa", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Câmara de Rolim de Moura - RO", prova: "Artífice de Copa", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual foi o principal motivo da migração de pessoas para o estado de Rondônia nas décadas de 1970 e 1980?",
         a: "A política de ocupação e desenvolvimento da Amazônia, impulsionada pelo governo federal, foi um fator determinante para o crescimento da região.",
@@ -85,7 +85,7 @@ const banco_ro = [
     },
     {
         id: "ro08",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Agente Administrativo - FCJRM", materia: "História de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Agente Administrativo - FCJRM", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que relata os momentos ou ciclos econômicos desde a ocupação até os dias atuais:",
         a: "Construção da Estrada de Ferro Madeira-Mamoré - ciclo da borracha, o “ouro negro” - ciclos da garimpagem de cassiterita e ouro – expansão da “fronteira agrícola” nas terras férteis de Rondônia.",
@@ -97,7 +97,7 @@ const banco_ro = [
     },
     {
         id: "ro9",
-        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Zeladora - SANEROM", materia: "Geografia de RO",
+        ano: "2025", banca: "IBADE", orgao: "Prefeitura de Rolim de Moura - RO", prova: "Zeladora - SANEROM", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual é o principal reservatório de água de Rondônia, destacado por sua extensão, volume de água e funções essenciais, como abastecimento, geração de energia, transporte e manutenção da biodiversidade?",
         a: "Rio São Francisco.",
@@ -109,7 +109,7 @@ const banco_ro = [
     },
     {
         id: "ro10",
-        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Desse modo, é considerado o principal minério de Rondônia, ocorrendo com maior frequência nos municípios de Ariquemes, Campo Novo, Itapuã do Oeste, Monte Negro, Porto Velho e Rio Crespo:",
         a: "cassiterita.",
@@ -121,7 +121,7 @@ const banco_ro = [
     },
     {
         id: "ro11",
-        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A construção da Estrada de Ferro Madeira-Mamoré (EFMM) foi motivada principalmente por qual tratado internacional?",
         a: "Tratado de Tordesilhas",
@@ -133,7 +133,7 @@ const banco_ro = [
     },
     {
         id: "ro12",
-        ano: "2024", banca: "IBADE", orgao: "Governo-RO", prova: "Oficial", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "Governo-RO", prova: "Oficial", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual é o principal rio que banha a capital, Porto Velho, e abriga importantes usinas hidrelétricas?",
         a: "Rio Guaporé",
@@ -145,7 +145,7 @@ const banco_ro = [
     },
     {
         id: "ro13",
-        ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Técnico", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Técnico", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Território Federal do Guaporé foi criado em 1943, durante o governo de Getúlio Vargas. Em 1956, seu nome foi alterado em homenagem a:",
         a: "Marechal Rondon",
@@ -157,7 +157,7 @@ const banco_ro = [
     },
     {
         id: "ro14",
-        ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Educação", materia: "Geografia de RO",
+        ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Educação", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia faz fronteira internacional com qual país?",
         a: "Peru",
@@ -169,7 +169,7 @@ const banco_ro = [
     },
     {
         id: "ro15",
-        ano: "2023", banca: "IBADE", orgao: "Câmara", prova: "Geral", materia: "História de RO",
+        ano: "2023", banca: "IBADE", orgao: "Câmara", prova: "Geral", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Quem foi o primeiro governador do Estado de Rondônia, após sua elevação de território a estado em 1981?",
         a: "Aluízio Ferreira",
@@ -181,7 +181,7 @@ const banco_ro = [
     },
     {
         id: "ro16",
-        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A economia de Rondônia, a partir da década de 1970, foi impulsionada por qual fenômeno social e econômico?",
         a: "Extração de Petróleo",
@@ -193,7 +193,7 @@ const banco_ro = [
     },
     {
         id: "ro17",
-        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Técnico", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Técnico", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual rodovia federal é a principal espinha dorsal de Rondônia, ligando Porto Velho a Cuiabá?",
         a: "BR-364",
@@ -205,7 +205,7 @@ const banco_ro = [
     },
     {
         id: "ro18",
-        ano: "2023", banca: "IBADE", orgao: "SEDUC", prova: "Administrativo", materia: "História de RO",
+        ano: "2023", banca: "IBADE", orgao: "SEDUC", prova: "Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o Forte Príncipe da Beira, assinale a alternativa correta:",
         a: "Foi construído para proteger a fronteira contra incursões francesas.",
@@ -217,7 +217,7 @@ const banco_ro = [
     },
     {
         id: "ro19",
-        ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Oficial", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "Prefeitura", prova: "Oficial", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O bioma predominante no estado de Rondônia é:",
         a: "Cerrado",
@@ -229,7 +229,7 @@ const banco_ro = [
     },
     {
         id: "ro20",
-        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Oficial", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Oficial", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O ciclo econômico que trouxe os 'Soldados da Borracha' para a região ocorreu durante:",
         a: "A Primeira Guerra Mundial",
@@ -241,7 +241,7 @@ const banco_ro = [
     },
     {
         id: "ro21",
-        ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Nível Médio", materia: "Geografia de RO",
+        ano: "2023", banca: "IBADE", orgao: "Estado-RO", prova: "Nível Médio", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual cidade rondoniense é conhecida como a 'Capital do Café' no estado?",
         a: "Porto Velho",
@@ -253,7 +253,7 @@ const banco_ro = [
     },
     {
         id: "ro22",
-        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "SEDUC-RO", prova: "Geral", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A fundação de Porto Velho está diretamente ligada a qual obra de infraestrutura?",
         a: "Construção da Usina de Samuel",
@@ -265,7 +265,7 @@ const banco_ro = [
     },
     {
         id: "ro23",
-        ano: "2023", banca: "IBADE", orgao: "Prefeitura", prova: "Saúde", materia: "Geografia de RO",
+        ano: "2023", banca: "IBADE", orgao: "Prefeitura", prova: "Saúde", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia apresenta um clima do tipo:",
         a: "Semiárido",
@@ -277,7 +277,7 @@ const banco_ro = [
     },
     {
         id: "ro24",
-        ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Técnico", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Técnico", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Marechal Rondon ficou famoso na região por qual atividade principal?",
         a: "Garimpo de ouro",
@@ -289,7 +289,7 @@ const banco_ro = [
     },
     {
         id: "ro25",
-        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Superior", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Superior", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual desses municípios localiza-se na região do 'Cone Sul' de Rondônia?",
         a: "Vilhena",
@@ -301,7 +301,7 @@ const banco_ro = [
     },
     {
         id: "ro26",
-        ano: "2023", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "Geografia de RO",
+        ano: "2023", banca: "IBADE", orgao: "SEDUC-RO", prova: "Professor", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A mineração em Rondônia teve um marco histórico com a descoberta de grandes jazidas de qual minério na região de Ariquemes?",
         a: "Ferro",
@@ -313,7 +313,7 @@ const banco_ro = [
     },
     {
         id: "ro27",
-        ano: "2024", banca: "IBADE", orgao: "Estado", prova: "Oficial", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "Estado", prova: "Oficial", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A ferrovia Madeira-Mamoré ficou conhecida mundialmente como a 'Ferrovia do Diabo' devido a:",
         a: "Ataques de piratas fluviais",
@@ -325,7 +325,7 @@ const banco_ro = [
     },
     {
         id: "ro28",
-        ano: "2023", banca: "IBADE", orgao: "Governo", prova: "Técnico", materia: "Geografia de RO",
+        ano: "2023", banca: "IBADE", orgao: "Governo", prova: "Técnico", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A Usina Hidrelétrica de Samuel localiza-se no rio:",
         a: "Madeira",
@@ -337,7 +337,7 @@ const banco_ro = [
     },
     {
         id: "ro29",
-        ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Administrativo", materia: "História de RO",
+        ano: "2024", banca: "IBADE", orgao: "Câmara", prova: "Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A cidade de Guajará-Mirim faz fronteira com qual cidade boliviana?",
         a: "Cobija",
@@ -349,7 +349,7 @@ const banco_ro = [
     },
     {
         id: "ro30",
-        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Geral", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "Geral", prova: "Geral", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Em termos de divisão regional, Rondônia pertence a qual região brasileira?",
         a: "Centro-Oeste",
@@ -361,7 +361,7 @@ const banco_ro = [
     },
     {
         id: "ro31",
-        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que indique a Área de Livre Comércio do estado de Rondônia, localizada na divisa com a Bolívia e nas margens do Rio Madeira.",
         a: "Zona Franca de Rondônia.",
@@ -372,7 +372,7 @@ const banco_ro = [
     },
     {
         id: "ro32",
-        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Com relação ao relevo, são consideradas as áreas mais elevadas do estado de Rondônia:",
         a: "Serra dos Pacaás Novos e Chapada dos Parecis.",
@@ -383,7 +383,7 @@ const banco_ro = [
     },
     {
         id: "ro33",
-        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "Geografia de RO",
+        ano: "2024", banca: "IBADE", orgao: "SESDEC-RO", prova: "Prestador Voluntário", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o estado de Rondônia, julgue os itens a seguir: I. Localizado ao norte da linha do Equador. II. Porto Velho nas margens do Rio Madeira. III. Localizado na Amazônia Legal. IV. Entre os estados mais antigos da federação.",
         a: "I, II e IV, apenas.",
@@ -394,7 +394,7 @@ const banco_ro = [
     },
     {
         id: "ro34",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Técnico em Radiologia", materia: "História de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Técnico em Radiologia", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O que, para os historiadores, é tida localmente como um dos símbolos da fundação de Rondônia, operando como um mito fundador ou de origem?",
         a: "A construção da rodovia federal que atravessa o estado",
@@ -406,7 +406,7 @@ const banco_ro = [
     },
     {
         id: "ro35",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Técnico em Radiologia", materia: "História de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Técnico em Radiologia", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Aluízio Pinheiro Ferreira tornou-se, no período de 1943-1946, o:",
         a: "primeiro governador do extinto Território Federal do Guaporé.",
@@ -418,7 +418,7 @@ const banco_ro = [
     },
     {
         id: "ro36",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "Geografia de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o desenvolvimento regional de Rondônia, julgue os itens sobre migrantes e impactos ambientais.",
         a: "I, III e IV.",
@@ -430,7 +430,7 @@ const banco_ro = [
     },
     {
         id: "ro37",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o Território Federal do Guaporé, é INCORRETO afirmar que:",
         a: "nasceu composto por terras de Mato Grosso e Amazonas.",
@@ -442,7 +442,7 @@ const banco_ro = [
     },
     {
         id: "ro38",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "Geografia de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre a exploração da atividade agrícola em Rondônia iniciada nos anos 70, é correto afirmar:",
         a: "a implantação da hidrovia do rio Madeira é um importante meio de escoamento da produção de grãos.",
@@ -454,7 +454,7 @@ const banco_ro = [
     },
     {
         id: "ro39",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "Geografia de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o município de Costa Marques, julgue as assertivas de I a V.",
         a: "I, II e IV.",
@@ -466,7 +466,7 @@ const banco_ro = [
     },
     {
         id: "ro40",
-        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "Geografia de RO",
+        ano: "2022", banca: "IBADE", orgao: "Prefeitura de Costa Marques - RO", prova: "Microscopista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Com base no contingente populacional de Rondônia e Porto Velho, assinale a correta:",
         a: "Costa Marques é um dos dez maiores municípios.",
@@ -478,7 +478,7 @@ const banco_ro = [
     },
     {
         id: "ro41",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Em Ministro Andreazza, quem comanda o Município como Chefe do Poder Executivo é o:",
         a: "presidente da república.",
@@ -490,7 +490,7 @@ const banco_ro = [
     },
     {
         id: "ro42",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre a economia de Rondônia, verifica-se nos últimos anos uma expansão da produção de:",
         a: "soja.",
@@ -502,7 +502,7 @@ const banco_ro = [
     },
     {
         id: "ro43",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Zelador", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Município de Ministro Andreazza localiza-se na região brasileira denominada:",
         a: "Nordeste.",
@@ -514,7 +514,7 @@ const banco_ro = [
     },
     {
         id: "ro44",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O município de Ji-Paraná tem hoje o maior parque de exposição do norte e o segundo maior do Brasil. Anualmente, é realizado um evento que já reuniu um público próximo a 300 mil pessoas. Trata-se da:",
         a: "EXPOINEL ( Exposição Internacional de Gado Zebu ).",
@@ -526,7 +526,7 @@ const banco_ro = [
     },
     {
         id: "ro45",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A respeito da hidrografia de Ji-Paraná, pode-se afirmar que:",
         a: "não há trecho navegável.",
@@ -538,7 +538,7 @@ const banco_ro = [
     },
     {
         id: "ro46",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Em 11 de outubro de 1977, o então presidente da República concedeu emancipação política à Vila de Rondônia. O termos que completam o texto corretamente são:",
         a: "Humberto Castelo Branco / à Comarca de Abunã.",
@@ -550,7 +550,7 @@ const banco_ro = [
     },
     {
         id: "ro47",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "Legislação Local",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "De acordo com a Lei de Licenciamento Ambiental nº 2807/2015, a autorização que permite extrair bem mineral por tempo não superior a 20 anos denomina-se:",
         a: "Licença Municipal de Extração Mineral.",
@@ -562,7 +562,7 @@ const banco_ro = [
     },
     {
         id: "ro48",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia tem uma população estimada em 1.800.000 habitantes. Acerca do assunto, pode-se afirmar que:",
         a: "a maior parte da população vive nas cidades.",
@@ -574,7 +574,7 @@ const banco_ro = [
     },
     {
         id: "ro49",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia faz fronteira a leste com o(a):",
         a: "Estado do Amazonas.",
@@ -586,7 +586,7 @@ const banco_ro = [
     },
     {
         id: "ro50",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rio que nasce nos Andes bolivianos e forma o rio Madeira ao encontrar o rio Beni. Trata-se do rio:",
         a: "Aponiã.",
@@ -598,7 +598,7 @@ const banco_ro = [
     },
     {
         id: "ro51",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Território Federal do Guaporé foi criado em 1943 através do Decreto nº 5.812, assinado pelo então Presidente:",
         a: "Artur Bernardes.",
@@ -610,7 +610,7 @@ const banco_ro = [
     },
     {
         id: "ro52",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Povo indígena que ocupa reserva de 160.000 ha nos Igarapés Lourdes e mantém contato com Ji-Paraná:",
         a: "Gaviões.",
@@ -622,7 +622,7 @@ const banco_ro = [
     },
     {
         id: "ro53",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Legislação Local",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "De acordo com o Código Ambiental de Ji-Paraná, Lei nº 1113/2001, o conceito ligado à promoção de condições ambientais favoráveis à saúde é:",
         a: "recursos ambientais.",
@@ -634,7 +634,7 @@ const banco_ro = [
     },
     {
         id: "ro54",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Na composição econômica de Ji-Paraná, pequenas plantações vendidas para proprietários maiores são transformadas em grande parte em:",
         a: "pastos.",
@@ -646,7 +646,7 @@ const banco_ro = [
     },
     {
         id: "ro55",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O clima predominante no município de Ji-Paraná é o:",
         a: "tropical atlântico.",
@@ -658,7 +658,7 @@ const banco_ro = [
     },
     {
         id: "ro56",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Destino histórico em Ji-Paraná que possui acervo sobre telégrafos, artesanato indígena e artefatos de pedra:",
         a: "Museu do Homem do Norte.",
@@ -670,7 +670,7 @@ const banco_ro = [
     },
     {
         id: "ro57",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "São consideradas as principais atividades do extrativismo vegetal no estado de Rondônia:",
         a: "a produção de café e da mandioca.",
@@ -682,7 +682,7 @@ const banco_ro = [
     },
     {
         id: "ro58",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Primeiro Ciclo da Borracha começou a decair a partir de 1912, principalmente pela:",
         a: "falta do produto (matéria-prima).",
@@ -694,7 +694,7 @@ const banco_ro = [
     },
     {
         id: "ro59",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O estado de Rondônia faz limite com a República da Bolívia ao/a:",
         a: "Norte e Nordeste.",
@@ -706,7 +706,7 @@ const banco_ro = [
     },
     {
         id: "ro60",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A aldeia Lapetanha, do povo Paiter Suruí (vencedores no Concafé), localiza-se próxima à cidade de:",
         a: "Guajará-Mirim.",
@@ -718,7 +718,7 @@ const banco_ro = [
     },
     {
         id: "ro61",
-        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "Geografia de RO",
+        ano: "2020", banca: "IBADE", orgao: "Câmara de Ji-Paraná - RO", prova: "Técnico de Informática", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Acerca dos afluentes formadores do rio Machado (Comemoração e Apediá), pode-se afirmar que:",
         a: "suas nascentes estão na região norte de Rondônia.",
@@ -730,7 +730,7 @@ const banco_ro = [
     },
     {
         id: "ro62",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Técnico Eletricista", materia: "Atualidades de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Ministro Andreazza - RO", prova: "Técnico Eletricista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Equipamentos adquiridos pelo Governo em 2020 fundamentais para fiscalização do desmatamento e incêndios em áreas de difícil acesso:",
         a: "separadores de óleo.",
@@ -742,7 +742,7 @@ const banco_ro = [
     },
     {
         id: "ro63",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Santa Luzia D'Oeste - RO", prova: "Assistente de Controle Interno", materia: "Atualidades de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Santa Luzia D'Oeste - RO", prova: "Assistente de Controle Interno", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual argumento a SEDUC-RO apresentou em 2020 para propor (embora não efetivada) a retirada de clássicos literários das escolas?",
         a: "Que os livros eram demasiadamente ultrapassados.",
@@ -754,7 +754,7 @@ const banco_ro = [
     },
     {
         id: "ro64",
-        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Santa Luzia D'Oeste - RO", prova: "Artifice de Pedreiro", materia: "Atualidades de RO",
+        ano: "2020", banca: "IBADE", orgao: "Prefeitura de Santa Luzia D'Oeste - RO", prova: "Artifice de Pedreiro", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O que motivou a greve dos motoristas e cobradores de ônibus em Porto Velho em janeiro de 2020?",
         a: "Atrasos nos salários e benefícios dos trabalhadores.",
@@ -766,7 +766,7 @@ const banco_ro = [
     },
     {
         id: "ro65",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Porto Velho - RO", prova: "Professor", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Porto Velho - RO", prova: "Professor", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Depois da segunda época da borracha, a economia do estado foi marcada pela:",
         a: "“Belle Époque Amazônica”.",
@@ -778,7 +778,7 @@ const banco_ro = [
     },
     {
         id: "ro66",
-        ano: "2019", banca: "IBADE", orgao: "SAAE de Vilhena - RO", prova: "Agente Administrativo", materia: "Geografia de RO",
+        ano: "2019", banca: "IBADE", orgao: "SAAE de Vilhena - RO", prova: "Agente Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Bacia hidrográfica formada pela confluência dos rios Mamoré e Beni, onde se localizam as usinas de Santo Antônio e Jirau:",
         a: "Madeira.",
@@ -790,7 +790,7 @@ const banco_ro = [
     },
     {
         id: "ro67",
-        ano: "2019", banca: "IBADE", orgao: "SAAE de Vilhena - RO", prova: "Agente Administrativo", materia: "Geografia de RO",
+        ano: "2019", banca: "IBADE", orgao: "SAAE de Vilhena - RO", prova: "Agente Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que descreve corretamente os limites de Rondônia:",
         a: "ao norte com Mato Grosso...",
@@ -802,7 +802,7 @@ const banco_ro = [
     },
     {
         id: "ro68",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O forte situado em Costa Marques, candidato a patrimônio mundial da Unesco, é o:",
         a: "Forte Orange.",
@@ -814,7 +814,7 @@ const banco_ro = [
     },
     {
         id: "ro69",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "Geografia de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "De acordo com dados demográficos de Seringueiras (Censo 2015), a característica da população é:",
         a: "a maior parte habitantes da região urbana.",
@@ -826,7 +826,7 @@ const banco_ro = [
     },
     {
         id: "ro70",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "Geografia de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O gentílico de quem nasce em Seringueiras é:",
         a: "rondoniense.",
@@ -838,7 +838,7 @@ const banco_ro = [
     },
     {
         id: "ro71",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Almoxarife", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O município de Seringueiras foi desmembrado dos municípios de:",
         a: "Porto Velho e Ji-Paraná.",
@@ -850,7 +850,7 @@ const banco_ro = [
     },
     {
         id: "ro72",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Agente Administrativo", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Seringueiras - RO", prova: "Agente Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Seringueiras – RO foi elevado à categoria de município pela Lei Estadual nº 370, de 13-02-1992. Foi desmembrado dos municípios de:",
         a: "São Miguel do Guaporé e Costa Marques.",
@@ -862,7 +862,7 @@ const banco_ro = [
     },
     {
         id: "ro73",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que descreve corretamente o contexto econômico e político do Território Federal de Rondônia entre as décadas de 1960 e 1970.",
         a: "Início do chamado Ciclo da Borracha e chegada de nordestinos.",
@@ -874,7 +874,7 @@ const banco_ro = [
     },
     {
         id: "ro74",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre o processo de criação do Território Federal do Guaporé (1943), é correto afirmar que:",
         a: "foi criado a partir do desmembramento de parte do Mato Grosso e Amazonas, sendo inicialmente formado por quatro municípios.",
@@ -886,7 +886,7 @@ const banco_ro = [
     },
     {
         id: "ro75",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "Geografia de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Com cerca de 3.300 quilômetros de extensão, o Rio Madeira é um dos principais afluentes do Amazonas. Sobre ele, assinale a correta:",
         a: "Não apresenta diferenças de coloração nas águas.",
@@ -898,7 +898,7 @@ const banco_ro = [
     },
     {
         id: "ro76",
-        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História de RO",
+        ano: "2019", banca: "IBADE", orgao: "Prefeitura de Vilhena - RO", prova: "Arquiteto", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Real Forte Príncipe da Beira (Séc. XVIII) é patrimônio nacional. Qual foi o principal motivo de sua construção?",
         a: "Preocupação com bandeirantes paulistas.",
@@ -910,7 +910,7 @@ const banco_ro = [
     },
     {
         id: "ro77",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A agropecuária responde por 20% do PIB de Rondônia. Qual o principal produto de exportação?",
         a: "carne suína.",
@@ -922,7 +922,7 @@ const banco_ro = [
     },
     {
         id: "ro78",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O Território Federal de Guaporé (1943) foi constituído mediante o desmembramento das áreas:",
         a: "da Bolívia e do Peru.",
@@ -934,7 +934,7 @@ const banco_ro = [
     },
     {
         id: "ro79",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Porto Velho - RO", prova: "Tradutor de Libras", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que indica corretamente os limites geográficos de Rondônia:",
         a: "Amazonas(leste), Bolívia(sul), Acre(oeste), Mato grosso(sul e oeste).",
@@ -946,7 +946,7 @@ const banco_ro = [
     },
     {
         id: "ro80",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O rio Ji-Paraná (rio Machado) possui sua nascente na seguinte região:",
         a: "Chapada dos Parecis.",
@@ -958,7 +958,7 @@ const banco_ro = [
     },
     {
         id: "ro81",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "Conhecimentos Gerais",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O município de Ji-Paraná, nas últimas eleições (referência 2018), empossou a seguinte quantidade de vereadores:",
         a: "62.",
@@ -970,7 +970,7 @@ const banco_ro = [
     },
     {
         id: "ro82",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Em Ji-Paraná, qual das lavouras a seguir apresentou a maior área plantada (dados de 2017/2018)?",
         a: "Mamão",
@@ -982,7 +982,7 @@ const banco_ro = [
     },
     {
         id: "ro83",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O dia da criação do município de Ji-Paraná, feriado municipal, é:",
         a: "22 de novembro.",
@@ -994,7 +994,7 @@ const banco_ro = [
     },
     {
         id: "ro84",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "Conhecimentos Gerais",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Merendeira", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Nas eleições de 2016 em Ji-Paraná, quem foi eleito como vice-prefeito?",
         a: "Marcito Aparecido Pinto",
@@ -1006,7 +1006,7 @@ const banco_ro = [
     },
     {
         id: "ro85",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os municípios a seguir, assinale a alternativa que indica o município localizado mais distante do município de Cacoal.",
         a: "Pimenta Bueno",
@@ -1018,7 +1018,7 @@ const banco_ro = [
     },
     {
         id: "ro86",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Motorista", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Motorista", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O nome da capital de Rondônia é em função a um porto localizado às margens de um importante rio que passa pelo estado. O nome do rio que corta a cidade de Porto Velho é:",
         a: "Roosevelt.",
@@ -1030,7 +1030,7 @@ const banco_ro = [
     },
     {
         id: "ro87",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente de Manutenção", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente de Manutenção", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Rondônia foi elevado à categoria de estado na década de 80 do século XX. Antes disso, o que hoje é o estado de Rondônia era denominado:",
         a: "Estado de Ji-Paraná.",
@@ -1042,7 +1042,7 @@ const banco_ro = [
     },
     {
         id: "ro88",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente de Manutenção", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente de Manutenção", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre as alternativas a seguir, assinale a que indica o político que exerceu o cargo de governador de Rondônia mais recentemente (em relação a 2018).",
         a: "Assis Canuto",
@@ -1054,7 +1054,7 @@ const banco_ro = [
     },
     {
         id: "ro89",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Técnico de Saúde Bucal", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Técnico de Saúde Bucal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os municípios a seguir, assinale o que possui limites com o município de Ji-Paraná.",
         a: "Buriti",
@@ -1066,7 +1066,7 @@ const banco_ro = [
     },
     {
         id: "ro90",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Anterior a denominação de Território Federal de Rondônia (1956), o atual estado era denominado de Território Federal do:",
         a: "Jaru.",
@@ -1078,7 +1078,7 @@ const banco_ro = [
     },
     {
         id: "ro91",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre as unidades de relevo a seguir, assinale a alternativa que indica uma unidade existente no estado de Rondônia.",
         a: "Depressão do Miranda",
@@ -1090,7 +1090,7 @@ const banco_ro = [
     },
     {
         id: "ro92",
-        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Prefeitura de Ji-Paraná - RO", prova: "Artesão", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que apresenta o fator mais importante no processo de ocupação de Rondônia, a partir da segunda metade do século XX.",
         a: "Construção da rodovia BR-364",
@@ -1102,7 +1102,7 @@ const banco_ro = [
     },
     {
         id: "ro93",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os rios a seguir, assinale a alternativa que apresenta o rio que passa pelo município de Cacoal.",
         a: "Guaporé",
@@ -1114,7 +1114,7 @@ const banco_ro = [
     },
     {
         id: "ro94",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os municípios a seguir, o que possui limites com o município de Cacoal é:",
         a: "Jaru.",
@@ -1126,7 +1126,7 @@ const banco_ro = [
     },
     {
         id: "ro95",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O estado de Rondônia possui o seu nome em homenagem a(o):",
         a: "Barão do Rio Branco.",
@@ -1138,7 +1138,7 @@ const banco_ro = [
     },
     {
         id: "ro96",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os tipos de clima a seguir, o que melhor se aplica ao estado de Rondônia é:",
         a: "polar.",
@@ -1150,7 +1150,7 @@ const banco_ro = [
     },
     {
         id: "ro97",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Braçal", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os estados a seguir, assinale a alternativa que apresenta o que possui divisas com Rondônia.",
         a: "Acre",
@@ -1162,7 +1162,7 @@ const banco_ro = [
     },
     {
         id: "ro98",
-        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente Administrativo", materia: "Geografia de RO",
+        ano: "2018", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Agente Administrativo", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre as produções agrícolas a seguir, assinale a que possui a maior área plantada em Rondônia, segundo os últimos dados oficiais divulgados (referência 2018).",
         a: "Arroz",
@@ -1174,7 +1174,7 @@ const banco_ro = [
     },
     {
         id: "ro99",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "O nome do estado de Rondônia é uma homenagem a Cândido Rondon. Entre as alternativas a seguir, assinale a que mais caracteriza esse desbravador.",
         a: "Articulou a assinatura do Tratado de Madrid em 1750.",
@@ -1186,7 +1186,7 @@ const banco_ro = [
     },
     {
         id: "ro100",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que apresenta o governador que foi nomeado pelo presidente da república como governador do, então denominado, Território Federal de Rondônia.",
         a: "Ivo Cassol",
@@ -1198,7 +1198,7 @@ const banco_ro = [
     },
     {
         id: "ro101",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A elevação do Território Federal de Rondônia para a condição de Estado de Rondônia foi assinada na seguinte década do século XX:",
         a: "40.",
@@ -1210,7 +1210,7 @@ const banco_ro = [
     },
     {
         id: "ro102",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Segundo o IBGE, o clima predominante no estado de Rondônia é:",
         a: "subtropical.",
@@ -1222,7 +1222,7 @@ const banco_ro = [
     },
     {
         id: "ro103",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "A Represa de Samuel é alimentada principalmente por qual rio?",
         a: "Jamari.",
@@ -1234,7 +1234,7 @@ const banco_ro = [
     },
     {
         id: "ro104",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Sobre a ferrovia Madeira-Mamoré, assinale a alternativa que melhor caracteriza o período da construção/inauguração:",
         a: "Inaugurada na última década do período colonial.",
@@ -1246,7 +1246,7 @@ const banco_ro = [
     },
     {
         id: "ro105",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Qual Terra Indígena engloba parte dos municípios de Nova Mamoré e Porto Velho?",
         a: "Terra Indígena Karipuna",
@@ -1258,7 +1258,7 @@ const banco_ro = [
     },
     {
         id: "ro106",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em Suporte", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale a alternativa que apresenta o município que possui limites territoriais com a capital, Porto Velho.",
         a: "Cacoal",
@@ -1270,7 +1270,7 @@ const banco_ro = [
     },
     {
         id: "ro107",
-        ano: "2017", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Geral", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "Câmara de Cacoal - RO", prova: "Geral", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre os países a seguir, assinale o que Rondônia possui fronteira.",
         a: "Paraguai",
@@ -1282,7 +1282,7 @@ const banco_ro = [
     },
     {
         id: "ro108",
-        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em TI", materia: "Geografia de RO",
+        ano: "2017", banca: "IBADE", orgao: "IPERON - RO", prova: "Técnico em TI", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Segundo o IBGE (2015), qual lavoura permanente teve a maior área colhida em Rondônia?",
         a: "maracujá.",
@@ -1294,7 +1294,7 @@ const banco_ro = [
     },
     {
         id: "ro109",
-        ano: "2016", banca: "IBADE", orgao: "SEDUC-RO", prova: "Intérprete Libras", materia: "Geografia de RO",
+        ano: "2016", banca: "IBADE", orgao: "SEDUC-RO", prova: "Intérprete Libras", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Entre as culturas permanentes a seguir (além do café), qual possuiu a maior extensão de área colhida no estado?",
         a: "Pera",
@@ -1306,7 +1306,7 @@ const banco_ro = [
     },
     {
         id: "ro110",
-        ano: "2016", banca: "IBADE", orgao: "SEDUC-RO", prova: "Intérprete Libras", materia: "Geografia de RO",
+        ano: "2016", banca: "IBADE", orgao: "SEDUC-RO", prova: "Intérprete Libras", materia: "História e Geografia de RO",
         assunto: "Hist e Geo RO",
         enunciado: "Assinale o município que possui divisa com o estado do Mato Grosso.",
         a: "Buritis",
@@ -1317,4 +1317,5 @@ const banco_ro = [
         correta: "b", comentario: "Embora Ji-Paraná esteja no centro, seu território extenso limita-se a leste com municípios que fazem fronteira com MT (como Vilhena ou Pimenta Bueno em contexto regional), mas tecnicamente, das opções, Ji-Paraná é a que integra o eixo leste de influência."
     }
 ];
+
 
