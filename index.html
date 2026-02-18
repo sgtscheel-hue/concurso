@@ -452,6 +452,30 @@ window.abrirResumoPDF = function() {
                               assuntos.map(a => `<option value="${a}">${a}</option>`).join('');
             select.value = "todos";
         }
+	// INSERIR AQUI:
+window.carregarSimuladoInedito = function() {
+    if (typeof banco_simulado_novo === 'undefined' || banco_simulado_novo.length === 0) {
+        alert("O Simulado de hoje ainda não foi carregado no servidor.");
+        return;
+    }
+
+    if(!confirm("Deseja iniciar o simulado inédito? O progresso atual será pausado.")) return;
+
+    window.questoesFiltradas = [...banco_simulado_novo];
+    window.index = 0;
+    window.materiaAtual = 'simulado'; 
+
+    document.getElementById('nomeMateriaAtual').innerText = "Simulado Especial Inédito";
+    document.getElementById('nomeMateriaAtual').className = "ml-4 text-xs font-bold text-white bg-orange-500 px-3 py-1 rounded-full uppercase italic";
+    
+    document.getElementById('filtroAssunto').disabled = true;
+    document.getElementById('btnAulaAssunto').classList.add('hidden');
+
+    render();
+    alert("Simulado carregado com sucesso! Boa sorte.");
+};
+
+// ... código da função aplicarFiltro() que já existe ...
 
         function aplicarFiltro() {
     const filtroAssunto = document.getElementById('filtroAssunto').value;
@@ -718,6 +742,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
