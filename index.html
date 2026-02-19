@@ -494,6 +494,48 @@ window.carregarSimuladoInedito = function() {
 
 // ... código da função aplicarFiltro() que já existe ...
 
+
+
+
+	function verificarFimSimulado() {
+    // Se estivermos na última questão do banco de simulado (índice 9)
+    if (questoesAtuais === banco_simulado_novo && indiceAtual === 9) {
+        finalizarSimulado();
+    } else {
+        proxima();
+    }
+}
+
+function finalizarSimulado() {
+    const acertos = parseInt(document.getElementById('dashAcertos').innerText);
+    const erros = parseInt(document.getElementById('dashErros').innerText);
+    const total = acertos + erros;
+    const nota = (acertos / total) * 100;
+    
+    let mensagem = "";
+    if (nota >= 70) mensagem = "🔥 Excelente desempenho! Você está no caminho da aprovação.";
+    else if (nota >= 50) mensagem = "👍 Bom trabalho, mas revise os pontos onde errou.";
+    else mensagem = "📚 Continue estudando! Use o comentário da IA para reforçar a base.";
+
+    alert(`
+        📊 RESULTADO DO SIMULADO SEDUC-RO
+        ----------------------------------
+        Total Respondido: ${total}
+        Acertos: ${acertos}
+        Erros: ${erros}
+        Aproveitamento: ${nota.toFixed(1)}%
+        
+        ${mensagem}
+    `);
+    
+    // Opcional: Resetar para o banco normal após o OK
+    location.reload(); 
+}
+
+	
+
+	
+
         function aplicarFiltro() {
     const filtroAssunto = document.getElementById('filtroAssunto').value;
     const apenasErradas = document.getElementById('checkApenasErradas').checked;
@@ -759,6 +801,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
