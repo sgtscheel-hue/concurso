@@ -38,18 +38,16 @@
 
     <script>
         let atual = 0;
-        let respostas = {}; // Guarda { idQuestao: 'a' }
+        let respostas = {};
 
         function render() {
             const q = banco_simulado_novo[atual];
             const container = document.getElementById('area-questao');
             
-            // Atualiza Topo
             document.getElementById('progresso-texto').innerText = `Questão ${atual + 1}/${banco_simulado_novo.length}`;
             document.getElementById('info-materia').innerText = q.materia + " > " + q.assunto;
             document.getElementById('barra-progresso').style.width = ((atual + 1) / banco_simulado_novo.length * 100) + "%";
             
-            // Botão Finalizar vs Próxima
             const btnProx = document.getElementById('btn-prox');
             if (atual === banco_simulado_novo.length - 1) {
                 btnProx.innerText = "FINALIZAR SIMULADO";
@@ -83,7 +81,7 @@
 
         function gravar(id, letra) {
             respostas[id] = letra;
-            render(); // Re-renderiza para aplicar estilo visual de selecionado
+            render();
         }
 
         function navegar(dir) {
@@ -93,66 +91,97 @@
         }
 
         function finalizar() {
-            let pontos = 0;
+            if(!confirm("Deseja finalizar o simulado?")) return;
+
+            let pontosObtidos = 0;
+            let pontosMaximosPossiveis = 0;
+            
+            // Inicializa contador de acertos por matéria
             let acertosMateria = { 
-                "Língua Portuguesa": 0, "História de RO": 0, "Geografia de RO": 0, 
-                "Informática": 0, "Conhecimentos Específicos": 0 
+                "Língua Portuguesa": 0, 
+                "História de RO": 0, 
+                "Geografia de RO": 0, 
+                "Informática": 0, 
+                "Conhecimentos Específicos": 0 
             };
+            
             let errosAssunto = new Set();
 
             banco_simulado_novo.forEach(q => {
+                // Cálculo de Pontuação Máxima da Prova
+                let peso = (q.materia === "Conhecimentos Específicos") ? 3 : 1;
+                pontosMaximosPossiveis += peso;
+
                 if (respostas[q.id] === q.correta) {
                     acertosMateria[q.materia]++;
-                    pontos += (q.materia === "Conhecimentos Específicos") ? 3 : 1;
+                    pontosObtidos += peso;
                 } else {
                     errosAssunto.add(q.assunto);
                 }
             });
 
+            // Regra 1: Verificar se zerou alguma matéria
             const zeradas = Object.keys(acertosMateria).filter(m => acertosMateria[m] === 0);
-            const aprovado = (zeradas.length === 0 && pontos >= 60);
+            
+            // Regra 2: Verificar se atingiu 60% dos pontos totais
+            const percentual = (pontosObtidos / pontosMaximosPossiveis) * 100;
+            const atingiuMinimoPontos = percentual >= 60;
 
-            exibirResultado(pontos, aprovado, zeradas, acertosMateria, errosAssunto);
+            // Resultado Final
+            const aprovado = (zeradas.length === 0 && atingiuMinimoPontos);
+
+            exibirResultado(pontosObtidos, aprovado, zeradas, acertosMateria, errosAssunto, percentual);
         }
 
-        function exibirResultado(nota, aprovado, zeradas, acertos, revisao) {
+        function exibirResultado(nota, aprovado, zeradas, acertos, revisao, percentual) {
             document.body.innerHTML = `
-                <div class="max-w-2xl mx-auto mt-10 bg-white rounded-3xl shadow-2xl overflow-hidden p-8 text-center">
+                <div class="max-w-2xl mx-auto my-10 bg-white rounded-3xl shadow-2xl overflow-hidden p-8 text-center">
                     <h2 class="text-2xl font-bold mb-2 text-gray-700">Resultado do Simulado</h2>
-                    <div class="text-8xl font-black my-6 ${aprovado ? 'text-green-600' : 'text-red-600'}">${nota}</div>
+                    <div class="text-8xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">${nota}</div>
+                    <p class="text-lg text-gray-500 mb-4">Você atingiu <b>${percentual.toFixed(1)}%</b> da prova.</p>
                     <p class="text-xl font-bold uppercase mb-8">${aprovado ? '✅ Aprovado!' : '❌ Reprovado'}</p>
                     
-                    <div class="grid grid-cols-1 gap-4 text-left mb-8">
-                        <div class="bg-gray-50 p-6 rounded-2xl">
-                            <h3 class="font-bold border-b pb-2 mb-4">Desempenho por Matéria</h3>
-                            ${Object.entries(acertos).map(([m, v]) => `
-                                <div class="flex justify-between mb-2 text-sm">
-                                    <span>${m}</span>
-                                    <span class="font-bold ${v === 0 ? 'text-red-500' : 'text-gray-700'}">${v} acertos</span>
-                                </div>
-                            `).join('')}
-                        </div>
+                    <div class="bg-gray-50 p-6 rounded-2xl text-left mb-8">
+                        <h3 class="font-bold border-b pb-2 mb-4">Acertos por Matéria:</h3>
+                        ${Object.entries(acertos).map(([m, v]) => `
+                            <div class="flex justify-between mb-2 text-sm">
+                                <span>${m}</span>
+                                <span class="font-bold ${v === 0 ? 'text-red-500' : 'text-gray-700'}">${v} acertos</span>
+                            </div>
+                        `).join('')}
                     </div>
 
+                    ${!atingiuMinimo(percentual) ? `
+                        <div class="bg-orange-100 text-orange-700 p-4 rounded-xl mb-4 font-medium text-sm text-left">
+                            ⚠️ <b>Motivo:</b> Pontuação abaixo de 60% do total da prova.
+                        </div>
+                    ` : ''}
+
                     ${zeradas.length > 0 ? `
-                        <div class="bg-red-100 text-red-700 p-4 rounded-xl mb-6 font-medium text-sm">
-                            Atenção: Você zerou <strong>${zeradas.join(', ')}</strong> e foi eliminado.
+                        <div class="bg-red-100 text-red-700 p-4 rounded-xl mb-6 font-medium text-sm text-left">
+                            🚫 <b>Eliminação Crítica:</b> Você zerou as seguintes matérias: <b>${zeradas.join(', ')}</b>.
                         </div>
                     ` : ''}
 
                     <div class="text-left bg-amber-50 p-6 rounded-2xl border border-amber-100 mb-8">
-                        <h3 class="text-amber-800 font-bold mb-2 italic">Revisar estes assuntos:</h3>
-                        <p class="text-xs text-amber-700 leading-relaxed">${Array.from(revisao).join(', ')}</p>
+                        <h3 class="text-amber-800 font-bold mb-2 italic">Revisar estes tópicos:</h3>
+                        <div class="flex flex-wrap gap-2 text-[10px]">
+                            ${Array.from(revisao).map(a => `<span class="bg-amber-200 px-2 py-1 rounded">${a}</span>`).join('')}
+                        </div>
                     </div>
 
-                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700">
-                        TENTAR NOVAMENTE
+                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                        REFAZER SIMULADO
                     </button>
                 </div>
             `;
         }
 
+        // Função auxiliar para o template string
+        function atingiuMinimo(p) { return p >= 60; }
+
         render();
     </script>
 </body>
 </html>
+
