@@ -145,11 +145,7 @@
                         <input type="checkbox" id="checkNaoRespondidas" onchange="aplicarFiltro()" class="mr-2"> questões que não respondeu!
                     </label>
                 </div>
-                
-                <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
-                    <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
-                </button>
-				
+                               	
                 </div>
             </div>
        
@@ -185,7 +181,9 @@
                             <button id="btnResponder" onclick="verificar()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-md font-bold text-xs transition">Responder</button>
                             <button onclick="togglePanel('panel-comment')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-gray-200">Comentário</button>
 							<button onclick="abrirResumoPDF()" class="bg-rose-100 text-rose-700 px-4 py-2 rounded-md font-bold text-xs hover:bg-rose-200 border border-rose-200"> <i class="fa-solid fa-file-pdf mr-1"></i> Resumo em PDF </button>
-                            <button onclick="togglePanel('panel-video')" class="bg-red-50 text-red-600 px-4 py-2 rounded-md font-bold text-xs hover:bg-red-100">Vídeo Aula</button>
+                            <button id="btnAulaAssunto" onclick="abrirAulaAssunto()" class="hidden w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black py-2 rounded shadow-sm transition uppercase">
+                    <i class="fa-solid fa-play mr-1"></i> Assistir Aula do Assunto
+                </button>
                         </div>
                         <div class="flex gap-4 items-center">
                             <button onclick="anterior()" class="text-gray-400 hover:text-blue-600 font-bold"><i class="fa-solid fa-chevron-left"></i></button>
@@ -801,6 +799,7 @@ window.onload = () => {
     </script>
 </body>
 </html>
+
 
 
 
