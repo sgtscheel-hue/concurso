@@ -769,6 +769,14 @@ function render() {
             fecharModalAulas();
         }
 
+
+	// Função para abrir o simulado em uma nova aba
+function abrirSimuladoIndependente() {
+    // Certifique-se de que o nome do arquivo abaixo seja EXATAMENTE 
+    // o nome do arquivo HTML que criamos para o simulado
+    window.open('simulado.html', '_blank');
+}
+
 // --- LOGICA DE LOGIN E INICIALIZAÇÃO UNIFICADA ---
 const CREDENCIAIS = {
     usuario: "admin",
@@ -924,6 +932,7 @@ function exibirResultadoNaTela(pontos, status, cor, zeradas, revisao, acertos) {
     </script>
 </body>
 </html>
+
 
 
 
