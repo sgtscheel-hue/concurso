@@ -164,9 +164,22 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button onclick="carregarSimuladoInedito()" class="btn-pulsar bg-red-600 hover:bg-red-700 text-white text-[10px] font-black px-4 py-2 rounded-full transition shadow-lg flex items-center gap-2">
-                <i class="fa-solid fa-fire-flame-curved"></i> SIMULADO INÉDITO - 23 FEV
-            </button>
+
+			<button onclick="abrirSimuladoIndependente()" class="flex items-center gap-3 w-full p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:scale-[1.02] transition-all shadow-lg group">
+    <div class="bg-white/20 p-2 rounded-lg group-hover:rotate-12 transition-transform">
+        <i class="fa-solid fa-star-half-stroke text-xl"></i>
+    </div>
+    <div class="text-left">
+        <span class="block font-bold text-sm uppercase tracking-wider">Simulado Inédito</span>
+        <span class="block text-[10px] text-blue-100 italic">Disponível: 23 Fev 2026</span>
+    </div>
+</button>
+
+
+			
+        //    <button onclick="carregarSimuladoInedito()" class="btn-pulsar bg-red-600 hover:bg-red-700 text-white text-[10px] font-black px-4 py-2 rounded-full transition shadow-lg flex items-center gap-2">
+        //        <i class="fa-solid fa-fire-flame-curved"></i> SIMULADO INÉDITO - 23 FEV
+        //    </button>
             <button onclick="resetar()" class="text-gray-300 hover:text-red-500 p-2"><i class="fa-solid fa-trash-can"></i></button>
         </div>
     </div>
@@ -911,6 +924,7 @@ function exibirResultadoNaTela(pontos, status, cor, zeradas, revisao, acertos) {
     </script>
 </body>
 </html>
+
 
 
 
