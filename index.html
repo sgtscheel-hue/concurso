@@ -795,10 +795,123 @@ window.onload = () => {
     } else {
         document.getElementById('login-screen').style.display = 'flex';
     }
-};       
+};   
+
+	// Objeto para armazenar as respostas do aluno (Ex: { "simulado31": "a" })
+let respostasDoAluno = {};
+
+function finalizarSimulado() {
+    let pontuacaoTotal = 0;
+    let acertosPorMateria = {
+        "Língua Portuguesa": 0,
+        "História de RO": 0,
+        "Geografia de RO": 0,
+        "Informática": 0,
+        "Conhecimentos Específicos": 0
+    };
+    let errosPorAssunto = new Set(); // Para não repetir o assunto na lista de revisão
+
+    // 1. Processamento das Questões
+    banco_simulado_novo.forEach(q => {
+        const respostaMarcada = respostasDoAluno[q.id];
+        
+        if (respostaMarcada === q.correta) {
+            // Soma acertos para o critério de não zerar
+            acertosPorMateria[q.materia]++;
+            
+            // Cálculo de Pontuação com Pesos
+            if (q.materia === "Conhecimentos Específicos") {
+                pontuacaoTotal += 3;
+            } else {
+                pontuacaoTotal += 1;
+            }
+        } else {
+            // Se errou (ou não respondeu), adiciona o assunto para revisar
+            errosPorAssunto.add(q.assunto);
+        }
+    });
+
+    // 2. Verificação de Zeramento (Critério Eliminatório)
+    let materiasZeradas = [];
+    for (let materia in acertosPorMateria) {
+        if (acertosPorMateria[materia] === 0) {
+            materiasZeradas.push(materia);
+        }
+    }
+
+    // 3. Definição do Status Final
+    let status = "";
+    let corStatus = "";
+    const zerouAlguma = materiasZeradas.length > 0;
+    
+    // Critério de Aprovação Exemplo: 60% da pontuação total (Total possível: 100 pontos)
+    // (25 básicas * 1) + (25 específicas * 3) = 100
+    const notaMinima = 60; 
+
+    if (zerouAlguma) {
+        status = "REPROVADO (Zerou disciplina)";
+        corStatus = "text-red-600";
+    } else if (pontuacaoTotal < notaMinima) {
+        status = "REPROVADO (Nota insuficiente)";
+        corStatus = "text-orange-600";
+    } else {
+        status = "APROVADO!";
+        corStatus = "text-green-600";
+    }
+
+    // 4. Exibição do Resultado
+    exibirResultadoNaTela(pontuacaoTotal, status, corStatus, materiasZeradas, errosPorAssunto, acertosPorMateria);
+}
+
+function exibirResultadoNaTela(pontos, status, cor, zeradas, revisao, acertos) {
+    const container = document.getElementById('container-questoes');
+    
+    container.innerHTML = `
+        <div class="bg-white p-6 rounded-xl shadow-2xl border-t-8 ${zeradas.length > 0 ? 'border-red-500' : 'border-green-500'}">
+            <h2 class="text-2xl font-bold text-center mb-4">Resultado do Simulado Especial</h2>
+            
+            <div class="text-center mb-6">
+                <span class="text-5xl font-black">${pontos}</span>
+                <span class="text-gray-500 text-xl">/ 100 pontos</span>
+                <p class="text-xl font-bold mt-2 ${cor}">${status}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold mb-2 border-b pb-1">Desempenho por Matéria:</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>Português: ${acertos["Língua Portuguesa"]}/10</li>
+                        <li>História de RO: ${acertos["História de RO"]}/5</li>
+                        <li>Geografia de RO: ${acertos["Geografia de RO"]}/5</li>
+                        <li>Informática: ${acertos["Informática"]}/5</li>
+                        <li class="font-bold text-blue-700">Conhecimentos Específicos: ${acertos["Conhecimentos Específicos"]}/25</li>
+                    </ul>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded-lg">
+                    <h3 class="font-bold mb-2 border-b border-amber-200 text-amber-800">Precisa Revisar:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${Array.from(revisao).map(a => `<span class="bg-amber-200 text-amber-900 text-[10px] px-2 py-1 rounded-md font-medium">${a}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+
+            ${zeradas.length > 0 ? `
+                <div class="mt-4 p-3 bg-red-100 border border-red-200 rounded-lg text-red-700 text-sm">
+                    <strong>Motivo da Eliminação:</strong> Você não obteve acertos em: ${zeradas.join(", ")}.
+                </div>
+            ` : ''}
+
+            <button onclick="location.reload()" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                Refazer Simulado
+            </button>
+        </div>
+    `;
+}
     </script>
 </body>
 </html>
+
 
 
 
