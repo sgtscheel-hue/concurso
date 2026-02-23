@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Independente - SEDUC RO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-4">
+
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-blue-700 p-6 rounded-t-xl text-white shadow-lg">
+            <h1 class="text-2xl font-bold italic">SIMULADO ESPECIAL SEDUC</h1>
+            <p class="text-sm opacity-80">50 Questões | Peso 1 (Básicas) e Peso 3 (Específicas)</p>
+        </div>
+
+        <div id="area-simulado" class="bg-white p-6 shadow-md rounded-b-xl min-h-[400px]">
+            </div>
+    </div>
+
+    <script>
+        // --- SEU BANCO DE QUESTÕES (COLE AQUI O BANCO QUE VOCÊ ENVIOU) ---
+        const banco_simulado_novo = [
+            // ... cole aqui todas as 50 questões que você me mandou ...
+        ];
+
+        // --- VARIÁVEIS DE CONTROLE ---
+        let indiceAtual = 0;
+        let respostasUsuario = {}; // Armazena { id: "letra" }
+
+        // --- FUNÇÃO PARA RENDERIZAR A QUESTÃO ---
+        function mostrarQuestao() {
+            const container = document.getElementById('area-simulado');
+            const q = banco_simulado_novo[indiceAtual];
+            const total = banco_simulado_novo.length;
+
+            container.innerHTML = `
+                <div class="mb-4">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded">
+                        QUESTÃO ${indiceAtual + 1} DE ${total}
+                    </span>
+                    <span class="ml-2 text-gray-500 text-sm italic">${q.materia}</span>
+                </div>
+                
+                <h2 class="text-lg font-semibold mb-6 text-gray-800">${q.enunciado}</h2>
+
+                <div class="space-y-3">
+                    ${['a', 'b', 'c', 'd', 'e'].map(letra => `
+                        <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition border-gray-200">
+                            <input type="radio" name="opcao" value="${letra}" 
+                                   class="w-4 h-4 text-blue-600"
+                                   ${respostasUsuario[q.id] === letra ? 'checked' : ''}
+                                   onchange="salvarResposta('${q.id}', '${letra}')">
+                            <span class="ml-3 text-gray-700"><strong>${letra.toUpperCase()})</strong> ${q[letra]}</span>
+                        </label>
+                    `).join('')}
+                </div>
+
+                <div class="flex justify-between mt-8 pt-4 border-t">
+                    <button onclick="mudarQuestao(-1)" 
+                            ${indiceAtual === 0 ? 'disabled' : ''}
+                            class="px-6 py-2 bg-gray-200 rounded-lg font-bold disabled:opacity-30">
+                        Anterior
+                    </button>
+
+                    ${indiceAtual === total - 1 
+                        ? `<button onclick="calcularNotaFinal()" class="px-8 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 shadow-lg">FINALIZAR SIMULADO</button>`
+                        : `<button onclick="mudarQuestao(1)" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700">Próxima</button>`
+                    }
+                </div>
+            `;
+        }
+
+        function salvarResposta(id, letra) {
+            respostasUsuario[id] = letra;
+        }
+
+        function mudarQuestao(passo) {
+            indiceAtual += passo;
+            mostrarQuestao();
+        }
+
+        // --- LÓGICA DE PONTUAÇÃO E REVISÃO ---
+        function calcularNotaFinal() {
+            let pontos = 0;
+            let acertosPorMateria = {
+                "Língua Portuguesa": 0, "História de RO": 0, "Geografia de RO": 0,
+                "Informática": 0, "Conhecimentos Específicos": 0
+            };
+            let revisao = new Set();
+
+            banco_simulado_novo.forEach(q => {
+                const marcada = respostasUsuario[q.id];
+                if (marcada === q.correta) {
+                    acertosPorMateria[q.materia]++;
+                    pontos += (q.materia === "Conhecimentos Específicos") ? 3 : 1;
+                } else {
+                    revisao.add(q.assunto);
+                }
+            });
+
+            // Regra de Ouro: Ver se zerou alguma
+            let zeradas = Object.keys(acertosPorMateria).filter(m => acertosPorMateria[m] === 0);
+            
+            exibirTelaResultado(pontos, zeradas, revisao, acertosPorMateria);
+        }
+
+        function exibirTelaResultado(pontos, zeradas, revisao, acertos) {
+            const container = document.getElementById('area-simulado');
+            const aprovado = (zeradas.length === 0 && pontos >= 60);
+
+            container.innerHTML = `
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-2">Fim do Simulado</h2>
+                    <div class="text-6xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">
+                        ${pontos} <span class="text-xl">Pontos</span>
+                    </div>
+                    
+                    <p class="text-xl font-bold uppercase mb-6">
+                        ${aprovado ? '✅ Aprovado!' : '❌ Reprovado'}
+                    </p>
+
+                    <div class="bg-gray-50 p-4 rounded-lg text-left mb-6">
+                        <p class="font-bold border-b mb-2">Desempenho por Matéria:</p>
+                        ${Object.entries(acertos).map(([m, a]) => `
+                            <p class="text-sm flex justify-between">
+                                ${m}: <span>${a} acertos</span>
+                            </p>
+                        `).join('')}
+                    </div>
+
+                    ${zeradas.length > 0 ? `
+                        <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-6 text-sm">
+                            <strong>Atenção:</strong> Você foi eliminado por zerar: ${zeradas.join(', ')}
+                        </div>
+                    ` : ''}
+
+                    <div class="bg-amber-50 p-4 rounded-lg text-left mb-6 border border-amber-200">
+                        <p class="font-bold text-amber-800 mb-2 italic text-sm">O que você precisa revisar:</p>
+                        <p class="text-xs text-amber-700">${Array.from(revisao).join(', ') || 'Nada! Parabéns.'}</p>
+                    </div>
+
+                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg">
+                        Tentar Novamente
+                    </button>
+                </div>
+            `;
+        }
+
+        // Inicia a primeira questão
+        mostrarQuestao();
+    </script>
+</body>
+</html>
