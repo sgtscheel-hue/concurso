@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado Independente - SEDUC RO</title>
+    <title>Simulado Especial - SEDUC RO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="simulado_diario.js"></script>
 </head>
 <body class="bg-gray-100 p-4 font-sans">
 
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto" id="container-geral">
         <div class="bg-white p-6 rounded-t-2xl shadow-sm border-b flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold text-blue-900">Simulado Técnico Educacional</h1>
@@ -30,7 +30,7 @@
             <button onclick="navegar(-1)" id="btn-ant" class="px-6 py-2 font-bold text-gray-400 hover:text-gray-700 disabled:opacity-0">
                 ← Anterior
             </button>
-            <button onclick="navegar(1)" id="btn-prox" class="bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md">
+            <button onclick="navegar(1)" id="btn-prox" class="bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md transition-all active:scale-95">
                 Próxima →
             </button>
         </footer>
@@ -38,7 +38,7 @@
 
     <script>
         let atual = 0;
-        let respostas = {};
+        let respostasUsuario = {}; // { id: 'a' }
 
         function render() {
             const q = banco_simulado_novo[atual];
@@ -63,14 +63,14 @@
 
             container.innerHTML = `
                 <div class="animate-in fade-in duration-500">
-                    <h2 class="text-xl text-gray-800 leading-relaxed mb-8">${q.enunciado}</h2>
+                    <h2 class="text-xl text-gray-800 font-medium leading-relaxed mb-8">${q.enunciado}</h2>
                     <div class="space-y-3">
                         ${['a', 'b', 'c', 'd', 'e'].map(l => `
-                            <label class="flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${respostas[q.id] === l ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:bg-gray-50'}">
+                            <label class="flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${respostasUsuario[q.id] === l ? 'border-blue-500 bg-blue-50 shadow-inner' : 'border-gray-100 hover:bg-gray-50'}">
                                 <input type="radio" name="resp" value="${l}" class="hidden" 
-                                       ${respostas[q.id] === l ? 'checked' : ''} 
+                                       ${respostasUsuario[q.id] === l ? 'checked' : ''} 
                                        onchange="gravar('${q.id}', '${l}')">
-                                <span class="w-8 h-8 flex items-center justify-center rounded-full ${respostas[q.id] === l ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'} font-bold mr-4 text-sm">${l.toUpperCase()}</span>
+                                <span class="w-8 h-8 flex items-center justify-center rounded-full ${respostasUsuario[q.id] === l ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'} font-bold mr-4 text-sm">${l.toUpperCase()}</span>
                                 <span class="text-gray-700">${q[l]}</span>
                             </label>
                         `).join('')}
@@ -80,7 +80,7 @@
         }
 
         function gravar(id, letra) {
-            respostas[id] = letra;
+            respostasUsuario[id] = letra;
             render();
         }
 
@@ -91,97 +91,96 @@
         }
 
         function finalizar() {
-            if(!confirm("Deseja finalizar o simulado?")) return;
+            if(!confirm("Deseja ver seu desempenho agora?")) return;
 
-            let pontosObtidos = 0;
-            let pontosMaximosPossiveis = 0;
-            
-            // Inicializa contador de acertos por matéria
-            let acertosMateria = { 
-                "Língua Portuguesa": 0, 
-                "História de RO": 0, 
-                "Geografia de RO": 0, 
-                "Informática": 0, 
-                "Conhecimentos Específicos": 0 
-            };
-            
-            let errosAssunto = new Set();
+            let pontos = 0;
+            let totalPossivel = 0;
+            let acertosMateria = { "Língua Portuguesa": 0, "História de RO": 0, "Geografia de RO": 0, "Informática": 0, "Conhecimentos Específicos": 0 };
+            let listaErros = [];
 
             banco_simulado_novo.forEach(q => {
-                // Cálculo de Pontuação Máxima da Prova
                 let peso = (q.materia === "Conhecimentos Específicos") ? 3 : 1;
-                pontosMaximosPossiveis += peso;
+                totalPossivel += peso;
 
-                if (respostas[q.id] === q.correta) {
+                if (respostasUsuario[q.id] === q.correta) {
                     acertosMateria[q.materia]++;
-                    pontosObtidos += peso;
+                    pontos += peso;
                 } else {
-                    errosAssunto.add(q.assunto);
+                    listaErros.push({
+                        enunciado: q.enunciado,
+                        marcada: respostasUsuario[q.id] || "Não respondida",
+                        correta: q.correta,
+                        textoCorreta: q[q.correta],
+                        comentario: q.comentario
+                    });
                 }
             });
 
-            // Regra 1: Verificar se zerou alguma matéria
             const zeradas = Object.keys(acertosMateria).filter(m => acertosMateria[m] === 0);
-            
-            // Regra 2: Verificar se atingiu 60% dos pontos totais
-            const percentual = (pontosObtidos / pontosMaximosPossiveis) * 100;
-            const atingiuMinimoPontos = percentual >= 60;
+            const perc = (pontos / totalPossivel) * 100;
+            const aprovado = (zeradas.length === 0 && perc >= 60);
 
-            // Resultado Final
-            const aprovado = (zeradas.length === 0 && atingiuMinimoPontos);
-
-            exibirResultado(pontosObtidos, aprovado, zeradas, acertosMateria, errosAssunto, percentual);
+            exibirResultado(pontos, aprovado, zeradas, acertosMateria, listaErros, perc);
         }
 
-        function exibirResultado(nota, aprovado, zeradas, acertos, revisao, percentual) {
-            document.body.innerHTML = `
-                <div class="max-w-2xl mx-auto my-10 bg-white rounded-3xl shadow-2xl overflow-hidden p-8 text-center">
-                    <h2 class="text-2xl font-bold mb-2 text-gray-700">Resultado do Simulado</h2>
-                    <div class="text-8xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">${nota}</div>
-                    <p class="text-lg text-gray-500 mb-4">Você atingiu <b>${percentual.toFixed(1)}%</b> da prova.</p>
-                    <p class="text-xl font-bold uppercase mb-8">${aprovado ? '✅ Aprovado!' : '❌ Reprovado'}</p>
-                    
-                    <div class="bg-gray-50 p-6 rounded-2xl text-left mb-8">
-                        <h3 class="font-bold border-b pb-2 mb-4">Acertos por Matéria:</h3>
-                        ${Object.entries(acertos).map(([m, v]) => `
-                            <div class="flex justify-between mb-2 text-sm">
-                                <span>${m}</span>
-                                <span class="font-bold ${v === 0 ? 'text-red-500' : 'text-gray-700'}">${v} acertos</span>
+        function exibirResultado(nota, aprovado, zeradas, acertos, erros, percentual) {
+            const container = document.getElementById('container-geral');
+            container.innerHTML = `
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-10">
+                    <div class="p-8 text-center border-b">
+                        <h2 class="text-2xl font-bold text-gray-700">Fim do Simulado</h2>
+                        <div class="text-7xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">${nota}</div>
+                        <p class="text-lg font-bold ${aprovado ? 'text-green-700' : 'text-red-700'} uppercase">
+                            ${aprovado ? '✅ Aprovado!' : '❌ Reprovado'} (${percentual.toFixed(1)}%)
+                        </p>
+                    </div>
+
+                    <div class="p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-gray-50 p-5 rounded-2xl border">
+                                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Acertos por Disciplina</h3>
+                                ${Object.entries(acertos).map(([m, v]) => `
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span class="${v === 0 ? 'text-red-500 font-bold' : 'text-gray-600'}">${m}</span>
+                                        <span class="font-bold">${v}</span>
+                                    </div>
+                                `).join('')}
                             </div>
-                        `).join('')}
+                            
+                            <div class="flex flex-col justify-center">
+                                ${zeradas.length > 0 ? `<p class="text-red-600 text-sm font-medium mb-2">⚠️ Você foi eliminado por zerar: ${zeradas.join(', ')}</p>` : ''}
+                                ${percentual < 60 ? `<p class="text-orange-600 text-sm font-medium">⚠️ Você não atingiu o mínimo de 60%.</p>` : ''}
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-lg">Revisão de Erros (${erros.length})</span>
+                        </h3>
+
+                        <div class="space-y-6">
+                            ${erros.map((e, i) => `
+                                <div class="p-5 border-l-4 border-red-500 bg-red-50/30 rounded-r-xl">
+                                    <p class="text-gray-800 font-medium mb-3 text-sm">${i+1}. ${e.enunciado}</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-3">
+                                        <div class="p-2 bg-red-100 text-red-800 rounded">Sua resposta: <b>${e.marcada.toUpperCase()}</b></div>
+                                        <div class="p-2 bg-green-100 text-green-800 rounded">Gabarito: <b>${e.correta.toUpperCase()}</b> - ${e.textoCorreta}</div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 italic bg-white p-3 rounded border border-gray-100">
+                                        <b>Dica:</b> ${e.comentario}
+                                    </p>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <button onclick="location.reload()" class="mt-10 w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                            RECOMEÇAR SIMULADO
+                        </button>
                     </div>
-
-                    ${!atingiuMinimo(percentual) ? `
-                        <div class="bg-orange-100 text-orange-700 p-4 rounded-xl mb-4 font-medium text-sm text-left">
-                            ⚠️ <b>Motivo:</b> Pontuação abaixo de 60% do total da prova.
-                        </div>
-                    ` : ''}
-
-                    ${zeradas.length > 0 ? `
-                        <div class="bg-red-100 text-red-700 p-4 rounded-xl mb-6 font-medium text-sm text-left">
-                            🚫 <b>Eliminação Crítica:</b> Você zerou as seguintes matérias: <b>${zeradas.join(', ')}</b>.
-                        </div>
-                    ` : ''}
-
-                    <div class="text-left bg-amber-50 p-6 rounded-2xl border border-amber-100 mb-8">
-                        <h3 class="text-amber-800 font-bold mb-2 italic">Revisar estes tópicos:</h3>
-                        <div class="flex flex-wrap gap-2 text-[10px]">
-                            ${Array.from(revisao).map(a => `<span class="bg-amber-200 px-2 py-1 rounded">${a}</span>`).join('')}
-                        </div>
-                    </div>
-
-                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
-                        REFAZER SIMULADO
-                    </button>
                 </div>
             `;
         }
-
-        // Função auxiliar para o template string
-        function atingiuMinimo(p) { return p >= 60; }
 
         render();
     </script>
 </body>
 </html>
-
