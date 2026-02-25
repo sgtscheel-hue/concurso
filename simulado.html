@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado Especial - SEDUC RO</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="simulado_diario.js"></script>
+</head>
+
+<body class="bg-gray-100 p-4 font-sans">
+
+<div class="max-w-4xl mx-auto" id="container-geral">
+
+    <div class="bg-white p-6 rounded-t-2xl shadow-sm border-b flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold text-blue-900">Simulado Técnico Educacional</h1>
+            <p class="text-sm text-gray-500" id="info-materia"></p>
+        </div>
+
+        <div class="text-right">
+            <span id="progresso-texto" class="text-sm font-bold text-blue-600"></span>
+            <div class="w-32 h-2 bg-gray-200 rounded-full mt-1">
+                <div id="barra-progresso" class="h-full bg-blue-600 rounded-full transition-all"></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="area-questao" class="bg-white p-8 shadow-xl min-h-[450px]"></main>
+
+    <footer class="bg-gray-50 p-6 rounded-b-2xl border-t flex justify-between">
+        <button onclick="navegar(-1)" id="btn-ant"
+            class="px-6 py-2 font-bold text-gray-400 hover:text-gray-700 disabled:opacity-0">
+            ← Anterior
+        </button>
+
+        <button onclick="navegar(1)" id="btn-prox"
+            class="bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md transition-all active:scale-95">
+            Próxima →
+        </button>
+    </footer>
+
+</div>
+
+<script>
+
+let atual = 0;
+let respostasUsuario = {};
+
+function render() {
+
+    if (!window.banco_simulado_novo || banco_simulado_novo.length === 0) {
+        document.getElementById('area-questao').innerHTML =
+            "<p class='text-red-600 font-bold'>Erro ao carregar questões.</p>";
+        return;
+    }
+
+    const q = banco_simulado_novo[atual];
+    const container = document.getElementById('area-questao');
+
+    document.getElementById('progresso-texto').innerText =
+        `Questão ${atual + 1}/${banco_simulado_novo.length}`;
+
+    document.getElementById('info-materia').innerText =
+        q.materia + " > " + q.assunto;
+
+    document.getElementById('barra-progresso').style.width =
+        ((atual + 1) / banco_simulado_novo.length * 100) + "%";
+
+    document.getElementById('btn-ant').disabled = (atual === 0);
+
+    const btnProx = document.getElementById('btn-prox');
+
+    if (atual === banco_simulado_novo.length - 1) {
+        btnProx.innerText = "FINALIZAR SIMULADO";
+        btnProx.className =
+            "bg-green-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-green-700 shadow-md";
+        btnProx.onclick = finalizar;
+    } else {
+        btnProx.innerText = "Próxima →";
+        btnProx.className =
+            "bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md";
+        btnProx.onclick = () => navegar(1);
+    }
+
+    container.innerHTML = `
+        <div>
+            <h2 class="text-xl text-gray-800 font-medium leading-relaxed mb-8">${q.enunciado}</h2>
+            <div class="space-y-3">
+                ${['a','b','c','d','e'].map(l => `
+                    <label class="flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all
+                        ${respostasUsuario[q.id] === l
+                            ? 'border-blue-500 bg-blue-50 shadow-inner'
+                            : 'border-gray-100 hover:bg-gray-50'}">
+
+                        <input type="radio"
+                               name="resp"
+                               value="${l}"
+                               class="hidden"
+                               ${respostasUsuario[q.id] === l ? 'checked' : ''}
+                               onchange="gravar('${q.id}','${l}')">
+
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full
+                            ${respostasUsuario[q.id] === l
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-200 text-gray-600'}
+                            font-bold mr-4 text-sm">${l.toUpperCase()}</span>
+
+                        <span class="text-gray-700">${q[l]}</span>
+                    </label>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function gravar(id, letra) {
+    respostasUsuario[id] = letra;
+}
+
+function navegar(dir) {
+    atual += dir;
+    render();
+    window.scrollTo(0,0);
+}
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        document.getElementById("btn-prox").click();
+    }
+});
+
+function finalizar() {
+
+    if (!confirm("Deseja ver seu desempenho agora?")) return;
+
+    let pontos = 0;
+    let totalPossivel = 0;
+
+    let acertosMateria = {};
+    let totalMateria = {};
+    let listaErros = [];
+
+    banco_simulado_novo.forEach(q => {
+
+        let peso = (q.materia === "Conhecimentos Específicos") ? 3 : 1;
+
+        totalPossivel += peso;
+        totalMateria[q.materia] = (totalMateria[q.materia] || 0) + 1;
+        acertosMateria[q.materia] = acertosMateria[q.materia] || 0;
+
+        if (respostasUsuario[q.id] === q.correta) {
+            pontos += peso;
+            acertosMateria[q.materia]++;
+        } else {
+            listaErros.push(q);
+        }
+    });
+
+    const percentual = (pontos / totalPossivel) * 100;
+
+    const zeradas = Object.keys(totalMateria).filter(m =>
+        acertosMateria[m] === 0
+    );
+
+    const aprovado = (percentual >= 60 && zeradas.length === 0);
+
+    exibirResultado(pontos, percentual, aprovado, acertosMateria, totalMateria, listaErros, zeradas);
+}
+
+function exibirResultado(nota, percentual, aprovado, acertos, totalMateria, erros, zeradas) {
+
+    const container = document.getElementById('container-geral');
+
+    container.innerHTML = `
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-10 relative">
+
+            <div class="p-8 text-center border-b">
+                <h2 class="text-3xl font-bold mb-4">
+                    ${aprovado ? '🎉 PARABÉNS, APROVADO!' : '📚 VOCÊ PRECISA MELHORAR!'}
+                </h2>
+
+                <div class="text-7xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">
+                    ${nota}
+                </div>
+
+                <p class="text-xl font-bold">
+                    ${percentual.toFixed(1)}% de aproveitamento
+                </p>
+
+                ${
+                    zeradas.length > 0
+                    ? `<p class="text-red-600 mt-2">Eliminado por zerar: ${zeradas.join(", ")}</p>`
+                    : ''
+                }
+            </div>
+
+            <div class="p-8">
+
+                <h3 class="text-xl font-bold mb-4">📊 Percentual por Disciplina</h3>
+
+                ${Object.keys(totalMateria).map(m => {
+                    let perc = ((acertos[m] / totalMateria[m]) * 100).toFixed(1);
+                    return `
+                        <div class="mb-4">
+                            <div class="flex justify-between">
+                                <span>${m}</span>
+                                <span>${perc}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full mt-1">
+                                <div class="bg-blue-600 h-2 rounded-full"
+                                    style="width:${perc}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+
+                <h3 class="text-xl font-bold mt-10 mb-4">❌ Questões Erradas (${erros.length})</h3>
+
+                ${erros.map((q,i)=>`
+                    <div class="p-4 mb-4 border-l-4 border-red-500 bg-red-50 rounded">
+                        <p class="font-medium text-sm mb-2">${i+1}. ${q.enunciado}</p>
+                        <p class="text-xs text-green-700">
+                            Gabarito: ${q.correta.toUpperCase()} - ${q[q.correta]}
+                        </p>
+                        <p class="text-xs italic mt-2">${q.comentario}</p>
+                    </div>
+                `).join('')}
+
+                <button onclick="location.reload()"
+                    class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                    REFAZER SIMULADO
+                </button>
+
+            </div>
+        </div>
+    `;
+
+    if (aprovado) fogos();
+}
+
+function fogos() {
+
+    const duracao = 3000;
+    const fim = Date.now() + duracao;
+
+    const intervalo = setInterval(function() {
+
+        if (Date.now() > fim) {
+            clearInterval(intervalo);
+            return;
+        }
+
+        const div = document.createElement("div");
+        div.style.position = "fixed";
+        div.style.left = Math.random()*100+"vw";
+        div.style.top = Math.random()*100+"vh";
+        div.style.width = "8px";
+        div.style.height = "8px";
+        div.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        div.style.borderRadius = "50%";
+        div.style.zIndex = "9999";
+        div.style.transition = "all 1s ease-out";
+
+        document.body.appendChild(div);
+
+        setTimeout(()=>{
+            div.style.transform="scale(5)";
+            div.style.opacity="0";
+        },50);
+
+        setTimeout(()=>div.remove(),1000);
+
+    },100);
+}
+
+render();
+
+</script>
+</body>
+</html>
