@@ -1,4 +1,4 @@
-const banco_simulado_novo = [
+window.banco_simulado_novo = [
 
 /* =====================================================
 LÍNGUA PORTUGUESA (10)
@@ -723,3 +723,4 @@ comentario: "Na administração pública, o princípio da legalidade impõe que 
 }
 
 ];
+
