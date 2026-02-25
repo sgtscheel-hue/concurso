@@ -14,25 +14,45 @@ body{
 }
 .container{
     background:white;
-    width:900px;
+    width:950px;
     padding:30px;
     border-radius:10px;
     box-shadow:0 0 15px rgba(0,0,0,0.1);
+    position:relative;
+    z-index:2;
 }
 button{
     padding:10px 20px;
-    margin-top:20px;
+    margin-top:15px;
     cursor:pointer;
 }
 .option{ margin:8px 0; }
 .hidden{ display:none; }
-.aprovado{ color:green; font-size:22px; font-weight:bold; }
-.reprovado{ color:red; font-size:20px; font-weight:bold; }
+
+.aprovado{
+    color:green;
+    font-size:24px;
+    font-weight:bold;
+}
+.reprovado{
+    color:red;
+    font-size:22px;
+    font-weight:bold;
+}
+
 canvas{
     position:fixed;
     top:0;
     left:0;
     pointer-events:none;
+    z-index:1;
+}
+
+.detalhe{
+    background:#f1f1f1;
+    padding:10px;
+    margin:10px 0;
+    border-radius:5px;
 }
 </style>
 </head>
@@ -49,7 +69,6 @@ canvas{
 <div id="resultado" class="hidden"></div>
 </div>
 
-<!-- CARREGA O BANCO -->
 <script src="simulado_diario.js"></script>
 
 <script>
@@ -68,12 +87,11 @@ const quizDiv = document.getElementById("quiz");
 const nextBtn = document.getElementById("nextBtn");
 const resultadoDiv = document.getElementById("resultado");
 
-function pesoMateria(materia){
-    return materia === "Conhecimentos Específicos" ? 3 : 1;
+function peso(m){
+    return m === "Conhecimentos Específicos" ? 3 : 1;
 }
 
 function mostrarQuestao(){
-
     const q = questoes[indice];
 
     quizDiv.innerHTML = `
@@ -83,8 +101,8 @@ function mostrarQuestao(){
 
         ${["a","b","c","d","e"].map(letra => `
             <div class="option">
-                <input type="radio" name="opcao" value="${letra}" id="${letra}">
-                <label for="${letra}">${q[letra]}</label>
+                <input type="radio" name="opcao" value="${letra}">
+                ${q[letra]}
             </div>
         `).join("")}
     `;
@@ -95,78 +113,116 @@ function calcularResultado(){
     let total = 0;
     let pontos = 0;
     let materias = {};
-    let erros = [];
-    let assuntosRevisar = new Set();
+    let detalhes = [];
 
     questoes.forEach((q,i)=>{
 
-        let peso = pesoMateria(q.materia);
-        total += peso;
+        let p = peso(q.materia);
+        total += p;
 
         if(!materias[q.materia]){
             materias[q.materia] = {acertos:0,total:0};
         }
 
-        materias[q.materia].total += peso;
+        materias[q.materia].total += p;
 
-        if(respostas[i] === q.correta){
-            pontos += peso;
-            materias[q.materia].acertos += peso;
-        }else{
-            erros.push(`Questão ${q.id} - ${q.assunto}`);
-            assuntosRevisar.add(q.assunto);
+        let acertou = respostas[i] === q.correta;
+
+        if(acertou){
+            pontos += p;
+            materias[q.materia].acertos += p;
         }
+
+        detalhes.push({
+            numero: q.id,
+            materia: q.materia,
+            assunto: q.assunto,
+            enunciado: q.enunciado,
+            correta: q.correta,
+            respostaAluno: respostas[i],
+            comentario: q.comentario,
+            acertou
+        });
+
     });
 
     let percentual = (pontos/total)*100;
-
-    let eliminado = false;
-    for(let m in materias){
-        if(materias[m].acertos === 0){
-            eliminado = true;
-        }
-    }
+    let eliminado = Object.values(materias).some(m => m.acertos === 0);
 
     quizDiv.classList.add("hidden");
     nextBtn.classList.add("hidden");
     resultadoDiv.classList.remove("hidden");
 
     let html = `<h3>Resultado Final</h3>`;
-    html += `<p><strong>Nota:</strong> ${pontos} / ${total} (${percentual.toFixed(2)}%)</p>`;
+    html += `<p><strong>Nota:</strong> ${pontos} / ${total}</p>`;
+    html += `<p><strong>Acerto Geral:</strong> ${percentual.toFixed(2)}%</p>`;
+    html += `<p><strong>Erro Geral:</strong> ${(100-percentual).toFixed(2)}%</p>`;
 
-    html += `<h4>Percentual por Matéria:</h4>`;
+    html += `<h4>Desempenho por Matéria:</h4>`;
+
     for(let m in materias){
         let perc = (materias[m].acertos/materias[m].total)*100;
-        html += `<p>${m}: ${perc.toFixed(2)}%</p>`;
+        html += `<p><strong>${m}</strong>: ${perc.toFixed(2)}% acerto | ${(100-perc).toFixed(2)}% erro</p>`;
     }
 
     if(percentual >= 60 && !eliminado){
-        html += `<p class="aprovado">🎉 PARABÉNS! VOCÊ FOI APROVADO!</p>`;
+        html += `<p class="aprovado">
+        🎉 EXCELENTE DESEMPENHO!  
+        Você está no nível competitivo para aprovação!  
+        Continue mantendo esse padrão!
+        </p>`;
         iniciarFogos();
     }else{
-        html += `<p class="reprovado">Você precisa melhorar mais. Continue estudando!</p>`;
+        html += `<p class="reprovado">
+        ⚠ Ainda não foi dessa vez.  
+        Mas sua aprovação é questão de ajuste estratégico.  
+        Foque nos pontos fracos e continue evoluindo!
+        </p>`;
 
-        html += `<h4>Questões Erradas:</h4><ul>`;
-        erros.forEach(e => html += `<li>${e}</li>`);
-        html += `</ul>`;
+        let revisar = new Set(
+            detalhes.filter(d=>!d.acertou).map(d=>d.assunto)
+        );
 
         html += `<h4>Assuntos para Revisar:</h4><ul>`;
-        assuntosRevisar.forEach(a => html += `<li>${a}</li>`);
+        revisar.forEach(r=> html += `<li>${r}</li>`);
         html += `</ul>`;
     }
 
+    html += `<button onclick="mostrarDetalhes('erros')">Ver Questões Erradas</button>
+             <button onclick="mostrarDetalhes('acertos')">Ver Questões Acertadas</button>
+             <div id="detalhes"></div>`;
+
     resultadoDiv.innerHTML = html;
+
+    window.detalhesQuestoes = detalhes;
 }
 
+window.mostrarDetalhes = function(tipo){
+
+    let area = document.getElementById("detalhes");
+    area.innerHTML = "";
+
+    window.detalhesQuestoes
+    .filter(d => tipo === "erros" ? !d.acertou : d.acertou)
+    .forEach(d => {
+
+        area.innerHTML += `
+            <div class="detalhe">
+                <strong>Questão ${d.numero}</strong> - ${d.materia}<br>
+                ${d.enunciado}<br><br>
+                <strong>Sua resposta:</strong> ${d.respostaAluno}<br>
+                <strong>Correta:</strong> ${d.correta}<br><br>
+                <strong>Comentário:</strong> ${d.comentario}
+            </div>
+        `;
+    });
+};
+
 nextBtn.addEventListener("click",()=>{
-    const selecionada = document.querySelector("input[name='opcao']:checked");
+    const sel = document.querySelector("input[name='opcao']:checked");
+    if(!sel){ alert("Selecione uma alternativa."); return; }
 
-    if(!selecionada){
-        alert("Selecione uma alternativa.");
-        return;
-    }
-
-    respostas[indice] = selecionada.value;
+    respostas[indice] = sel.value;
     indice++;
 
     if(indice < questoes.length){
@@ -177,57 +233,47 @@ nextBtn.addEventListener("click",()=>{
 });
 
 document.addEventListener("keydown",(e)=>{
-    if(e.key === "Enter"){
-        nextBtn.click();
-    }
+    if(e.key==="Enter") nextBtn.click();
 });
 
 mostrarQuestao();
 
-/* ================= FOGOS PROFISSIONAIS ================= */
-
+/* FOGOS SEM COBRIR RESULTADO */
 function iniciarFogos(){
-
     const canvas = document.getElementById("fogos");
     const ctx = canvas.getContext("2d");
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let particulas = [];
+    let particulas=[];
 
-    function criarParticula(){
-        return {
-            x: canvas.width/2,
-            y: canvas.height/2,
-            radius: Math.random()*3+2,
-            color: `hsl(${Math.random()*360},100%,50%)`,
+    for(let i=0;i<200;i++){
+        particulas.push({
+            x:canvas.width/2,
+            y:canvas.height/2,
+            radius:Math.random()*3+2,
+            color:`hsl(${Math.random()*360},100%,50%)`,
             speedX:(Math.random()-0.5)*8,
             speedY:(Math.random()-0.5)*8,
             life:100
-        }
-    }
-
-    for(let i=0;i<250;i++){
-        particulas.push(criarParticula());
+        });
     }
 
     function animar(){
-        ctx.fillStyle="rgba(0,0,0,0.2)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
         particulas.forEach(p=>{
             ctx.beginPath();
             ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
             ctx.fillStyle=p.color;
             ctx.fill();
-
             p.x+=p.speedX;
             p.y+=p.speedY;
             p.life--;
         });
 
-        particulas = particulas.filter(p=>p.life>0);
+        particulas=particulas.filter(p=>p.life>0);
 
         if(particulas.length>0){
             requestAnimationFrame(animar);
