@@ -2,279 +2,240 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulado Especial - SEDUC RO</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="simulado_diario.js"></script>
+<title>Simulado Diário</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    padding:40px;
+}
+.container{
+    background:white;
+    width:900px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+button{
+    padding:10px 20px;
+    margin-top:20px;
+    cursor:pointer;
+}
+.option{ margin:8px 0; }
+.hidden{ display:none; }
+.aprovado{ color:green; font-size:22px; font-weight:bold; }
+.reprovado{ color:red; font-size:20px; font-weight:bold; }
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+</style>
 </head>
+<body>
 
-<body class="bg-gray-100 p-4 font-sans">
+<canvas id="fogos"></canvas>
 
-<div class="max-w-4xl mx-auto" id="container-geral">
+<div class="container">
+<h2>Simulado Diário</h2>
 
-    <div class="bg-white p-6 rounded-t-2xl shadow-sm border-b flex justify-between items-center">
-        <div>
-            <h1 class="text-xl font-bold text-blue-900">Simulado Técnico Educacional</h1>
-            <p class="text-sm text-gray-500" id="info-materia"></p>
-        </div>
+<div id="quiz"></div>
+<button id="nextBtn">Próxima (Enter)</button>
 
-        <div class="text-right">
-            <span id="progresso-texto" class="text-sm font-bold text-blue-600"></span>
-            <div class="w-32 h-2 bg-gray-200 rounded-full mt-1">
-                <div id="barra-progresso" class="h-full bg-blue-600 rounded-full transition-all"></div>
-            </div>
-        </div>
-    </div>
-
-    <main id="area-questao" class="bg-white p-8 shadow-xl min-h-[450px]"></main>
-
-    <footer class="bg-gray-50 p-6 rounded-b-2xl border-t flex justify-between">
-        <button onclick="navegar(-1)" id="btn-ant"
-            class="px-6 py-2 font-bold text-gray-400 hover:text-gray-700 disabled:opacity-0">
-            ← Anterior
-        </button>
-
-        <button onclick="navegar(1)" id="btn-prox"
-            class="bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md transition-all active:scale-95">
-            Próxima →
-        </button>
-    </footer>
-
+<div id="resultado" class="hidden"></div>
 </div>
+
+<!-- CARREGA O BANCO -->
+<script src="simulado_diario.js"></script>
 
 <script>
 
-let atual = 0;
-let respostasUsuario = {};
+if(!window.banco_simulado_novo){
+    document.body.innerHTML = "<h2>Erro ao carregar banco de questões.</h2>";
+    throw new Error("Banco não carregado.");
+}
 
-function render() {
+const questoes = window.banco_simulado_novo;
 
-    if (!window.banco_simulado_novo || banco_simulado_novo.length === 0) {
-        document.getElementById('area-questao').innerHTML =
-            "<p class='text-red-600 font-bold'>Erro ao carregar questões.</p>";
-        return;
-    }
+let indice = 0;
+let respostas = [];
 
-    const q = banco_simulado_novo[atual];
-    const container = document.getElementById('area-questao');
+const quizDiv = document.getElementById("quiz");
+const nextBtn = document.getElementById("nextBtn");
+const resultadoDiv = document.getElementById("resultado");
 
-    document.getElementById('progresso-texto').innerText =
-        `Questão ${atual + 1}/${banco_simulado_novo.length}`;
+function pesoMateria(materia){
+    return materia === "Conhecimentos Específicos" ? 3 : 1;
+}
 
-    document.getElementById('info-materia').innerText =
-        q.materia + " > " + q.assunto;
+function mostrarQuestao(){
 
-    document.getElementById('barra-progresso').style.width =
-        ((atual + 1) / banco_simulado_novo.length * 100) + "%";
+    const q = questoes[indice];
 
-    document.getElementById('btn-ant').disabled = (atual === 0);
+    quizDiv.innerHTML = `
+        <p><strong>${indice+1} / ${questoes.length}</strong></p>
+        <p><strong>${q.materia}</strong> - ${q.assunto}</p>
+        <p>${q.enunciado}</p>
 
-    const btnProx = document.getElementById('btn-prox');
-
-    if (atual === banco_simulado_novo.length - 1) {
-        btnProx.innerText = "FINALIZAR SIMULADO";
-        btnProx.className =
-            "bg-green-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-green-700 shadow-md";
-        btnProx.onclick = finalizar;
-    } else {
-        btnProx.innerText = "Próxima →";
-        btnProx.className =
-            "bg-blue-600 text-white px-10 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md";
-        btnProx.onclick = () => navegar(1);
-    }
-
-    container.innerHTML = `
-        <div>
-            <h2 class="text-xl text-gray-800 font-medium leading-relaxed mb-8">${q.enunciado}</h2>
-            <div class="space-y-3">
-                ${['a','b','c','d','e'].map(l => `
-                    <label class="flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all
-                        ${respostasUsuario[q.id] === l
-                            ? 'border-blue-500 bg-blue-50 shadow-inner'
-                            : 'border-gray-100 hover:bg-gray-50'}">
-
-                        <input type="radio"
-                               name="resp"
-                               value="${l}"
-                               class="hidden"
-                               ${respostasUsuario[q.id] === l ? 'checked' : ''}
-                               onchange="gravar('${q.id}','${l}')">
-
-                        <span class="w-8 h-8 flex items-center justify-center rounded-full
-                            ${respostasUsuario[q.id] === l
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-200 text-gray-600'}
-                            font-bold mr-4 text-sm">${l.toUpperCase()}</span>
-
-                        <span class="text-gray-700">${q[l]}</span>
-                    </label>
-                `).join('')}
+        ${["a","b","c","d","e"].map(letra => `
+            <div class="option">
+                <input type="radio" name="opcao" value="${letra}" id="${letra}">
+                <label for="${letra}">${q[letra]}</label>
             </div>
-        </div>
+        `).join("")}
     `;
 }
 
-function gravar(id, letra) {
-    respostasUsuario[id] = letra;
-}
+function calcularResultado(){
 
-function navegar(dir) {
-    atual += dir;
-    render();
-    window.scrollTo(0,0);
-}
-
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-        document.getElementById("btn-prox").click();
-    }
-});
-
-function finalizar() {
-
-    if (!confirm("Deseja ver seu desempenho agora?")) return;
-
+    let total = 0;
     let pontos = 0;
-    let totalPossivel = 0;
+    let materias = {};
+    let erros = [];
+    let assuntosRevisar = new Set();
 
-    let acertosMateria = {};
-    let totalMateria = {};
-    let listaErros = [];
+    questoes.forEach((q,i)=>{
 
-    banco_simulado_novo.forEach(q => {
+        let peso = pesoMateria(q.materia);
+        total += peso;
 
-        let peso = (q.materia === "Conhecimentos Específicos") ? 3 : 1;
+        if(!materias[q.materia]){
+            materias[q.materia] = {acertos:0,total:0};
+        }
 
-        totalPossivel += peso;
-        totalMateria[q.materia] = (totalMateria[q.materia] || 0) + 1;
-        acertosMateria[q.materia] = acertosMateria[q.materia] || 0;
+        materias[q.materia].total += peso;
 
-        if (respostasUsuario[q.id] === q.correta) {
+        if(respostas[i] === q.correta){
             pontos += peso;
-            acertosMateria[q.materia]++;
-        } else {
-            listaErros.push(q);
+            materias[q.materia].acertos += peso;
+        }else{
+            erros.push(`Questão ${q.id} - ${q.assunto}`);
+            assuntosRevisar.add(q.assunto);
         }
     });
 
-    const percentual = (pontos / totalPossivel) * 100;
+    let percentual = (pontos/total)*100;
 
-    const zeradas = Object.keys(totalMateria).filter(m =>
-        acertosMateria[m] === 0
-    );
-
-    const aprovado = (percentual >= 60 && zeradas.length === 0);
-
-    exibirResultado(pontos, percentual, aprovado, acertosMateria, totalMateria, listaErros, zeradas);
-}
-
-function exibirResultado(nota, percentual, aprovado, acertos, totalMateria, erros, zeradas) {
-
-    const container = document.getElementById('container-geral');
-
-    container.innerHTML = `
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-10 relative">
-
-            <div class="p-8 text-center border-b">
-                <h2 class="text-3xl font-bold mb-4">
-                    ${aprovado ? '🎉 PARABÉNS, APROVADO!' : '📚 VOCÊ PRECISA MELHORAR!'}
-                </h2>
-
-                <div class="text-7xl font-black my-4 ${aprovado ? 'text-green-600' : 'text-red-600'}">
-                    ${nota}
-                </div>
-
-                <p class="text-xl font-bold">
-                    ${percentual.toFixed(1)}% de aproveitamento
-                </p>
-
-                ${
-                    zeradas.length > 0
-                    ? `<p class="text-red-600 mt-2">Eliminado por zerar: ${zeradas.join(", ")}</p>`
-                    : ''
-                }
-            </div>
-
-            <div class="p-8">
-
-                <h3 class="text-xl font-bold mb-4">📊 Percentual por Disciplina</h3>
-
-                ${Object.keys(totalMateria).map(m => {
-                    let perc = ((acertos[m] / totalMateria[m]) * 100).toFixed(1);
-                    return `
-                        <div class="mb-4">
-                            <div class="flex justify-between">
-                                <span>${m}</span>
-                                <span>${perc}%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full mt-1">
-                                <div class="bg-blue-600 h-2 rounded-full"
-                                    style="width:${perc}%"></div>
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-
-                <h3 class="text-xl font-bold mt-10 mb-4">❌ Questões Erradas (${erros.length})</h3>
-
-                ${erros.map((q,i)=>`
-                    <div class="p-4 mb-4 border-l-4 border-red-500 bg-red-50 rounded">
-                        <p class="font-medium text-sm mb-2">${i+1}. ${q.enunciado}</p>
-                        <p class="text-xs text-green-700">
-                            Gabarito: ${q.correta.toUpperCase()} - ${q[q.correta]}
-                        </p>
-                        <p class="text-xs italic mt-2">${q.comentario}</p>
-                    </div>
-                `).join('')}
-
-                <button onclick="location.reload()"
-                    class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
-                    REFAZER SIMULADO
-                </button>
-
-            </div>
-        </div>
-    `;
-
-    if (aprovado) fogos();
-}
-
-function fogos() {
-
-    const duracao = 3000;
-    const fim = Date.now() + duracao;
-
-    const intervalo = setInterval(function() {
-
-        if (Date.now() > fim) {
-            clearInterval(intervalo);
-            return;
+    let eliminado = false;
+    for(let m in materias){
+        if(materias[m].acertos === 0){
+            eliminado = true;
         }
+    }
 
-        const div = document.createElement("div");
-        div.style.position = "fixed";
-        div.style.left = Math.random()*100+"vw";
-        div.style.top = Math.random()*100+"vh";
-        div.style.width = "8px";
-        div.style.height = "8px";
-        div.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
-        div.style.borderRadius = "50%";
-        div.style.zIndex = "9999";
-        div.style.transition = "all 1s ease-out";
+    quizDiv.classList.add("hidden");
+    nextBtn.classList.add("hidden");
+    resultadoDiv.classList.remove("hidden");
 
-        document.body.appendChild(div);
+    let html = `<h3>Resultado Final</h3>`;
+    html += `<p><strong>Nota:</strong> ${pontos} / ${total} (${percentual.toFixed(2)}%)</p>`;
 
-        setTimeout(()=>{
-            div.style.transform="scale(5)";
-            div.style.opacity="0";
-        },50);
+    html += `<h4>Percentual por Matéria:</h4>`;
+    for(let m in materias){
+        let perc = (materias[m].acertos/materias[m].total)*100;
+        html += `<p>${m}: ${perc.toFixed(2)}%</p>`;
+    }
 
-        setTimeout(()=>div.remove(),1000);
+    if(percentual >= 60 && !eliminado){
+        html += `<p class="aprovado">🎉 PARABÉNS! VOCÊ FOI APROVADO!</p>`;
+        iniciarFogos();
+    }else{
+        html += `<p class="reprovado">Você precisa melhorar mais. Continue estudando!</p>`;
 
-    },100);
+        html += `<h4>Questões Erradas:</h4><ul>`;
+        erros.forEach(e => html += `<li>${e}</li>`);
+        html += `</ul>`;
+
+        html += `<h4>Assuntos para Revisar:</h4><ul>`;
+        assuntosRevisar.forEach(a => html += `<li>${a}</li>`);
+        html += `</ul>`;
+    }
+
+    resultadoDiv.innerHTML = html;
 }
 
-render();
+nextBtn.addEventListener("click",()=>{
+    const selecionada = document.querySelector("input[name='opcao']:checked");
+
+    if(!selecionada){
+        alert("Selecione uma alternativa.");
+        return;
+    }
+
+    respostas[indice] = selecionada.value;
+    indice++;
+
+    if(indice < questoes.length){
+        mostrarQuestao();
+    }else{
+        calcularResultado();
+    }
+});
+
+document.addEventListener("keydown",(e)=>{
+    if(e.key === "Enter"){
+        nextBtn.click();
+    }
+});
+
+mostrarQuestao();
+
+/* ================= FOGOS PROFISSIONAIS ================= */
+
+function iniciarFogos(){
+
+    const canvas = document.getElementById("fogos");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particulas = [];
+
+    function criarParticula(){
+        return {
+            x: canvas.width/2,
+            y: canvas.height/2,
+            radius: Math.random()*3+2,
+            color: `hsl(${Math.random()*360},100%,50%)`,
+            speedX:(Math.random()-0.5)*8,
+            speedY:(Math.random()-0.5)*8,
+            life:100
+        }
+    }
+
+    for(let i=0;i<250;i++){
+        particulas.push(criarParticula());
+    }
+
+    function animar(){
+        ctx.fillStyle="rgba(0,0,0,0.2)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        particulas.forEach(p=>{
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+            ctx.fillStyle=p.color;
+            ctx.fill();
+
+            p.x+=p.speedX;
+            p.y+=p.speedY;
+            p.life--;
+        });
+
+        particulas = particulas.filter(p=>p.life>0);
+
+        if(particulas.length>0){
+            requestAnimationFrame(animar);
+        }
+    }
+
+    animar();
+}
 
 </script>
 </body>
